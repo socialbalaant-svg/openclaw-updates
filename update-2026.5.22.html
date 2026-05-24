@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحديث OpenClaw 2026.5.22</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 32px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .version {
+            color: #a78bfa;
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        .section-title {
+            color: #a78bfa;
+            font-size: 18px;
+            margin: 30px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(139,92,246,0.3);
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            line-height: 1.7;
+        }
+        li:before {
+            content: "◆";
+            color: #6366f1;
+            margin-left: 10px;
+            font-size: 10px;
+        }
+        .highlight {
+            background: rgba(99,102,241,0.15);
+            border: 1px solid rgba(99,102,241,0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .highlight h3 {
+            color: #a78bfa;
+            margin-bottom: 10px;
+        }
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            margin-top: 30px;
+        }
+        .date {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <span class="badge">🚀 تحديث جديد متاح</span>
+            <h1>OpenClaw Update</h1>
+            <p class="version">النسخة 2026.5.22 — 24 مايو 2026</p>
+            
+            <div class="highlight">
+                <h3>📌 ملخص التحديث</h3>
+                <p>تحديث جديد متوفر على npm — تحسينات أداء كبيرة، إضافة Meeting Notes، وتحديثاتوثائقية واسعة.</p>
+            </div>
+
+            <h2 class="section-title">⚡ تحسينات الأداء (Gateway/Perf)</h2>
+            <ul>
+                <li>إعادة استخدام قراءات قناة الكتالوج المستقرة.process — تجنب التحقق المتكرر من حدود القنوات</li>
+                <li>إعادة استخدام لقطات البيانات الوصفية للبلج إنز الثابتة عبر عمليات البدء</li>
+                <li>التحميل الكسول للعمل في وضع الخمول للبلج إنز在工作، معالجات البوابة، و ACPX runtime</li>
+                <li>تخزين خرائط الاسم المستعارة العامة لـ SDK والتخطي من PATH probes</li>
+            </ul>
+
+            <h2 class="section-title">📝 Meeting Notes</h2>
+            <ul>
+                <li>إضافة بلج إنز خارجي للالتقاء - ملاحظات اجتماع مصدر فقط</li>
+                <li>دعم الاستيراد اليدوي للنصوص</li>
+                <li>أداة CLI للقراءة فقط</li>
+                <li>Discord Voice كمصدر مباشر الأول</li>
+            </ul>
+
+            <h2 class="section-title">📚 التحديثات الوثائقية</h2>
+            <ul>
+                <li>إضافة Signal configPath وتلميحات Telegram wildcard</li>
+                <li>توضيحات IPv4-only Gateway BYOH binding</li>
+                <li>إرشادات Android pairing approval و macOS Accessibility</li>
+                <li>تحديث Zalo profile env vars و Bitwarden SecretRef setup</li>
+                <li>إضافة Upstash Box install guide</li>
+            </ul>
+
+            <h2 class="section-title">🔧 تغييرات تقنية أخرى</h2>
+            <ul>
+                <li>تقليل حجم حزمة npm — استبعاد صور الوثائق</li>
+                <li>Media understanding: إيقاف auto-probing لـ Gemini CLI</li>
+                <li>الحد من سياق bootstrap للـ sub-agent</li>
+                <li>إضافة OpenTelemetry smoke harness للـ trace, metric, log export</li>
+                <li>بلج إنز Crabbox: مزامنة التحقق من المزود</li>
+            </ul>
+
+            <h2 class="section-title">👥 المساهمون</h2>
+            <ul>
+                <li>شكر لـ 50+ مساهم على GitHub</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">💻 طريقة التحديث</h2>
+            <div class="highlight" style="direction: ltr; text-align: left;">
+                <code style="color: #a5b4fc;">npm update openclaw</code>
+            </div>
+            <p style="margin-top: 15px; color: #aaa;">
+                أو قم بتثبيت النسخة المحددة:
+            </p>
+            <div class="highlight" style="direction: ltr; text-align: left;">
+                <code style="color: #a5b4fc;">npm install openclaw@2026.5.22</code>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>تقرير تلقائي — OpenClaw Update Monitor</p>
+            <p>24 مايو 2026</p>
+        </div>
+    </div>
+</body>
+</html>
