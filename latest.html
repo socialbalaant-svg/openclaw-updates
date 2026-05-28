@@ -3,55 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آخر تحديثات OpenClaw</title>
+    <title>OpenClaw - آخر التحديثات</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
-            color: #e0e0e0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             min-height: 100vh;
             padding: 40px 20px;
+            color: #fff;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00d4aa, #00b894);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header p {
+            color: #888;
+            font-size: 18px;
+        }
+        .current-version {
+            background: rgba(0,212,170,0.1);
+            border: 2px solid #00d4aa;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .current-version .label {
+            color: #888;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .current-version .version {
+            font-size: 48px;
+            font-weight: bold;
+            color: #00d4aa;
+            margin: 10px 0;
+        }
+        .current-version .note {
+            color: #666;
+            font-size: 14px;
         }
         .card {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 20px;
-            padding: 40px;
-        }
-        h1 {
-            font-size: 28px;
-            color: #fff;
+            padding: 30px;
+            backdrop-filter: blur(10px);
             margin-bottom: 20px;
         }
-        .current {
-            display: inline-block;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 700;
+        .update-card {
+            border: 1px solid rgba(0,212,170,0.3);
+            background: rgba(0,212,170,0.05);
+        }
+        .update-card h2 {
+            color: #00d4aa;
+            font-size: 24px;
             margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .update-link {
-            display: block;
+            display: inline-block;
+            background: linear-gradient(135deg, #00d4aa, #00b894);
+            color: #000;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        .changelog {
             margin-top: 20px;
-            color: #a78bfa;
-            font-size: 16px;
+        }
+        .changelog h3 {
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        li:before {
+            content: "◆";
+            color: #00d4aa;
+            margin-left: 10px;
+        }
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .update-date {
+            color: #888;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="header">
+            <h1>🧬 OpenClaw Updates</h1>
+            <p>تتبع تحديثات OpenClaw</p>
+        </div>
+
+        <div class="current-version">
+            <div class="label">النسخة المثبتة حالياً</div>
+            <div class="version">2026.5.20</div>
+            <div class="note">🔴 هناك تحديث متاح!</div>
+        </div>
+
+        <div class="card update-card">
+            <h2>🚀 تحديث متاح: v2026.5.26</h2>
+            <p class="update-date">تم النشر: منذ 19 ساعة</p>
+            <p>هناك 6 أيام بين النسختين - راجع التفاصيل الكاملة:</p>
+            <a href="update-2026.5.26.html" class="update-link">📋 عرض تفاصيل التحديث</a>
+        </div>
+
         <div class="card">
-            <h1>🔗 رابط آخر تحديث</h1>
-            <p>النسخة الحالية: <span class="current">2026.5.22</span></p>
-            <a class="update-link" href="update-2026.5.22.html">📋 عرض تفاصيل تحديث 2026.5.22</a>
+            <h2 style="color:#fff;margin-bottom:20px;">📚 أرشيف التحديثات</h2>
+            <ul>
+                <li><a href="update-2026.5.26.html" style="color:#00d4aa;text-decoration:none;">v2026.5.26</a> - 28 مايو 2026 <span style="color:#00d4aa;">(أحدث)</span></li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>آخر فحص: 28 مايو 2026 - 08:00 UTC</p>
+            <p>github.com/openclaw/openclaw</p>
         </div>
     </div>
 </body>
