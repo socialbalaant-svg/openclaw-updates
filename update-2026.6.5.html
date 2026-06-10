@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحديث OpenClaw - الإصدار 2026.6.5</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; padding: 2rem; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 2rem; padding: 2rem; background: linear-gradient(135deg, #1e40af, #7c3aed); border-radius: 16px; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .version-badge { display: inline-block; background: #10b981; color: #fff; padding: 0.5rem 1.5rem; border-radius: 50px; font-size: 1.5rem; font-weight: bold; margin-top: 1rem; }
+        .section { background: #1e293b; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .section h2 { color: #60a5fa; margin-bottom: 1rem; font-size: 1.3rem; border-bottom: 2px solid #334155; padding-bottom: 0.5rem; }
+        .section ul { list-style: none; padding: 0; }
+        .section li { padding: 0.5rem 0; border-bottom: 1px solid #334155; }
+        .section li:last-child { border-bottom: none; }
+        .highlight { color: #fbbf24; font-weight: bold; }
+        .tag { display: inline-block; background: #7c3aed; color: #fff; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; margin-left: 0.5rem; }
+        .footer { text-align: center; margin-top: 2rem; color: #64748b; font-size: 0.9rem; }
+        .install-cmd { background: #0f172a; padding: 1rem; border-radius: 8px; font-family: monospace; color: #10b981; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 تحديث جديد لـ OpenClaw</h1>
+            <div class="version-badge">2026.6.5</div>
+            <p style="margin-top: 1rem; opacity: 0.9;">تم النشر منذ 13 ساعة</p>
+        </div>
+
+        <div class="section">
+            <h2>✨ أهم التغييرات</h2>
+            <ul>
+                <li>🔧 <span class="highlight">QQBot</span> - إزالة محتوى النموذج الداخلي (thinking/reasoning) قبل الإرسال</li>
+                <li>🔧 <span class="highlight">MCP Tools</span> - تحسين معالجة النتائج غير النصية/الصور</li>
+                <li>🔧 <span class="highlight">Anthropic</span> - إصلاح مشكلة انتهاء صلاحية ذاكرة التخزين المؤقت</li>
+                <li>🔧 <span class="highlight">Parallel Search</span> - إضافة كمزوّد بحث مدمج جديد</li>
+                <li>🔧 <span class="highlight">Google Vertex</span> - تحسين دقة حل النماذج</li>
+                <li>🔧 <span class="highlight">Matrix</span> - دعم رسائل الصوت وتحسين سلاسل المحادثات</li>
+                <li>🔧 <span class="highlight">macOS</span> - إصلاح مشكلة إعادة الاتصال التلقائي</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>📦 التحديثات الأمنية والصيانة</h2>
+            <ul>
+                <li>🔒 تحسين أمان أدوات HTTP المخصصة للمالك</li>
+                <li>🔒 حماية مخزون وكلاء MCP</li>
+                <li>🔒 تحسين التحقق من موارد الملفات</li>
+                <li>🛠️ ترحيل مخازن Cron القديمة إلى SQLite</li>
+                <li>🛠️ تحسين تخزين حالة Matrix و Crypto</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>🐛 الإصلاحات</h2>
+            <ul>
+                <li>إصلاح تسرب محتوى النموذج الداخلي في QQBot</li>
+                <li>إصلاح فشل جلسة Anthropic بعد إعادة التشغيل</li>
+                <li>إصلاح مشكلة تكرار رسائل WhatsApp</li>
+                <li>إصلاح مشكلة فقدان الرسائل في TUI/Workboard</li>
+                <li>إصلاح مشاكل Feishu مع إعادة المحاولة</li>
+                <li>تحسين استقرار الاتصال في Mattermost</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>📝 تعليمات التحديث</h2>
+            <p>لتحديث OpenClaw إلى الإصدار الأحدث، نفذ الأمر التالي:</p>
+            <div class="install-cmd">npm install -g openclaw@latest</div>
+            <p style="margin-top: 1rem;">أو استخدم:</p>
+            <div class="install-cmd">openclaw update</div>
+        </div>
+
+        <div class="section">
+            <h2>🔗 روابط مهمة</h2>
+            <ul>
+                <li>📦 <a href="https://www.npmjs.com/package/openclaw/v/2026.6.5" style="color: #60a5fa;">npm package</a></li>
+                <li>📄 <a href="https://github.com/openclaw/releases/blob/main/evidence/2026.6.5/release-evidence.md" style="color: #60a5fa;">Release Evidence</a></li>
+                <li>🔨 <a href="https://github.com/openclaw/openclaw/actions/runs/27225410843" style="color: #60a5fa;">Release CI Report</a></li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>تم التحقق: 10 يونيو 2026 - 08:00 UTC</p>
+            <p>OpenClaw Update Monitor</p>
+        </div>
+    </div>
+</body>
+</html>
