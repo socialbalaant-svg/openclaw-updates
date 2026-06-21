@@ -1,159 +1,31 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحديث OpenClaw - الإصدار 2026.6.8</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background: #0f1923; color: #e8eaed; direction: rtl; padding: 20px; }
-        .container { max-width: 900px; margin: 0 auto; }
-        .header { background: linear-gradient(135deg, #1a73e8, #0d47a1); padding: 30px; border-radius: 16px; text-align: center; margin-bottom: 24px; }
-        .header h1 { font-size: 2.2em; color: #fff; margin-bottom: 8px; }
-        .header .version-badge { display: inline-block; background: #fff; color: #1a73e8; padding: 8px 24px; border-radius: 30px; font-weight: bold; font-size: 1.2em; margin-top: 10px; }
-        .update-info { background: #1e2a38; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-right: 4px solid #1a73e8; }
-        .update-info p { margin: 6px 0; font-size: 1.05em; }
-        .update-info strong { color: #8ab4f8; }
-        .section { background: #1e2a38; border-radius: 12px; padding: 24px; margin-bottom: 20px; }
-        .section h2 { color: #8ab4f8; font-size: 1.3em; margin-bottom: 16px; border-bottom: 1px solid #2d3f52; padding-bottom: 10px; }
-        .highlight-item { background: #263341; border-radius: 8px; padding: 14px 18px; margin-bottom: 10px; border-right: 3px solid #1a73e8; }
-        .highlight-item .title { color: #fff; font-weight: bold; font-size: 1.05em; margin-bottom: 6px; }
-        .highlight-item .desc { color: #9aa0a6; font-size: 0.9em; line-height: 1.6; }
-        .changelog-badge { background: #1a73e8; color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 0.85em; display: inline-block; margin-left: 8px; }
-        .footer { text-align: center; color: #5f6368; padding: 20px; font-size: 0.9em; }
-        .model-badge { background: #34a853; color: #fff; padding: 3px 10px; border-radius: 4px; font-size: 0.85em; }
-        .ui-badge { background: #f9ab00; color: #fff; padding: 3px 10px; border-radius: 4px; font-size: 0.85em; }
-        .memory-badge { background: #9334e6; color: #fff; padding: 3px 10px; border-radius: 4px; font-size: 0.85em; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آخر تحديث لـ OpenClaw</title>
+<meta http-equiv="refresh" content="0; url=update-2026.6.9.html">
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #0f172a;
+    color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+  }
+  a { color: #6366f1; text-decoration: none; font-size: 1.2em; }
+  a:hover { text-decoration: underline; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🦿 تحديث OpenClaw متاح!</h1>
-            <p style="color:#cde0ff; font-size:1.1em;">نظرة عامة على الإصدار الجديد</p>
-            <div class="version-badge">2026.6.8</div>
-        </div>
-
-        <div class="update-info">
-            <p><strong>📦 الإصدار:</strong> 2026.6.8</p>
-            <p><strong>📅 تاريخ النشر:</strong> 17 يونيو 2026 (منذ 15 ساعة)</p>
-            <p><strong>⬆️ من:</strong> 2026.5.20 → 2026.6.8</p>
-            <p><strong>📦 حجم الحزمة:</strong> 85.6 MB</p>
-            <p><strong>🔧 التبعيات:</strong> 55 حزمة</p>
-        </div>
-
-        <div class="section">
-            <h2>📱 تسليم قنوات أكثر ثراءً</h2>
-            <div class="highlight-item">
-                <div class="title">💬 عرض منظم في Telegram</div>
-                <div class="desc">
-                    يدعم Telegram الآن عرض النصوص المنظمة بشكل غني: الجداول، القوائم، blockquotes قابلة للتوسيع، الحفاظ على فواصل الأسطر المتعمدة، وردود مدعومة بـ CLI.
-                </div>
-            </div>
-            <div class="highlight-item">
-                <div class="title">🟢 WhatsApp ACP Bindings</div>
-                <div class="desc">
-                    WhatsApp يحترم الآن bindings ACP المكوّنة، مع إصلاحات لإرفاق captured replies وتقديم transport fixtures للـ drafts الأغنى.
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>🤖 وكلاء أكثر موثوقية</h2>
-            <div class="highlight-item">
-                <div class="title">🔄 إصلاحات استرداد Agent</div>
-                <div class="desc">
-                    account-scoped DM sends، اكتمال الوسائط المولّدة، ردود message-tool التلقائية، قراءات reset archive الاحتياطية، إجهاض shutdown عند restart، توقف subagents، ومطالبات هوية الجلسة كلها تبقى على مسار الاسترداد الصحيح.
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>🧠 نماذج جديدة <span class="changelog-badge">هام</span></h2>
-            <div class="highlight-item">
-                <div class="title"><span class="model-badge">GLM-5.2</span> دعم جديد</div>
-                <div class="desc">
-                    إضافة دعم GLM-5.2 مع provider IDs موحدة، SecretRef auth مُدارة، bounded model browsing، واستعادة OpenAI/Anthropic tool-schema أكثر أماناً.
-                </div>
-            </div>
-            <div class="highlight-item">
-                <div class="title"><span class="model-badge">Claude Haiku 4.5</span> كتالوج جديد</div>
-                <div class="desc">
-                    إدخالات كتالوج Claude Haiku 4.5 الجديدة مع normalized provider IDs عبر مسارات OpenRouter و Google Vertex.
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>📊 تذييل استخدام محسّن</h2>
-            <div class="highlight-item">
-                <div class="title">📈 /usage و reply payload hooks</div>
-                <div class="desc">
-                    renderer كامل أصلي لتذييل الاستخدام، default template، تنسيق decimal ثابت، حدود aware-credential، معالجة partial-count أفضل، وتحذيرات للقوالب المعطلة بدلاً من إخراج صامت سيئ.
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>🔍 البحث على الويب - قيم افتراضية قابلة للتنبؤ</h2>
-            <div class="highlight-item">
-                <div class="title">🚫 مزودون بدون مفتاح API</div>
-                <div class="desc">
-                    مزودون مثل Parallel Free و DuckDuckGo و Ollama و Codex Hosted Search يبقون opt-ins صريحة بدلاً من fallbacks تلقائية مفاجئة.
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>🎨 واجهة أهدأ وجلسات موبايل</h2>
-            <div class="highlight-item">
-                <div class="title"><span class="ui-badge">UI</span> تجربة محسّنة</div>
-                <div class="desc">
-                    ملفات workspace تبدأ مطوية، backscroll في WebChat يبقى بعد streaming، desktop session picker يظل تفاعلياً، reset arguments تبقى عبر dispatch، وiOS يعيد الاتصال بـ Gateways القديمة في المقدمة.
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>💾 ذاكرة وحالة مرنة <span class="memory-badge">Memory</span></h2>
-            <div class="highlight-item">
-                <div class="title">🔒 تحسينات التخزين</div>
-                <div class="desc">
-                    OpenAI embedding batches الكبيرة تُقسّم قبل 431 ثانية، بحث QMD يبقى متاحاً في transient mode، SQLite يتجنب WAL على وحدات NFS، وreindexes كاملة تحافظ على rollback/cache recovery.
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>📋 تعليمات التحديث</h2>
-            <div style="background:#263341;padding:20px;border-radius:8px;font-family:monospace;font-size:0.95em;line-height:2;">
-                <div style="color:#8ab4f8;"># التحديث عبر npm</div>
-                <div style="color:#81c995;">npm update -g openclaw</div>
-                <br>
-                <div style="color:#8ab4f8;"># أو</div>
-                <div style="color:#81c995;">npm install -g openclaw@latest</div>
-                <br>
-                <div style="color:#8ab4f8;"># التحقق من الإصدار</div>
-                <div style="color:#81c995;">openclaw --version</div>
-                <br>
-                <div style="color:#8ab4f8;"># ملاحظة: يوصى بعمل نسخة احتياطية قبل التحديث</div>
-                <div style="color:#f28b82;">cp -r ~/.openclaw ~/.openclaw.backup.$(date +%Y%m%d)</div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>🔗 روابط مفيدة</h2>
-            <div style="background:#263341;padding:16px;border-radius:8px;line-height:2;">
-                <p>📄 <a href="https://github.com/openclaw/openclaw/releases/tag/v2026.6.8" style="color:#8ab4f8;">ملاحظات الإصدار الكاملة على GitHub</a></p>
-                <p>📦 <a href="https://www.npmjs.com/package/openclaw/v/2026.6.8" style="color:#8ab4f8;">صفحة الحزمة على npm</a></p>
-                <p>🏠 <a href="https://github.com/openclaw/openclaw" style="color:#8ab4f8;">مستودع المشروع</a></p>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>🦿 OpenClaw Update Report | Generated by Claw AI</p>
-            <p>تاريخ التقرير: 17 يونيو 2026</p>
-        </div>
-    </div>
+<div>
+  <h1>🦾 OpenClaw 2026.6.9</h1>
+  <p>جاري التحويل لصفحة التحديث...</p>
+  <p><a href="update-2026.6.9.html">اضغط هنا يدوياً</a></p>
+</div>
 </body>
 </html>

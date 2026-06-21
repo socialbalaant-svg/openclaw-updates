@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحديث OpenClaw 2026.6.9</title>
+<meta name="description" content="تقرير تحديث OpenClaw الجديد - الإصدار 2026.6.9 مع أهم المميزات والتغييرات">
+<meta name="keywords" content="OpenClaw, تحديث, AI, بوابة, Telegram, Codex">
+<style>
+  :root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --accent: #10b981;
+    --bg: #0f172a;
+    --card: #1e293b;
+    --card-border: #334155;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --code-bg: #0b1220;
+    --highlight: #fbbf24;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', 'Tahoma', 'Cairo', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: var(--text);
+    line-height: 1.8;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-radius: 20px;
+    padding: 50px 30px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '🦾';
+    position: absolute;
+    font-size: 200px;
+    opacity: 0.08;
+    top: -40px;
+    right: -20px;
+    transform: rotate(-15deg);
+  }
+  .hero h1 { font-size: 2.5em; margin-bottom: 15px; font-weight: 800; }
+  .version-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 1.1em;
+    font-weight: 700;
+    margin: 15px 0;
+    backdrop-filter: blur(10px);
+  }
+  .release-date { color: rgba(255, 255, 255, 0.85); font-size: 1.05em; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 30px 0;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-number {
+    font-size: 2em;
+    font-weight: 800;
+    color: var(--primary);
+    display: block;
+  }
+  .stat-label { color: var(--text-muted); font-size: 0.9em; margin-top: 5px; }
+  .section {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 20px;
+  }
+  .section h2 {
+    color: var(--primary);
+    font-size: 1.6em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .feature {
+    background: rgba(99, 102, 241, 0.08);
+    border-right: 4px solid var(--primary);
+    padding: 18px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+  }
+  .feature h3 {
+    color: var(--accent);
+    font-size: 1.15em;
+    margin-bottom: 8px;
+  }
+  .feature p { color: var(--text); font-size: 0.98em; }
+  .feature-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #0f172a;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 700;
+    margin-left: 8px;
+  }
+  .feature-tag.new { background: var(--highlight); }
+  .steps {
+    counter-reset: step;
+    list-style: none;
+  }
+  .steps li {
+    counter-increment: step;
+    background: var(--code-bg);
+    padding: 15px 20px 15px 50px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    position: relative;
+    font-family: 'Consolas', 'Monaco', monospace;
+    direction: ltr;
+    text-align: left;
+  }
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--primary);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9em;
+  }
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 18px;
+    margin: 15px 0;
+    overflow-x: auto;
+    direction: ltr;
+    text-align: left;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.92em;
+  }
+  .code-block code { color: #a5f3fc; }
+  .warning {
+    background: rgba(251, 191, 36, 0.1);
+    border-right: 4px solid var(--highlight);
+    padding: 18px;
+    border-radius: 10px;
+    margin: 15px 0;
+  }
+  .info {
+    background: rgba(16, 185, 129, 0.1);
+    border-right: 4px solid var(--accent);
+    padding: 18px;
+    border-radius: 10px;
+    margin: 15px 0;
+  }
+  .footer {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 30px 20px;
+    font-size: 0.9em;
+  }
+  .footer a { color: var(--primary); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  @media (max-width: 600px) {
+    .hero { padding: 35px 20px; }
+    .hero h1 { font-size: 1.8em; }
+    .section { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <h1>🦾 تحديث OpenClaw الجديد</h1>
+    <div class="version-badge">الإصدار 2026.6.9</div>
+    <div class="release-date">📅 تاريخ الإصدار: 21 يونيو 2026</div>
+    <div class="release-date">⚡ تحديث رئيسي مع مميزات جديدة كلياً</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <span class="stat-number">54</span>
+      <span class="stat-label">اعتمادية محدثة</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">221</span>
+      <span class="stat-label">إصدار متاح</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">86.6</span>
+      <span class="stat-label">MB حجم الحزمة</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">6h</span>
+      <span class="stat-label">منذ النشر</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🎯 أبرز المميزات الجديدة</h2>
+
+    <div class="feature">
+      <h3>📱 تسليم تيليجرام بشكل أغنى <span class="feature-tag new">جديد</span></h3>
+      <p>تيليجرام الآن يدعم إرسال HTML غني، يحافظ على المسارات الخاصة بالملصقات، يعرض مسودات التقدم ونتائج الأوامر بشكل أوضح، ويتعامل مع جداول HTML بشكل آمن. كما يحافظ على توجيه الإشارات والمعالجات المؤجلة بشكل صحيح.</p>
+    </div>
+
+    <div class="feature">
+      <h3>🔄 استعادة الوكيل بشكل أكثر موثوقية <span class="feature-tag new">محسّن</span></h3>
+      <p>تحسينات كبيرة على إعادة المحاولات، النتائج النهائية، الاستخدام بعد الضغط (compaction)، إصلاح تاريخ الجلسات، ومصالحة الردود. الآن الجلسات المتقطعة أو الجزئية تصل لنتائج نهائية مرئية بشكل أفضل.</p>
+    </div>
+
+    <div class="feature">
+      <h3>⚡ تكامل Codex أقوى <span class="feature-tag new">محسّن</span></h3>
+      <p>إضافة موافقات تلقائية على الإضافات، توجيه GPT-5.3 Spark OAuth، تنفيذ العقد البعيدة كأداة ديناميكية، وإنهاء أكثر استقراراً لـ app-server.</p>
+    </div>
+
+    <div class="feature">
+      <h3>📦 إضافات مزودي الخدمة المستقلة <span class="feature-tag new">جديد</span></h3>
+      <p>حزم المزودين الخارجيين أصبحت الآن إصدارات npm رسمية من الدرجة الأولى. إضافات القنوات المثبتة خارجياً تُحمَّل عند بدء تشغيل Gateway، و StepFun متاح الآن من npm و ClawHub.</p>
+    </div>
+
+    <div class="feature">
+      <h3>💻 عملاء الويب والموبايل أكثر قدرة <span class="feature-tag">محسّن</span></h3>
+      <p>واجهة Control UI أضافت شريط مساحة عمل الجلسات وحالة الإضافات. iOS أضاف أدوات تحكم Apple Watch، و Android يعرض سياق المحادثة.</p>
+    </div>
+
+    <div class="feature">
+      <h3>🔍 بحث ومهارات أكثر فائدة <span class="feature-tag">محسّن</span></h3>
+      <p>بحث Codex المستضاف أصبح متاحاً، مزودي البحث بدون مفاتيح يظلون خيارين متعمدين، وتثبيت مهارات ClawHub يحافظ على مصدر موثّق.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📋 التغييرات التفصيلية</h2>
+
+    <h3 style="color: var(--accent); margin: 15px 0 10px;">🔐 المزودون والمصادقة</h3>
+    <ul style="list-style: none; padding-right: 0;">
+      <li style="padding: 8px 0; padding-right: 25px; position: relative;">
+        <span style="position: absolute; right: 0; color: var(--accent);">✓</span>
+        إضافة بحث Codex المستضاف (Hosted Search)
+      </li>
+      <li style="padding: 8px 0; padding-right: 25px; position: relative;">
+        <span style="position: absolute; right: 0; color: var(--accent);">✓</span>
+        تحسين Gemini CLI OAuth خلف البروكسيات
+      </li>
+    </ul>
+
+    <h3 style="color: var(--accent); margin: 20px 0 10px;">🔌 الإضافات والتثبيت</h3>
+    <ul style="list-style: none; padding-right: 0;">
+      <li style="padding: 8px 0; padding-right: 25px; position: relative;">
+        <span style="position: absolute; right: 0; color: var(--accent);">✓</span>
+        حزم المزودين الرسمية أصبحت مستقلة على npm
+      </li>
+      <li style="padding: 8px 0; padding-right: 25px; position: relative;">
+        <span style="position: absolute; right: 0; color: var(--accent);">✓</span>
+        Gateway يكتشف إضافات القنوات المثبتة عند البدء
+      </li>
+      <li style="padding: 8px 0; padding-right: 25px; position: relative;">
+        <span style="position: absolute; right: 0; color: var(--accent);">✓</span>
+        تثبيت StepFun من npm أو ClawHub
+      </li>
+    </ul>
+
+    <h3 style="color: var(--accent); margin: 20px 0 10px;">📊 لوحة التحكم والموبايل</h3>
+    <ul style="list-style: none; padding-right: 0;">
+      <li style="padding: 8px 0; padding-right: 25px; position: relative;">
+        <span style="position: absolute; right: 0; color: var(--accent);">✓</span>
+        شريط مساحة عمل الجلسات في لوحة التحكم
+      </li>
+      <li style="padding: 8px 0; padding-right: 25px; position: relative;">
+        <span style="position: absolute; right: 0; color: var(--accent);">✓</span>
+        حالة الإضافات في شاشة الحالة
+      </li>
+      <li style="padding: 8px 0; padding-right: 25px; position: relative;">
+        <span style="position: absolute; right: 0; color: var(--accent);">✓</span>
+        قوائم cron مضغوطة
+      </li>
+      <li style="padding: 8px 0; padding-right: 25px; position: relative;">
+        <span style="position: absolute; right: 0; color: var(--accent);">✓</span>
+        أدوات تحكم Apple Watch في iOS
+      </li>
+    </ul>
+
+    <h3 style="color: var(--accent); margin: 20px 0 10px;">🤖 Codex والمراقبة والمهارات</h3>
+    <ul style="list-style: none; padding-right: 0;">
+      <li style="padding: 8px 0; padding-right: 25px; position: relative;">
+        <span style="position: absolute; right: 0; color: var(--accent);">✓</span>
+        موافقات تلقائية على الإضافات و SecretRefs
+      </li>
+      <li style="padding: 8px 0; padding-right: 25px; position: relative;">
+        <span style="position: absolute; right: 0; color: var(--accent);">✓</span>
+        الحفاظ على مصدر مهارات ClawHub
+      </li>
+      <li style="padding: 8px 0; padding-right: 25px; position: relative;">
+        <span style="position: absolute; right: 0; color: var(--accent);">✓</span>
+        تصدير سجلات OpenTelemetry
+      </li>
+      <li style="padding: 8px 0; padding-right: 25px; position: relative;">
+        <span style="position: absolute; right: 0; color: var(--accent);">✓</span>
+        تنفيذ العقد البعيدة لـ Codex عند توصيل عقدة
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>🚀 تعليمات التحديث</h2>
+
+    <div class="info">
+      <strong>💡 ملاحظة:</strong> قبل التحديث، يُفضل عمل نسخة احتياطية من إعداداتك الحالية.
+    </div>
+
+    <h3 style="color: var(--accent); margin: 20px 0 15px;">الطريقة الأولى: تحديث عبر npm</h3>
+    <ol class="steps">
+      <li>npm install -g openclaw@latest</li>
+      <li>openclaw gateway restart</li>
+      <li>openclaw status</li>
+    </ol>
+
+    <h3 style="color: var(--accent); margin: 25px 0 15px;">الطريقة الثانية: تحديث عبر Gateway Tool</h3>
+    <ol class="steps">
+      <li>openclaw gateway update</li>
+      <li>openclaw gateway restart</li>
+    </ol>
+
+    <h3 style="color: var(--accent); margin: 25px 0 15px;">التحقق من التثبيت</h3>
+    <div class="code-block"><code>openclaw --version</code></div>
+
+    <div class="warning">
+      <strong>⚠️ تحذير:</strong> إذا كنت تستخدم إضافات خارجية، تأكد من تحديثها أيضاً لتتوافق مع الإصدار الجديد.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📦 معلومات الحزمة</h2>
+    <ul style="list-style: none; padding-right: 0;">
+      <li style="padding: 8px 0;"><strong>الاسم:</strong> openclaw</li>
+      <li style="padding: 8px 0;"><strong>الإصدار:</strong> 2026.6.9</li>
+      <li style="padding: 8px 0;"><strong>الترخيص:</strong> MIT</li>
+      <li style="padding: 8px 0;"><strong>المستودع:</strong> <a href="https://github.com/openclaw/openclaw" style="color: var(--primary);">github.com/openclaw/openclaw</a></li>
+      <li style="padding: 8px 0;"><strong>الموقع:</strong> <a href="https://github.com/openclaw/openclaw#readme" style="color: var(--primary);">github.com/openclaw/openclaw</a></li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <p>🤖 تم إعداد هذا التقرير تلقائياً بواسطة <strong>Claw</strong></p>
+    <p style="margin-top: 10px;">📅 الأحد، 21 يونيو 2026 - 8:00 صباحاً (UTC)</p>
+    <p style="margin-top: 10px;">
+      <a href="https://github.com/openclaw/openclaw/releases/tag/v2026.6.9">📋 سجل التغييرات الكامل</a> |
+      <a href="https://www.npmjs.com/package/openclaw">📦 صفحة npm</a>
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
