@@ -1,192 +1,315 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحديث OpenClaw - الإصدار 2026.6.10</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 100vh;
-            color: #fff;
-            padding: 40px 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .badge {
-            display: inline-block;
-            background: linear-gradient(90deg, #00d4ff, #7c3aed);
-            color: white;
-            padding: 8px 24px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #00d4ff, #7c3aed);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .version-info {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        .version-box {
-            background: rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 20px 30px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .version-box .label {
-            font-size: 12px;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .version-box .value {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #00d4ff;
-        }
-        .version-box .value.new {
-            color: #10b981;
-        }
-        .card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .card h2 {
-            color: #7c3aed;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-        .card p, .card li {
-            color: #ccc;
-            line-height: 1.8;
-        }
-        ul {
-            list-style-position: inside;
-            padding-right: 0;
-        }
-        li {
-            margin-bottom: 8px;
-        }
-        .dependencies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .dep-tag {
-            background: rgba(124, 58, 237, 0.3);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: #a78bfa;
-        }
-        .instructions {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1));
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-        .instructions code {
-            background: rgba(0,0,0,0.3);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            color: #10b981;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #666;
-            font-size: 14px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحديث OpenClaw 2026.6.10 - جديد</title>
+<meta name="description" content="إصدار جديد من OpenClaw 2026.6.10 مع وضع السرعة التلقائي وتحسينات في القنوات والموفرين والبوابة.">
+<style>
+  :root{
+    --bg:#0b1020;
+    --card:#121a33;
+    --ink:#e8ecf8;
+    --muted:#a4adcb;
+    --accent:#7c5cff;
+    --accent-2:#22d3ee;
+    --ok:#22c55e;
+    --warn:#f59e0b;
+    --border:rgba(255,255,255,.08);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:"Tajawal","Cairo","Segoe UI",system-ui,-apple-system,Arial,sans-serif;line-height:1.7}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:920px;margin:0 auto;padding:32px 20px 64px}
+  .hero{
+    background:linear-gradient(135deg,rgba(124,92,255,.18),rgba(34,211,238,.12));
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:28px 28px 24px;
+    margin-bottom:24px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    inset:-40% -20% auto auto;
+    width:300px;height:300px;
+    background:radial-gradient(closest-side,rgba(124,92,255,.35),transparent 70%);
+    pointer-events:none;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(34,197,94,.14);
+    color:#86efac;
+    border:1px solid rgba(34,197,94,.35);
+    padding:6px 12px;border-radius:999px;
+    font-size:13px;font-weight:600;
+    margin-bottom:14px;
+  }
+  .badge .dot{width:8px;height:8px;background:#22c55e;border-radius:50%;box-shadow:0 0 10px #22c55e}
+  h1{font-size:30px;margin:6px 0 8px;line-height:1.3}
+  .sub{color:var(--muted);font-size:15px;margin:0}
+  .meta{
+    display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;
+    color:var(--muted);font-size:14px;
+  }
+  .meta span{display:inline-flex;align-items:center;gap:6px}
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:22px 24px;
+    margin-bottom:18px;
+  }
+  h2{font-size:20px;margin:0 0 14px;display:flex;align-items:center;gap:10px}
+  h2 .ico{font-size:22px}
+  p{margin:0 0 10px;color:#d3d8eb}
+  ul{padding-right:20px;margin:8px 0 0}
+  li{margin-bottom:8px;color:#d3d8eb}
+  li strong{color:#fff}
+  code{
+    background:rgba(124,92,255,.12);
+    border:1px solid rgba(124,92,255,.25);
+    padding:2px 8px;border-radius:6px;
+    font-family:"JetBrains Mono",Consolas,Menlo,monospace;
+    font-size:13px;color:#c4b5fd;
+    direction:ltr;display:inline-block;
+  }
+  pre{
+    background:#070b1a;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 18px;
+    overflow-x:auto;
+    direction:ltr;
+    text-align:left;
+  }
+  pre code{background:transparent;border:0;padding:0;color:#e8ecf8;font-size:14px;line-height:1.6}
+  .grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:8px
+  }
+  .pill{
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px 16px;
+  }
+  .pill h3{margin:0 0 6px;font-size:15px;color:#fff}
+  .pill p{margin:0;font-size:13px;color:var(--muted)}
+  .steps{counter-reset:step;list-style:none;padding:0;margin:0}
+  .steps li{
+    counter-increment:step;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px 16px 14px 50px;
+    margin-bottom:10px;
+    position:relative;
+    color:#d3d8eb;
+  }
+  .steps li::before{
+    content:counter(step);
+    position:absolute;
+    right:14px;top:50%;transform:translateY(-50%);
+    width:28px;height:28px;border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;
+    font-size:14px;
+  }
+  .warn-box{
+    background:rgba(245,158,11,.08);
+    border:1px solid rgba(245,158,11,.35);
+    border-radius:12px;
+    padding:14px 16px;
+    color:#fde68a;
+    font-size:14px;
+    margin-top:10px;
+  }
+  .footer{
+    text-align:center;color:var(--muted);font-size:13px;margin-top:24px
+  }
+  .footer a{color:var(--muted)}
+  .arrow{display:inline-block;margin:0 6px;color:var(--muted)}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="badge">🔄 تحديث جديد متاح</div>
-            <h1>OpenClaw Update</h1>
-            <p style="color: #888; margin-top: 10px;">نظام التشغيل الذكي متعدد القنوات</p>
-        </div>
+<div class="wrap">
 
-        <div class="version-info">
-            <div class="version-box">
-                <div class="label">الإصدار الحالي</div>
-                <div class="value">2026.5.20</div>
-            </div>
-            <div class="version-box">
-                <div class="label">الإصدار الجديد</div>
-                <div class="value new">2026.6.10</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>📦 معلومات التحديث</h2>
-            <ul>
-                <li><strong>رقم الإصدار:</strong> 2026.6.10</li>
-                <li><strong>الترخيص:</strong> MIT</li>
-                <li><strong>عدد التبعيات:</strong> 54 حزمة</li>
-                <li><strong>حجم التثبيت:</strong> 86.7 MB</li>
-                <li><strong>تاريخ النشر:</strong> منذ يومين</li>
-                <li><strong>ناشر:</strong> GitHub Actions</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>🔧 التبعيات الرئيسية المحدثة</h2>
-            <div class="dependencies">
-                <span class="dep-tag">chalk 5.6.2</span>
-                <span class="dep-tag">chokidar 5.0.0</span>
-                <span class="dep-tag">express 5.2.1</span>
-                <span class="dep-tag">grammy 1.43.0</span>
-                <span class="dep-tag">openai 6.39.1</span>
-                <span class="dep-tag">kysely 0.29.2</span>
-                <span class="dep-tag">zod 4.4.3</span>
-                <span class="dep-tag">undici 8.5.0</span>
-                <span class="dep-tag">ws 8.21.0</span>
-                <span class="dep-tag">+ 45 أخرى</span>
-            </div>
-        </div>
-
-        <div class="card instructions">
-            <h2>📝 خطوات التحديث</h2>
-            <ol style="list-style-position: inside; color: #ccc; line-height: 2;">
-                <li>تشغيل الأمر: <code>npm update -g openclaw</code></li>
-                <li>أو استخدام: <code>npm install -g openclaw@2026.6.10</code></li>
-                <li>إعادة تشغيل خدمة OpenClaw</li>
-                <li>التحقق من الإصدار: <code>openclaw --version</code></li>
-            </ol>
-        </div>
-
-        <div class="card">
-            <h2>📊 التغييرات مقارنة بالإصدار السابق</h2>
-            <p>هذا التحديث يتضمن تحسينات في الاستقرار والأداء وتحديثات للتبعيات. لم يتم توفير سجل تغييرات مفصل (changelog) في npm.</p>
-        </div>
-
-        <div class="footer">
-            <p>تم إنشاء هذا التقرير تلقائياً بواسطة Claw 🦿</p>
-            <p style="margin-top: 5px;">26 يونيو 2026</p>
-        </div>
+  <section class="hero">
+    <span class="badge"><span class="dot"></span> إصدار جديد متاح</span>
+    <h1>🦾 OpenClaw 2026.6.10</h1>
+    <p class="sub">
+      وضع السرعة التلقائي يبدأ المحادثات القصيرة بسرعة، ثم يعيد العمل الأطول إلى الوضع الطبيعي دون فقدان الحالة الظاهرة.
+      تحسينات في توجيه الموفرين، تقدم القنوات، هوية الجلسات، وسياسات الأدوات الموثوقة.
+    </p>
+    <div class="meta">
+      <span>📅 24 يونيو 2026</span>
+      <span class="arrow">•</span>
+      <span>📦 86.7 MB</span>
+      <span class="arrow">•</span>
+      <span>🧩 54 تبعية</span>
+      <span class="arrow">•</span>
+      <span>🚀 من 2026.5.20 إلى 2026.6.10</span>
     </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="ico">⚡</span> أبرز المزايا</h2>
+    <div class="grid">
+      <div class="pill">
+        <h3>وضع السرعة التلقائي</h3>
+        <p>أمر <code>/fast auto</code> جديد لبدء المحادثات القصيرة بسرعة، مع العودة التلقائية للوضع العادي عند الحاجة.</p>
+      </div>
+      <div class="pill">
+        <h3>توجيه الموفرين</h3>
+        <p>معالجة Zhipu/GLM للحمل الزائد، وإصلاح Z.AI GLM-5، ودعم GLM-5.2 و Kimi K2.7 Code في كتالوج OpenCode Go.</p>
+      </div>
+      <div class="pill">
+        <h3>تقدم القنوات</h3>
+        <p>منع فقدان ما تم تسليمه بعد الرسائل المجدولة، وإصلاح التحديثات المتكررة في المسودات.</p>
+      </div>
+      <div class="pill">
+        <h3>هوية الجلسات</h3>
+        <p>عقد SDK قوي لنسخ الجلسات، ومنع نقل هوية القناة القديمة بعد تبديل القناة.</p>
+      </div>
+      <div class="pill">
+        <h3>أمان البوابة</h3>
+        <p>حماية أدوات البوابة والإضافات الحساسة عند تغيير الإضافات المتصلة.</p>
+      </div>
+      <div class="pill">
+        <h3>تحسينات Docker</h3>
+        <p>إصلاح حدود timeout في Docker و Podman على المضيفات التي تستخدم <code>gtimeout</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="ico">📝</span> سجل التغييرات الكامل</h2>
+
+    <h3 style="margin-top:14px">⚡ وضع السرعة التلقائي (Automatic fast mode)</h3>
+    <ul>
+      <li>إضافة <code>/fast auto</code> لبدء المكالمات القصيرة بسرعة، مع العودة إلى الوضع العادي عند الحاجة مع إبقاء الحالة مرئية.</li>
+      <li>عرض الحالة الفعلية للوضع التلقائي في شاشة الحالة بدلاً من on/off البسيطة.</li>
+      <li>الحفاظ على توقيت وضع السرعة التلقائي عند تبديل النموذج الاحتياطي.</li>
+      <li>الاحتفاظ بتوقيت ووضع التقدم الأصلي عند إعادة محاولة تبديل النموذج.</li>
+      <li>تمييز تقدم وإعادة الضبط التلقائي عن وضع السرعة الصريح بعد تبديل الأوضاع.</li>
+      <li>عرض قيمة الوضع الفعلية في جلسات الوكلاء المتصلين بدلاً من القيمة المكونة.</li>
+      <li>الحفاظ على الإعداد التلقائي مرئياً عبر انتقالات الاحتياط في جلسات الوكلاء المتصلين.</li>
+      <li>الحفاظ على اتساق التوقيت والتقدم عند إعادة المحاولة أو تبديل النماذج في التشغيل المجدول.</li>
+      <li>اتساق تنظيف الوضع والحالة عند التبديل بين النماذج الاحتياطية.</li>
+      <li>عرض إعادة الضبط التلقائي فقط عند انتهاء عمل الاحتياط.</li>
+      <li>عرض إعادة الضبط وتسليم التقدم في الوقت المناسب عند إعادة محاولة التشغيل.</li>
+    </ul>
+
+    <h3 style="margin-top:18px">📨 القنوات والمراسلة</h3>
+    <ul>
+      <li>منع فقدان ما تم تسليمه بعد رسالة مجدولة في الرد التالي، حتى تستخدم الردود هذا السياق دون كشف تفاصيل الـ cron.</li>
+      <li>منع تقدم البث في القناة من إسقاط حالة متكررة تمثل خطوة مستقلة.</li>
+      <li>منع تقدم البث المُفهرس من البقاء على حالة أقدم، ليعرض أحدث حالة.</li>
+    </ul>
+
+    <h3 style="margin-top:18px">🤖 الموفرين والنماذج</h3>
+    <ul>
+      <li>معالجة استجابات Zhipu/GLM للحمل الزائد كحمل زائد، ليُختار الاحتياطي المُكوَّن للسبب الصحيح.</li>
+      <li>منع قوائم <code>/think</code> في Telegram و Slack و Discord للنماذج Ollama الحية من إخفاء المستويات المدعومة.</li>
+      <li>توسيع خيارات تفكير <code>zai/glm-5.2</code> خارج on/off الثنائي، وإرسال طلبات high/max كجهد الاستدلال المقصود من Z.AI.</li>
+      <li>منع نماذج Z.ai GLM-5 المجمّعة من السقوط إلى OpenAI وإنتاج أخطاء مفتاح API مضللة.</li>
+      <li>إضافة GLM-5.2 و Kimi K2.7 Code إلى كتالوج OpenCode Go بحدودها الحالية.</li>
+      <li>تصحيح قدرات <code>kimi-k2.7-code</code> كي لا يُعرض على مستخدمي OpenCode Go محفزات فيديو غير مدعومة.</li>
+    </ul>
+
+    <h3 style="margin-top:18px">🔌 إعداد الموفرين</h3>
+    <ul>
+      <li>منع إعداد التشغيل الأولي من تخطي موجه بيانات الاعتماد للمزود المختار بعد تثبيت الإضافة، ليستمر الإعداد مع ذلك المزود بدلاً من السقوط لـ OpenAI.</li>
+    </ul>
+
+    <h3 style="margin-top:18px">🧠 الذاكرة والجلسات والحالة</h3>
+    <ul>
+      <li>إضافة عقد SDK قوي لنسخ الجلسات — يمكن للإضافات قراءة وإضافة ونشر وقفل النص المقصود.</li>
+      <li>منع جلسة الرسائل المباشرة المشتركة من حمل هوية القناة السابقة بعد التبديل، لتستهدف الحالة والتفاعلات والمراجع القناة الحالية.</li>
+    </ul>
+
+    <h3 style="margin-top:18px">🛡️ البوابة والأمان والثقة</h3>
+    <ul>
+      <li>الإبقاء على الموجهات الفارغة منفصلة عن السياق المضاف عبر الـ hook أثناء الضغط أو إعادة استخدام الجلسات في Copilot و Codex.</li>
+      <li>الإبقاء على أدوات البوابة والإضافات الحساسة للموافقة محمية عند تغيير الإضافات المتصلة.</li>
+      <li>منع إرسال رموز المصادقة لمصدر الحزمة إلى redirect مسموح به على origin آخر، مع اكتمال التنزيل المُعاد توجيهه بشكل صحيح.</li>
+    </ul>
+
+    <h3 style="margin-top:18px">🖥️ العملاء والواجهات</h3>
+    <ul>
+      <li>منع إعداد Docker و Podman من العمل دون حد على المضيفات التي يكون فيها GNU timeout مُثبَّتاً كـ <code>gtimeout</code>.</li>
+    </ul>
+
+    <h3 style="margin-top:18px">🧩 الإضافات والتعبئة</h3>
+    <ul>
+      <li>منع مستويات خدمة Codex الممسوحة من الاستمرار كحالة قديمة صريحة، لتستخدم المحادثات المستأنفة أو المُبدَّلة الافتراضي العادي.</li>
+      <li>استعادة اكتشاف ClawHub لإضافة موفر StepFun، ليتمكن المشغلون من تثبيته عبر ClawHub أو npm.</li>
+    </ul>
+
+    <h3 style="margin-top:18px">📚 التوثيق وسير عمل المشغل</h3>
+    <ul>
+      <li>الإبقاء على تشخيصات <code>openclaw doctor</code> الأساسية بترتيبها الطبيعي قبل فحوصات الإضافات، لجعل إخراج lint والإصلاح أسهل في المتابعة.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2><span class="ico">🛠️</span> تعليمات التحديث</h2>
+    <p>قبل التحديث، خذ نسخة احتياطية كاملة من الإعدادات والجلسات.</p>
+
+    <ol class="steps">
+      <li><strong>أوقف البوابة الحالية</strong> (إن كانت تعمل كخدمة):<br>
+        <code>systemctl stop openclaw</code> أو أوقف العملية يدوياً.
+      </li>
+      <li><strong>حدّث الحزمة عالمياً:</strong>
+        <pre><code>npm install -g openclaw@2026.6.10</code></pre>
+      </li>
+      <li><strong>تحقق من الإصدار الجديد:</strong>
+        <pre><code>openclaw --version
+# المتوقع: 2026.6.10</code></pre>
+      </li>
+      <li><strong>شغّل فحص السلامة:</strong>
+        <pre><code>openclaw doctor</code></pre>
+      </li>
+      <li><strong>أعد تشغيل البوابة:</strong>
+        <pre><code>systemctl start openclaw
+# أو في وضع التطوير:
+openclaw start</code></pre>
+      </li>
+      <li><strong>تأكد من سلامة السجلات</strong> وراجعها للتأكد من عدم وجود أخطاء:<br>
+        <code>journalctl -u openclaw -n 200 --no-pager</code>
+      </li>
+    </ol>
+
+    <div class="warn-box">
+      ⚠️ <strong>تنبيه:</strong> لا تنسَ مراجعة ملاحظات الإصدار قبل التحديث في بيئات الإنتاج.
+      التغييرات في SDK الجلسات و Fast mode قد تتطلب تحديث بعض الإضافات.
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="ico">📊</span> معلومات الإصدار</h2>
+    <ul>
+      <li><strong>الإصدار:</strong> 2026.6.10</li>
+      <li><strong>تاريخ الإصدار:</strong> 24 يونيو 2026</li>
+      <li><strong>الحجم:</strong> 86.7 MB</li>
+      <li><strong>عدد التبعيات:</strong> 54</li>
+      <li><strong>الرخصة:</strong> MIT</li>
+      <li><strong>Release SHA:</strong> <code>aa69b12d0086b631b139c1435c9621a5783e3a40</code></li>
+      <li><strong>Integrity:</strong> <code>sha512-LcooND2t...AARcug==</code></li>
+      <li><strong>tarball:</strong> <a href="https://registry.npmjs.org/openclaw/-/openclaw-2026.6.10.tgz">registry.npmjs.org</a></li>
+      <li><strong>صفحة الإصدار:</strong> <a href="https://github.com/openclaw/openclaw/releases/tag/v2026.6.10">GitHub Release</a></li>
+    </ul>
+  </section>
+
+  <p class="footer">
+    تم إنشاء هذا التقرير تلقائياً بواسطة Claw 🦾
+    <span class="arrow">•</span>
+    <a href="latest.html">العودة لآخر تحديث</a>
+  </p>
+
+</div>
 </body>
 </html>

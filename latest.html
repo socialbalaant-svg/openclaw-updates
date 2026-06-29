@@ -1,192 +1,23 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحديث OpenClaw - الإصدار 2026.6.10</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 100vh;
-            color: #fff;
-            padding: 40px 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .badge {
-            display: inline-block;
-            background: linear-gradient(90deg, #00d4ff, #7c3aed);
-            color: white;
-            padding: 8px 24px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #00d4ff, #7c3aed);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .version-info {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        .version-box {
-            background: rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 20px 30px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .version-box .label {
-            font-size: 12px;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .version-box .value {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #00d4ff;
-        }
-        .version-box .value.new {
-            color: #10b981;
-        }
-        .card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .card h2 {
-            color: #7c3aed;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-        .card p, .card li {
-            color: #ccc;
-            line-height: 1.8;
-        }
-        ul {
-            list-style-position: inside;
-            padding-right: 0;
-        }
-        li {
-            margin-bottom: 8px;
-        }
-        .dependencies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .dep-tag {
-            background: rgba(124, 58, 237, 0.3);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: #a78bfa;
-        }
-        .instructions {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1));
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-        .instructions code {
-            background: rgba(0,0,0,0.3);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            color: #10b981;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #666;
-            font-size: 14px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آخر تحديث لـ OpenClaw</title>
+<meta http-equiv="refresh" content="0; url=update-2026.6.10.html">
+<style>
+  body{margin:0;background:#0b1020;color:#e8ecf8;font-family:"Tajawal","Cairo",system-ui,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh}
+  .box{text-align:center;padding:32px;background:#121a33;border:1px solid rgba(255,255,255,.08);border-radius:16px;max-width:480px}
+  h1{font-size:24px;margin:0 0 8px}
+  p{color:#a4adcb;margin:8px 0 16px}
+  a{color:#22d3ee;text-decoration:none;font-weight:600}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="badge">🔄 تحديث جديد متاح</div>
-            <h1>OpenClaw Update</h1>
-            <p style="color: #888; margin-top: 10px;">نظام التشغيل الذكي متعدد القنوات</p>
-        </div>
-
-        <div class="version-info">
-            <div class="version-box">
-                <div class="label">الإصدار الحالي</div>
-                <div class="value">2026.5.20</div>
-            </div>
-            <div class="version-box">
-                <div class="label">الإصدار الجديد</div>
-                <div class="value new">2026.6.10</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>📦 معلومات التحديث</h2>
-            <ul>
-                <li><strong>رقم الإصدار:</strong> 2026.6.10</li>
-                <li><strong>الترخيص:</strong> MIT</li>
-                <li><strong>عدد التبعيات:</strong> 54 حزمة</li>
-                <li><strong>حجم التثبيت:</strong> 86.7 MB</li>
-                <li><strong>تاريخ النشر:</strong> منذ يومين</li>
-                <li><strong>ناشر:</strong> GitHub Actions</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>🔧 التبعيات الرئيسية المحدثة</h2>
-            <div class="dependencies">
-                <span class="dep-tag">chalk 5.6.2</span>
-                <span class="dep-tag">chokidar 5.0.0</span>
-                <span class="dep-tag">express 5.2.1</span>
-                <span class="dep-tag">grammy 1.43.0</span>
-                <span class="dep-tag">openai 6.39.1</span>
-                <span class="dep-tag">kysely 0.29.2</span>
-                <span class="dep-tag">zod 4.4.3</span>
-                <span class="dep-tag">undici 8.5.0</span>
-                <span class="dep-tag">ws 8.21.0</span>
-                <span class="dep-tag">+ 45 أخرى</span>
-            </div>
-        </div>
-
-        <div class="card instructions">
-            <h2>📝 خطوات التحديث</h2>
-            <ol style="list-style-position: inside; color: #ccc; line-height: 2;">
-                <li>تشغيل الأمر: <code>npm update -g openclaw</code></li>
-                <li>أو استخدام: <code>npm install -g openclaw@2026.6.10</code></li>
-                <li>إعادة تشغيل خدمة OpenClaw</li>
-                <li>التحقق من الإصدار: <code>openclaw --version</code></li>
-            </ol>
-        </div>
-
-        <div class="card">
-            <h2>📊 التغييرات مقارنة بالإصدار السابق</h2>
-            <p>هذا التحديث يتضمن تحسينات في الاستقرار والأداء وتحديثات للتبعيات. لم يتم توفير سجل تغييرات مفصل (changelog) في npm.</p>
-        </div>
-
-        <div class="footer">
-            <p>تم إنشاء هذا التقرير تلقائياً بواسطة Claw 🦿</p>
-            <p style="margin-top: 5px;">26 يونيو 2026</p>
-        </div>
-    </div>
+<div class="box">
+  <h1>🦾 OpenClaw 2026.6.10</h1>
+  <p>جارٍ التحويل لصفحة آخر تحديث...</p>
+  <a href="update-2026.6.10.html">اضغط هنا إن لم يتم التحويل</a>
+</div>
 </body>
 </html>
