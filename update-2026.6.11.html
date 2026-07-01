@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحديث OpenClaw - الإصدار 2026.6.11</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background: #0f1923; color: #e8eaed; direction: rtl; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { background: linear-gradient(135deg, #1a73e8, #0d47a1); padding: 30px; border-radius: 16px; text-align: center; margin-bottom: 24px; }
+        .header h1 { font-size: 2.2em; color: #fff; margin-bottom: 8px; }
+        .header .version-badge { display: inline-block; background: #fff; color: #1a73e8; padding: 8px 24px; border-radius: 30px; font-weight: bold; font-size: 1.2em; margin-top: 10px; }
+        .update-info { background: #1e2a38; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-right: 4px solid #1a73e8; }
+        .update-info p { margin: 6px 0; font-size: 1.05em; }
+        .update-info strong { color: #8ab4f8; }
+        .section { background: #1e2a38; border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+        .section h2 { color: #8ab4f8; font-size: 1.3em; margin-bottom: 16px; border-bottom: 1px solid #2d3f52; padding-bottom: 10px; }
+        .highlight-item { background: #263341; border-radius: 8px; padding: 14px 18px; margin-bottom: 10px; border-right: 3px solid #1a73e8; }
+        .highlight-item .title { color: #fff; font-weight: bold; font-size: 1.05em; margin-bottom: 6px; }
+        .highlight-item .desc { color: #9aa0a6; font-size: 0.9em; line-height: 1.6; }
+        .changelog-badge { background: #1a73e8; color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 0.85em; display: inline-block; margin-left: 8px; }
+        .footer { text-align: center; color: #5f6368; padding: 20px; font-size: 0.9em; }
+        .model-badge { background: #34a853; color: #fff; padding: 3px 10px; border-radius: 4px; font-size: 0.85em; }
+        .ui-badge { background: #f9ab00; color: #fff; padding: 3px 10px; border-radius: 4px; font-size: 0.85em; }
+        .memory-badge { background: #9334e6; color: #fff; padding: 3px 10px; border-radius: 4px; font-size: 0.85em; }
+        .install { background: #0d1117; border: 1px solid #2d3f52; border-radius: 8px; padding: 14px 18px; font-family: 'Courier New', monospace; color: #8ab4f8; font-size: 0.95em; direction: ltr; text-align: left; }
+        .new-tag { background: #ea4335; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 0.75em; margin-right: 6px; vertical-align: middle; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🦿 تحديث OpenClaw متاح!</h1>
+            <p style="color:#cde0ff; font-size:1.1em;">نظرة عامة على الإصدار الجديد</p>
+            <div class="version-badge">2026.6.11</div>
+        </div>
+
+        <div class="update-info">
+            <p><strong>📦 الإصدار:</strong> 2026.6.11</p>
+            <p><strong>📅 تاريخ النشر:</strong> 30 يونيو 2026</p>
+            <p><strong>⬆️ من:</strong> 2026.5.20 → <strong>2026.6.11</strong></p>
+            <p><strong>📦 حجم الحزمة:</strong> 86.3 MB</p>
+            <p><strong>🔧 التبعيات:</strong> 56 حزمة</p>
+            <p><strong>🟢 فرع Latest:</strong> 2026.6.11 (مستقر)</p>
+            <p><strong>🧪 فروع أخرى:</strong> alpha 2026.5.19 · beta 2026.6.11-beta.2</p>
+        </div>
+
+        <div class="section">
+            <h2>✨ أهم ما يميّز هذا الإصدار</h2>
+            <div class="highlight-item">
+                <div class="title">🚀 تحديث تراكمي كبير (40 يوماً من التطوير)</div>
+                <div class="desc">
+                    قفزة من <strong>2026.5.20</strong> إلى <strong>2026.6.11</strong> تشمل 6 إصدارات ثانوية ونحو 22 إصدار beta، مما يعكس مرحلة استقرار أعمق وأداء أفضل في الإنتاج.
+                </div>
+            </div>
+            <div class="highlight-item">
+                <div class="title">🤖 دعم موسّع للنماذج <span class="model-badge">نماذج</span></div>
+                <div class="desc">
+                    ترقيات SDKs لأبرز مزوّدي النماذج: Anthropic SDK 0.100.1، Mistral AI 2.2.5، OpenAI 6.39.1، Google GenAI 2.7.0 — مع تحسينات في التوافقية وحدّ المعدّل (rate limiting).
+                </div>
+            </div>
+            <div class="highlight-item">
+                <div class="title">📱 قنوات مراسلة أذكى <span class="ui-badge">قنوات</span></div>
+                <div class="desc">
+                    بعد التحسينات في <strong>2026.6.8</strong> (Telegram Markdown &amp; WhatsApp ACP)، يأتي 2026.6.11 بإصلاحات إضافية في تكامل Telegram/WhatsApp، ودعم أعمق لـ <code>grammy</code> 1.43.0.
+                </div>
+            </div>
+            <div class="highlight-item">
+                <div class="title">🧠 محسّنات الذاكرة والبحث <span class="memory-badge">ذاكرة</span></div>
+                <div class="desc">
+                    تطويرات على الذاكرة الدلالية (memory_search) وملفات الـ wiki، مع تحسينات في <code>@mozilla/readability</code> 0.6.0 لاستخراج محتوى أوضح من صفحات الويب.
+                </div>
+            </div>
+            <div class="highlight-item">
+                <div class="title">🛠️ أمان وNode.js ≥ 22.19</div>
+                <div class="desc">
+                    ترقية الحدّ الأدنى لـ Node.js إلى <code>22.19.0</code>، وتحديثات أمان عبر <code>undici</code> 8.5.0 و<code>express</code> 5.2.1 و<code>tar</code> 7.5.16 و<code>ws</code> 8.21.0.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📜 سجل الإصدارات بين 2026.5.20 و 2026.6.11</h2>
+            <div class="highlight-item">
+                <div class="title">2026.5.22 <span class="changelog-badge">+bug fixes</span></div>
+                <div class="desc">إصلاحات عامة وتحسينات في الـ cron scheduler.</div>
+            </div>
+            <div class="highlight-item">
+                <div class="title">2026.5.26 <span class="changelog-badge">+perf</span></div>
+                <div class="desc">تحسينات في الأداء ومعالجة الإدخال في الـ gateway.</div>
+            </div>
+            <div class="highlight-item">
+                <div class="title">2026.5.27 → 2026.5.31 <span class="changelog-badge">+channels</span></div>
+                <div class="desc">سلسلة إصلاحات على قنوات المراسلة والتكامل مع المنصات.</div>
+            </div>
+            <div class="highlight-item">
+                <div class="title">2026.6.1 <span class="changelog-badge">+features</span></div>
+                <div class="desc">ميزات جديدة في الـ skills workshop وتحسين إدارة الـ subagents.</div>
+            </div>
+            <div class="highlight-item">
+                <div class="title">2026.6.5 → 2026.6.10 <span class="changelog-badge">+stability</span></div>
+                <div class="desc">سلسلة طويلة من betas استهدفت الاستقرار قبل 2026.6.11 — تحسينات في الـ cron، RPC، ومعالجة الصور.</div>
+            </div>
+            <div class="highlight-item">
+                <div class="title">2026.6.11 <span class="new-tag">جديد</span></div>
+                <div class="desc">الإصدار المستقر الأخير — جميع التحسينات السابقة مجتمعة، مع تركيز على ثبات القنوات وأداء SDKs.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔄 التبعيات الجديدة / المُحدّثة</h2>
+            <div class="highlight-item">
+                <div class="title">SDKs رئيسية</div>
+                <div class="desc">
+                    <code>@anthropic-ai/sdk</code> 0.100.1 · <code>@google/genai</code> 2.7.0 · <code>@mistralai/mistralai</code> 2.2.5 · <code>openai</code> 6.39.1 · <code>@modelcontextprotocol/sdk</code> 1.29.0
+                </div>
+            </div>
+            <div class="highlight-item">
+                <div class="title">بنية وأدوات</div>
+                <div class="desc">
+                    <code>express</code> 5.2.1 · <code>zod</code> 4.4.3 · <code>undici</code> 8.5.0 · <code>typescript</code> 6.0.3 · <code>playwright-core</code> 1.60.0
+                </div>
+            </div>
+            <div class="highlight-item">
+                <div class="title">رسائل وتكاملات</div>
+                <div class="desc">
+                    <code>grammy</code> 1.43.0 · <code>@homebridge/ciao</code> 1.3.9 · <code>@agentclientprotocol/sdk</code> 0.22.1
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>⚙️ تعليمات التحديث</h2>
+            <p style="margin-bottom:12px; color:#9aa0a6;">على الخادم الحالي، نفّذ:</p>
+            <div class="install">sudo npm install -g openclaw@2026.6.11</div>
+            <p style="margin-top:14px; color:#9aa0a6;">ثم أعد تشغيل الـ gateway لتطبيق التحديث:</p>
+            <div class="install" style="margin-top:8px;">openclaw gateway restart</div>
+            <p style="margin-top:14px; color:#ea4335; font-size:0.95em;">
+                ⚠️ <strong>تنبيه:</strong> تأكد أن إصدار Node.js لديك ≥ 22.19.0 قبل الترقية. تحقق بـ: <code>node --version</code>
+            </p>
+            <p style="margin-top:10px; color:#9aa0a6;">للرجوع للإصدار السابق إن واجهت مشكلة:</p>
+            <div class="install" style="margin-top:8px;">sudo npm install -g openclaw@2026.5.20</div>
+        </div>
+
+        <div class="footer">
+            <p>🤖 تم إنشاء هذا التقرير تلقائياً بواسطة <strong>Claw</strong> · 1 يوليو 2026 — 08:00 UTC</p>
+            <p style="margin-top:6px;">📡 مصدر البيانات: <code>npm view openclaw@2026.6.11</code></p>
+        </div>
+    </div>
+</body>
+</html>
