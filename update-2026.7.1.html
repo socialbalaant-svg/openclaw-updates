@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحديث OpenClaw - الإصدار 2026.7.1</title>
+    <meta name="description" content="تقرير تحديث OpenClaw v2026.7.1 - إصلاحات وتحسينات جديدة">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
+            color: #e0e0f0;
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.7;
+        }
+        .container { max-width: 950px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            padding: 50px 40px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(100,100,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(124,159,255,0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .header h1 {
+            font-size: 2.6em;
+            color: #7c9fff;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .version-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-size: 1.5em;
+            margin: 15px 0;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(79,70,229,0.4);
+        }
+        .status-update {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            padding: 8px 22px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 15px;
+            position: relative;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 15px;
+            align-items: center;
+            margin: 30px 0;
+        }
+        .comparison-box {
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .old-version { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); }
+        .new-version { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .comparison-box span { display: block; font-size: 0.85em; color: #888; margin-top: 5px; }
+        .comparison-box strong { font-size: 1.3em; }
+        .arrow { font-size: 1.8em; color: #7c9fff; }
+        .info-box {
+            background: rgba(79, 70, 229, 0.10);
+            border: 1px solid rgba(79, 70, 229, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        .info-box h2 { color: #a5b4fc; margin-bottom: 15px; font-size: 1.4em; }
+        .info-box ol { padding-right: 25px; line-height: 2; }
+        .code-block {
+            background: #0d0d1a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            direction: ltr;
+            text-align: left;
+            overflow-x: auto;
+            color: #a5b4fc;
+        }
+        .changelog-section {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        .changelog-section h2 { color: #34d399; margin-bottom: 20px; font-size: 1.4em; }
+        .highlight-card {
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 18px;
+            margin: 12px 0;
+            border-right: 3px solid #34d399;
+        }
+        .highlight-card h3 {
+            color: #a5b4fc;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        .highlight-card p { color: #cbd5e1; font-size: 0.95em; }
+        .channel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .channel-card {
+            background: rgba(255,255,255,0.04);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .channel-card strong { color: #7c9fff; display: block; margin-bottom: 6px; }
+        .channel-card span { color: #94a3b8; font-size: 0.9em; }
+        .versions-list {
+            display: grid;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .version-card {
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 18px;
+            border-right: 4px solid #4f46e5;
+        }
+        .version-card h3 { color: #a5b4fc; font-size: 1.05em; }
+        .version-card .ver-num {
+            background: #4f46e5;
+            padding: 3px 12px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            margin-right: 10px;
+            display: inline-block;
+        }
+        .version-card small { color: #888; display: block; margin-top: 5px; }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .stat-box {
+            background: rgba(79, 70, 229, 0.15);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(79, 70, 229, 0.3);
+        }
+        .stat-box .number {
+            font-size: 2em;
+            color: #7c9fff;
+            font-weight: bold;
+        }
+        .stat-box .label { color: #94a3b8; font-size: 0.9em; margin-top: 5px; }
+        .section-tag {
+            display: inline-block;
+            background: rgba(124,159,255,0.2);
+            color: #a5b4fc;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🦿 تقرير تحديث OpenClaw</h1>
+            <div class="version-badge">2026.7.1</div>
+            <div class="status-update">✓ تحديث جديد متاح</div>
+            <p style="margin-top: 15px; color: #888;">تاريخ الفحص: 18 يوليو 2026</p>
+        </div>
+
+        <div class="comparison">
+            <div class="comparison-box old-version">
+                <strong>2026.5.20</strong>
+                <span>الإصدار السابق</span>
+            </div>
+            <div class="arrow">←</div>
+            <div class="comparison-box new-version">
+                <strong>2026.7.1-2</strong>
+                <span>الإصدار الحالي (latest)</span>
+            </div>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="number">3,063</div>
+                <div class="label">مساهمة في الكود</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">532</div>
+                <div class="label">مساهم</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">v7.x</div>
+                <div class="label">إصدار رئيسي جديد</div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h2>📋 التحديثات الصادرة بين الإصدارين</h2>
+            <div class="versions-list">
+                <div class="version-card">
+                    <h3><span class="ver-num">الأحدث</span> 2026.7.1 (متاح الآن)</h3>
+                    <small>13 يوليو 2026 - إصدار رئيسي جديد</small>
+                </div>
+                <div class="version-card">
+                    <h3>2026.6.11</h3>
+                    <small>30 يونيو 2026 - إصدار رئيسي</small>
+                </div>
+                <div class="version-card">
+                    <h3>2026.6.10</h3>
+                    <small>24 يونيو 2026 - إصدار تصحيحي</small>
+                </div>
+                <div class="version-card">
+                    <h3>2026.6.9</h3>
+                    <small>21 يونيو 2026 - إصدار تصحيحي</small>
+                </div>
+                <div class="version-card">
+                    <h3>2026.6.8</h3>
+                    <small>16 يونيو 2026 - إصدار تصحيحي</small>
+                </div>
+                <div class="version-card">
+                    <h3>2026.6.6</h3>
+                    <small>إصدار تصحيحي</small>
+                </div>
+                <div class="version-card">
+                    <h3>2026.6.1</h3>
+                    <small>8 يونيو 2026 - إصدار رئيسي</small>
+                </div>
+                <div class="version-card">
+                    <h3>2026.5.28 / 5.27 / 5.26 / 5.22</h3>
+                    <small>إصدارات تصحيحية متتالية</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="changelog-section">
+            <h2>🎯 أبرز المميزات الجديدة</h2>
+
+            <div class="highlight-card">
+                <span class="section-tag">Control UI</span>
+                <h3>إعادة تصميم واجهة التحكم</h3>
+                <p>تنظيم محادثات أسهل، مهام مباشرة، ضوابط محادثة أوضح، عروض استخدام وتكلفة أفضل، تحميل الملفات، الإقران، الموافقات، وحالة Gateway كلها قريبة من المحادثة.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Onboarding</span>
+                <h3>إعداد أسهل من التثبيت لأول محادثة</h3>
+                <p>إعداد موجّه بخطوات واضحة نحو أول محادثة ناجحة، فحص الاتصالات قبل حفظها، والحفاظ على الخيارات السابقة في حال انقطاع الإعداد.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Mobile & Desktop</span>
+                <h3>تحديثات كبيرة لتطبيقات iOS و Android و macOS</h3>
+                <p>عمل واسع عبر الإعداد، التنقل، المحادثة، الصوت، الصلاحيات، التعريب، الملفات، العمل المجدول، القراءة بدون اتصال، الإرسال في الطابور، استعادة الاتصال، وضوابط الجلسات الأصلية.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Models</span>
+                <h3>دعم GPT-5.6 و Tencent Hy3 و Meta Muse Spark 1.1</h3>
+                <p>توافق GPT-5.6 عبر مسارات OpenAI و Codex المدعومة، إضافة مسار إعداد كامل لـ Tencent Hy3، دعم Meta Model API لـ Muse Spark 1.1، بالإضافة لتوسيع Claude و Ollama و ClawRouter و LongCat.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Coding Agents</span>
+                <h3>تحسينات Codex ووكلاء البرمجة</h3>
+                <p>أمر <code style="background:#0d0d1a;padding:2px 6px;border-radius:4px;color:#a5b4fc">openclaw attach</code> يمنح Claude Code وصول مؤقت لجلسة محددة، Codex delegation والـ sub-agents يعودون بنتائج متتبعة بشكل أفضل، Copilot يحصل على خيارات مزود أوسع.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Gateway</span>
+                <h3>إصلاح مشكلة حلقات إعادة تشغيل Gateway</h3>
+                <p>البوابات التي تفشل بشكل متكرر الآن تترك مسار إصلاح مستقر بدلاً من إعادة التشغيل اللانهائي.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Automation</span>
+                <h3>تحسينات العمل المجدول والمتصفح عن بُعد والأطراف</h3>
+                <p>العمل المجدول يمكنه الاستيقاظ فقط عند حدوث تغيير، علامات التبويب الموقّعة في المتصفح يمكن إقرانها عن بُعد وحفظ التنزيلات بأمان، أطراف طرفية محمية متاحة على الويب و iOS و Android.</p>
+            </div>
+        </div>
+
+        <div class="changelog-section">
+            <h2>💬 تحسينات منصات المراسلة</h2>
+            <div class="channel-grid">
+                <div class="channel-card">
+                    <strong>Telegram</strong>
+                    <span>تقدم مباشر، صور ووثائق، Topics، أوامر، إعادة محاولة، توجيه حساب، وإعداد</span>
+                </div>
+                <div class="channel-card">
+                    <strong>Slack</strong>
+                    <span>Threads، Cards، تقدم، هوية، تفاعلات، منع التكرار، وانتظار أقل في المحادثات الطويلة</span>
+                </div>
+                <div class="channel-card">
+                    <strong>Discord</strong>
+                    <span>ردود، مرفقات، جلسات صوتية، تقدم، إعادة اتصال، تعدد حسابات، إشارات قراءة أفضل</span>
+                </div>
+                <div class="channel-card">
+                    <strong>Apple Messages</strong>
+                    <span>ردود، كتابة، وسائط، توجيه، توجيه إعداد، استمرارية محادثة</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h2>🔄 طريقة التحديث</h2>
+            <p style="margin-bottom: 10px; color: #cbd5e1;">لتحديث OpenClaw إلى الإصدار الجديد:</p>
+            <div class="code-block">
+npm update -g openclaw
+            </div>
+            <p style="margin-top: 15px; margin-bottom: 10px; color: #cbd5e1;">أو للتثبيت الصريح لأحدث إصدار:</p>
+            <div class="code-block">
+npm install -g openclaw@latest
+            </div>
+            <p style="margin-top: 15px; color: #aaa;">⚠️ ملاحظة: يتطلب Node.js الإصدار <code style="background:#0d0d1a;padding:2px 6px;border-radius:4px">22.22.3+</code> أو <code style="background:#0d0d1a;padding:2px 6px;border-radius:4px">24.15.0+</code></p>
+        </div>
+
+        <div class="info-box">
+            <h2>📊 معلومات الإصدار</h2>
+            <ul style="list-style: none; line-height: 2.2;">
+                <li>📦 <strong>الاسم:</strong> openclaw</li>
+                <li>🏷️ <strong>الإصدار:</strong> 2026.7.1-2 (latest) - أصل 2026.7.1 (13 يوليو 2026)</li>
+                <li>📝 <strong>الوصف:</strong> Multi-channel AI gateway with extensible messaging integrations</li>
+                <li>📍 <strong>المستودع:</strong> npm registry</li>
+                <li>🔗 <strong>الرابط:</strong> <a href="https://www.npmjs.com/package/openclaw" style="color:#7c9fff">npmjs.com/package/openclaw</a></li>
+                <li>📄 <strong>ملاحظات الإصدار:</strong> <a href="https://docs.openclaw.ai/releases/2026.7.1" style="color:#7c9fff">docs.openclaw.ai/releases/2026.7.1</a></li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>🦿 OpenClaw Update Monitor - فحص تلقائي يومي</p>
+            <p style="margin-top: 5px;">socialbalaant-svg/openclaw-updates</p>
+            <p style="margin-top: 5px; font-size: 0.85em;">2026-07-18 08:00 UTC</p>
+        </div>
+    </div>
+</body>
+</html>

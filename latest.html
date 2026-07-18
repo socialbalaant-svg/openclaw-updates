@@ -3,60 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أحدث تحديثات OpenClaw</title>
+    <title>تحديث OpenClaw - v2026.7.1</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; padding: 40px 20px; }
-        .container { max-width: 800px; margin: 0 auto; }
-        .card { background: #1e293b; border-radius: 16px; padding: 40px; margin-bottom: 20px; border: 1px solid #334155; }
-        h1 { font-size: 28px; margin-bottom: 20px; color: #f8fafc; }
-        .version-badge { display: inline-block; background: linear-gradient(135deg, #22c55e, #16a34a); color: white; padding: 10px 25px; border-radius: 30px; font-weight: bold; font-size: 20px; margin-bottom: 20px; }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 25px 0; }
-        .info-box { background: #0f172a; padding: 20px; border-radius: 12px; text-align: center; }
-        .info-box .label { color: #64748b; font-size: 13px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        .info-box .value { font-size: 24px; font-weight: bold; color: #3b82f6; }
-        .changelog { background: #0f172a; border-radius: 12px; padding: 25px; }
-        .changelog-item { padding: 12px 0; border-bottom: 1px solid #1e293b; }
-        .changelog-item:last-child { border-bottom: none; }
-        .update-cmd { background: #0f172a; padding: 20px; border-radius: 12px; font-family: 'Courier New', monospace; direction: ltr; text-align: left; color: #22c55e; margin-top: 20px; }
-        .update-cmd code { display: block; font-size: 16px; }
-        .footer { text-align: center; color: #64748b; font-size: 14px; margin-top: 30px; }
-        .update-date { color: #64748b; font-size: 14px; margin-bottom: 20px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 24px;
+        }
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .version {
+            color: #94a3b8;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .info-item {
+            background: rgba(255,255,255,0.03);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .info-item label {
+            display: block;
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .info-item span {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        .changelog {
+            margin-top: 30px;
+        }
+        .changelog h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: #f1f5f9;
+        }
+        .changelog ul {
+            list-style: none;
+            padding: 0;
+        }
+        .changelog li {
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.03);
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border-right: 3px solid #10b981;
+        }
+        .update-cmd {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 16px 24px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            direction: ltr;
+            text-align: left;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+        .emoji { font-size: 48px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="card">
-            <div class="version-badge">v2026.6.11</div>
-            <h1>🔥 أحدث إصدار متاح</h1>
-            <p class="update-date">آخر تحديث: 2026-07-13</p>
+            <div class="emoji">🚀</div>
+            <span class="badge">تحديث جديد متاح!</span>
+            <h1>OpenClaw</h1>
+            <p class="version">الإصدار 2026.7.1 — صدر منذ 5 أيام</p>
 
             <div class="info-grid">
-                <div class="info-box">
-                    <div class="label">نسختك الحالية</div>
-                    <div class="value">2026.5.20</div>
+                <div class="info-item">
+                    <label>الاصدار الجديد</label>
+                    <span>2026.7.1-2 (latest)</span>
                 </div>
-                <div class="info-box">
-                    <div class="label">النسخة الأحدث</div>
-                    <div class="value">2026.6.11</div>
+                <div class="info-item">
+                    <label>الاصدار الحالي</label>
+                    <span>2026.5.20</span>
+                </div>
+                <div class="info-item">
+                    <label>عدد المساهمات</label>
+                    <span>3,063</span>
+                </div>
+                <div class="info-item">
+                    <label>المساهمون</label>
+                    <span>532 مساهم</span>
                 </div>
             </div>
 
             <div class="changelog">
-                <h3 style="margin-bottom: 15px; color: #f8fafc;">📋 التغييرات:</h3>
-                <div class="changelog-item">✨ Multi-channel AI gateway مع تحسينات جديدة</div>
-                <div class="changelog-item">✨ تحسينات في التكامل مع القنوات المتعددة</div>
-                <div class="changelog-item">✨ تحسينات أمنية وإصلاحات الأخطاء</div>
-                <div class="changelog-item">✨ تحسينات في الأداء والاستقرار</div>
+                <h2>🎯 أبرز التغييرات</h2>
+                <ul>
+                    <li><strong>Control UI:</strong> إعادة تصميم كاملة مع مهام مباشرة وضوابط أوضح</li>
+                    <li><strong>التطبيقات الرسمية:</strong> تحديثات كبيرة لـ iOS و Android و macOS</li>
+                    <li><strong>النماذج:</strong> دعم GPT-5.6، Tencent Hy3، Meta Muse Spark 1.1</li>
+                    <li><strong>Codex:</strong> تحسينات <code>openclaw attach</code> والوكلاء</li>
+                    <li><strong>Gateway:</strong> إصلاح حلقات إعادة التشغيل اللانهائية</li>
+                    <li><strong>Telegram:</strong> تقدم مباشر، Topics، إعادة محاولة، توجيه</li>
+                    <li><strong>Slack / Discord:</strong> تحسينات كبيرة في الأداء والموثوقية</li>
+                    <li><strong>Apple Messages:</strong> ردود ووسائط وتوجيه أفضل</li>
+                </ul>
             </div>
 
             <div class="update-cmd">
-                <code>npm update -g openclaw</code>
+                <strong>🔄 طريقة التحديث:</strong><br>
+                npm update -g openclaw<br><br>
+                <strong>📥 التثبيت المباشر:</strong><br>
+                npm install -g openclaw@latest
             </div>
         </div>
 
         <div class="footer">
-            <p>تحديث تلقائي | Claw | 2026-07-13</p>
+            <p>تم الفحص تلقائياً — 18 يوليو 2026</p>
+            <p style="margin-top:5px;"><a href="update-2026.7.1.html" style="color:#60a5fa;">📄 التقرير الكامل</a></p>
         </div>
     </div>
 </body>
