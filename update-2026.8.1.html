@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحديث OpenClaw - الإصدار 2026.8.1</title>
+    <meta name="description" content="تقرير تحديث OpenClaw v2026.8.1 - GPT-5.6 Ultra، إعادة هيكلة Control UI، Logbook، وإصلاحات شاملة">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
+            color: #e0e0f0;
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.7;
+        }
+        .container { max-width: 950px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            padding: 50px 40px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(100,100,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(124,159,255,0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .header h1 {
+            font-size: 2.6em;
+            color: #7c9fff;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .version-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-size: 1.5em;
+            margin: 15px 0;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(79,70,229,0.4);
+        }
+        .status-update {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            padding: 8px 22px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 15px;
+            position: relative;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 15px;
+            align-items: center;
+            margin: 30px 0;
+        }
+        .comparison-box {
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .old-version { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); }
+        .new-version { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .comparison-box span { display: block; font-size: 0.85em; color: #888; margin-top: 5px; }
+        .comparison-box strong { font-size: 1.3em; }
+        .arrow { font-size: 1.8em; color: #7c9fff; }
+        .info-box {
+            background: rgba(79, 70, 229, 0.10);
+            border: 1px solid rgba(79, 70, 229, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        .info-box h2 { color: #a5b4fc; margin-bottom: 15px; font-size: 1.4em; }
+        .info-box ol { padding-right: 25px; line-height: 2; }
+        .code-block {
+            background: #0d0d1a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            direction: ltr;
+            text-align: left;
+            overflow-x: auto;
+            color: #a5b4fc;
+        }
+        .changelog-section {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        .changelog-section h2 { color: #34d399; margin-bottom: 20px; font-size: 1.4em; }
+        .highlight-card {
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 18px;
+            margin: 12px 0;
+            border-right: 3px solid #34d399;
+        }
+        .highlight-card h3 {
+            color: #a5b4fc;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        .highlight-card p { color: #cbd5e1; font-size: 0.95em; }
+        .channel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .channel-card {
+            background: rgba(255,255,255,0.04);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .channel-card strong { color: #7c9fff; display: block; margin-bottom: 6px; }
+        .channel-card span { color: #94a3b8; font-size: 0.9em; }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .stat-box {
+            background: rgba(79, 70, 229, 0.15);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(79, 70, 229, 0.3);
+        }
+        .stat-box .number {
+            font-size: 2em;
+            color: #7c9fff;
+            font-weight: bold;
+        }
+        .stat-box .label { color: #94a3b8; font-size: 0.9em; margin-top: 5px; }
+        .section-tag {
+            display: inline-block;
+            background: rgba(124,159,255,0.2);
+            color: #a5b4fc;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-bottom: 8px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🦿 تقرير تحديث OpenClaw</h1>
+            <div class="version-badge">2026.8.1</div>
+            <div class="status-update">✓ تحديث جديد متاح</div>
+            <p style="margin-top: 15px; color: #888;">تاريخ الفحص: 1 سبتمبر 2026 — نُشر أمس عبر GitHub Actions</p>
+        </div>
+
+        <div class="comparison">
+            <div class="comparison-box old-version">
+                <strong>2026.5.20</strong>
+                <span>الإصدار السابق (المستخدم)</span>
+            </div>
+            <div class="arrow">←</div>
+            <div class="comparison-box new-version">
+                <strong>2026.8.1</strong>
+                <span>الإصدار الحالي (latest)</span>
+            </div>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="number">v2026.8</div>
+                <div class="label">إصدار شهري جديد</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">GPT-5.6</div>
+                <div class="label">دعم Ultra + runtime switching</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">Logbook</div>
+                <div class="label">مساعد يوميات جديد</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">200+</div>
+                <div class="label">إصلاح ومميزة هذا الإصدار</div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h2>📌 ملخص الإصدار</h2>
+            <p style="line-height:1.9;">
+                الإصدار <strong style="color:#34d399;">2026.8.1</strong> هو إصدار شهري جديد من OpenClaw يركّز على
+                <strong style="color:#a5b4fc;">دعم GPT-5.6 Ultra</strong> مع تبديل Runtime ديناميكي بين Sol و Terra و Luna،
+                إضافة مساعد <strong style="color:#a5b4fc;">Logbook</strong> الجديد لتوثيق العمل، إعادة هيكلة شاملة لـ Control UI،
+                إضافة أداة <strong style="color:#a5b4fc;">tts.speak</strong> للمشغل، وتحسينات عميقة على القنوات (Slack، Discord، WhatsApp، Microsoft Teams، iMessage، Feishu، Tlon، IRC) وإصلاحات ضخمة في Codex و Codex runtime.
+            </p>
+        </div>
+
+        <div class="changelog-section">
+            <h2>🎯 أبرز المميزات الجديدة</h2>
+
+            <div class="highlight-card">
+                <span class="section-tag">Models</span>
+                <h3>GPT-5.6 Ultra + Runtime Switching (Sol / Terra / Luna)</h3>
+                <p>دعم النماذج الجديدة عبر OpenClaw و Codex engines، مع إبقاء اختيار النموذج و الـ runtime و الـ thinking ذرّي عند استخدام <code>/model</code> أو fallback، إضافة تغطية live matrix لكلا الـ harness.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Meta Provider</span>
+                <h3>دعم muse-spark-1.1 الرسمي</h3>
+                <p>دعم Responses API streaming، استدعاء الأدوات، إعادة reasoning مشفّر، onboarding، وتوزيع منفصل عبر npm و ClawHub.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Plugin جديد</span>
+                <h3>Logbook — يوميات العمل التلقائية</h3>
+                <p>إضافة plugin جديد (معطّل افتراضياً) يحوّل snapshots شاشة العقدة المقترنة إلى timeline خاص، standup يومي، وأسئلة وأجوبة مبنية على الـ timeline — يُعرض في تبويب جديد في Control UI.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Control UI</span>
+                <h3>إعادة هيكلة كبيرة لواجهة التحكم</h3>
+                <p>شريط جانبي مخصّص مع pinned destinations، نقل Settings للفوتر، إظهار تفاصيل token/context/model لكل رسالة، عرض حالة GitHub issues/PRs على hover، تخصيص الجلسات الأخيرة، وتحسينات ضخمة على الـ history rendering.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Cron</span>
+                <h3>اختيار النموذج في Cron Jobs</h3>
+                <p>اختيار agent-turn model عند إنشاء cron من Control UI Quick Create، وعرض النموذج المكوّن أو الافتراضي في صفوف التفاصيل.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Android</span>
+                <h3>اختيار الـ Agent مباشرة من شاشة المحادثة</h3>
+                <p>تبديل الـ agent النشط مباشرة من شاشة المحادثة، مع الإبقاء على نفس الـ session في Talk mode و home canvas.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">iOS</span>
+                <h3>دعم Offline Chat</h3>
+                <p>عرض الجلسات و transcripts الأخيرة من cache محدود لكل gateway، تعطيل الإرسال offline، وتنظيف cache عند reset للاقتران.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Gateway</span>
+                <h3>tts.speak RPC + Gateway Host Status</h3>
+                <p>إضافة RPC جديد لتحويل النص إلى كلام للعمّال البعيدة، وعرض تفاصيل host الـ gateway المتصل (OS، runtime، uptime، CPU، RAM، disk) في Settings.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Slack</span>
+                <h3>مؤشرات تقدم Slack أصلية</h3>
+                <p>استخدام native assistant thread status و rotating loading messages بشكل افتراضي، مع تحكم جديد عبر <code>messages.statusReactions.enabled</code>.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Android UI</span>
+                <h3>تلوين كود الموبايل</h3>
+                <p>تلوين fenced code blocks لـ Kotlin و Swift و TypeScript و JavaScript و Python و Bash و JSON مع ألوان موضعية آمنة، دون التأثير على النصوص غير المعروفة.</p>
+            </div>
+        </div>
+
+        <div class="changelog-section">
+            <h2>🔧 إصلاحات بارزة</h2>
+
+            <div class="highlight-card">
+                <span class="section-tag">Setup</span>
+                <h3>Crabbox Hydration على Cloud Sandboxes</h3>
+                <p>إصلاح فشل Hydration على sandboxes غير المميزة عبر السقوط إلى user-writable pnpm store مع الحفاظ على hardlink import mode بعد الـ hydration، وإجبار Docker كق capability صريح بدلاً من متطلب ضمني.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Channel SDK</span>
+                <h3>Plugin Ingress Monitor موحّد</h3>
+                <p>إضافة SDK monitor موحّد لـ admission متينة، polling، pruning، claim identity validation، adoption handoff، و shutdown — تم ترحيل IRC و Synology Chat و Google Chat إلى الـ lifecycle الموحّد.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Codex</span>
+                <h3>Codex runtime switching وإصلاحات app-server</h3>
+                <p>قبول Codex runtime لـ <code>codex/*</code> و <code>openai/*</code> مع رفض غير المدعوم، ترقية إلى app-server 0.142، استرجاع <code>spawn_agent</code> المؤجل عبر <code>tool_search</code>، انتظار command-line من app-server قبل الفحص.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">WhatsApp</span>
+                <h3>إصلاح استعادة WhatsApp</h3>
+                <p>إصلاح recovery لـ malformed auth state من نسخة احتياطية سليمة، الحفاظ على quote metadata للرسائل المرسلة من البوت، استقبال رسائل Baileys المفقودة، وإيقاف restart loops بعد logged-out.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Discord</span>
+                <h3>إصلاحات Discord Voice و Echo Suppression</h3>
+                <p>عزل اتصالات Discord voice بـ Discord account، إصلاح Discord error 10065 كحالة disconnected عادية، إرسال completion replies كرسائل جديدة، وإيقاف webhook copies من إعادة الدخول إلى agents.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Microsoft Teams</span>
+                <h3>فك تشفير HTML entities + حدود الاستجابة</h3>
+                <p>فك تشفير HTML5 entities بشكل ثابت في الرسائل المقتبسة، تحديد حجم قراءة JSON من Graph لمنع استنزاف الذاكرة، وفك تشفير attachment metadata.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Session Settings</span>
+                <h3>استعادة دمج first writes المتزامنة</h3>
+                <p>إصلاح regression في lock ordering كان يمنع دمج إعدادات global و project، دون أي تأثير جانبي على missing-settings reads.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Secrets</span>
+                <h3>SecretRef model credentials</h3>
+                <p>الإبقاء على provider secrets خلف process-local sentinels عبر auth storage و stream setup، حقن النص الصريح فقط عند الـ network boundary مع redaction كامل في الـ logs.</p>
+            </div>
+
+            <div class="highlight-card">
+                <span class="section-tag">Control UI</span>
+                <h3>تسريع startup وتاريخ Control UI</h3>
+                <p>تقليل construction لمخططات التكوين، تخطّي مقارنة النصوص المكررة للرسائل المختلفة، استرداد stale bundle pages بعد restart، وعرض banner واضح عند update أثناء restart.</p>
+            </div>
+        </div>
+
+        <div class="changelog-section">
+            <h2>🌐 تحسينات القنوات</h2>
+            <div class="channel-grid">
+                <div class="channel-card">
+                    <strong>Slack</strong>
+                    <span>Native assistant thread status + rotating loading</span>
+                </div>
+                <div class="channel-card">
+                    <strong>Discord</strong>
+                    <span>Voice isolation + echo suppression + streamed finals</span>
+                </div>
+                <div class="channel-card">
+                    <strong>WhatsApp</strong>
+                    <span>Credential recovery + reconnect catch-up + quoted replies</span>
+                </div>
+                <div class="channel-card">
+                    <strong>Microsoft Teams</strong>
+                    <span>HTML entities + Graph bounds + attachment metadata</span>
+                </div>
+                <div class="channel-card">
+                    <strong>iMessage</strong>
+                    <span>Phone normalization + group warning fix</span>
+                </div>
+                <div class="channel-card">
+                    <strong>Feishu</strong>
+                    <span>فشل آمن عند غياب bot Open ID</span>
+                </div>
+                <div class="channel-card">
+                    <strong>Tlon / Urbit</strong>
+                    <span>حدود الاستجابة + حماية upload</span>
+                </div>
+                <div class="channel-card">
+                    <strong>IRC</strong>
+                    <span>تقسيم UTF-16 code-point + plugin lifecycle موحد</span>
+                </div>
+                <div class="channel-card">
+                    <strong>Google Chat</strong>
+                    <span>Plugin lifecycle migration</span>
+                </div>
+                <div class="channel-card">
+                    <strong>Synology Chat</strong>
+                    <span>Plugin lifecycle migration</span>
+                </div>
+                <div class="channel-card">
+                    <strong>Signal</strong>
+                    <span>Phone identity normalization</span>
+                </div>
+                <div class="channel-card">
+                    <strong>Voice Call</strong>
+                    <span>دقة الـ status من event store كامل</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h2>🚀 طريقة التحديث</h2>
+            <ol>
+                <li>تحديث OpenClaw عالمياً:</li>
+            </ol>
+            <div class="code-block">npm install -g openclaw@latest</div>
+            <ol start="2">
+                <li>أو تشغيل wizard التحديث المدمج:</li>
+            </ol>
+            <div class="code-block">openclaw update</div>
+            <ol start="3">
+                <li>إعادة تشغيل Gateway:</li>
+            </ol>
+            <div class="code-block">openclaw gateway restart</div>
+            <ol start="4">
+                <li>التحقق من الإصدار الجديد:</li>
+            </ol>
+            <div class="code-block">openclaw --version</div>
+            <p style="margin-top:15px;color:#94a3b8;">💡 <strong>ملاحظة:</strong> إذا كنت تستخدم <code style="color:#a5b4fc;">update --no-restart</code>، تأكد من وجود offline managed Gateway قبل updater-owned repair، وإلا ستتم إعادة التشغيل بواسطة الـ parent.</p>
+        </div>
+
+        <div class="info-box">
+            <h2>⚠️ تنبيهات قبل التحديث</h2>
+            <ul style="padding-right:25px;line-height:2;">
+                <li>الإصدار الجديد يستخدم <strong>OpenClaw 2026.8.1</strong> ويتطلب Node متوافق (يُفضّل 22 LTS أو 24+).</li>
+                <li>تأكد من عمل نسخة احتياطية للإعدادات قبل التحديث:</li>
+            </ul>
+            <div class="code-block">cp -r ~/.openclaw ~/.openclaw.backup-$(date +%F)</div>
+            <ul style="padding-right:25px;line-height:2;">
+                <li>إذا كنت تستخدم Codex، تأكد من أن app-server >= 0.142.</li>
+                <li>إذا كنت تستخدم LM Studio embeddings، الحد الأقصى للـ context window سيُحترم لمنع OOM.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>تم إنشاء هذا التقرير آلياً بواسطة Claw 🦿</p>
+            <p style="margin-top:8px;">المصدر: <a href="https://docs.openclaw.ai/releases/2026.8.1" style="color:#7c9fff;">docs.openclaw.ai/releases/2026.8.1</a></p>
+            <p style="margin-top:8px;">npm: <a href="https://www.npmjs.com/package/openclaw" style="color:#7c9fff;">npmjs.com/package/openclaw</a></p>
+        </div>
+    </div>
+</body>
+</html>
