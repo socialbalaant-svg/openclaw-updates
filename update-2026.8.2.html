@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحديث OpenClaw 2026.8.2 - تقرير التحديث</title>
+<meta name="description" content="تقرير تحديث OpenClaw الإصدار 2026.8.2 - أبرز المزايا، التحسينات، وتعليمات التحديث.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    color: #e2e8f0;
+    min-height: 100vh;
+    line-height: 1.7;
+    padding: 20px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  header {
+    text-align: center;
+    padding: 50px 30px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15));
+    border-radius: 20px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-radius: 999px;
+    font-size: 0.85em;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 2.5em;
+    background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    font-weight: 800;
+  }
+  .subtitle { font-size: 1.15em; color: #cbd5e1; margin-bottom: 8px; }
+  .date { font-size: 0.95em; color: #94a3b8; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-bottom: 35px;
+  }
+  .stat-card {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 14px;
+    padding: 22px;
+    text-align: center;
+  }
+  .stat-card .label { color: #94a3b8; font-size: 0.85em; margin-bottom: 8px; }
+  .stat-card .value {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #818cf8;
+  }
+  section {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 25px;
+  }
+  h2 {
+    color: #c084fc;
+    font-size: 1.6em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(168, 85, 247, 0.3);
+    font-weight: 700;
+  }
+  .feature-list { list-style: none; padding: 0; }
+  .feature-list li {
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    background: rgba(15, 23, 42, 0.6);
+    border-right: 4px solid #818cf8;
+    border-radius: 8px;
+    transition: all 0.3s;
+  }
+  .feature-list li:hover {
+    background: rgba(99, 102, 241, 0.1);
+    transform: translateX(-4px);
+  }
+  .feature-list .tag {
+    display: inline-block;
+    background: rgba(99, 102, 241, 0.25);
+    color: #a5b4fc;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.78em;
+    font-weight: 600;
+    margin-left: 8px;
+  }
+  code, pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+  pre {
+    padding: 18px;
+    overflow-x: auto;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 10px;
+    direction: ltr;
+    text-align: left;
+  }
+  .steps { counter-reset: step; padding: 0; list-style: none; }
+  .steps li {
+    counter-increment: step;
+    padding: 16px 20px 16px 60px;
+    margin-bottom: 12px;
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 10px;
+    position: relative;
+  }
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #818cf8, #c084fc);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+  .steps li code {
+    display: inline-block;
+    margin-top: 6px;
+  }
+  .note {
+    background: rgba(245, 158, 11, 0.1);
+    border-right: 4px solid #f59e0b;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    color: #fbbf24;
+  }
+  .note strong { color: #fde68a; }
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: #64748b;
+    font-size: 0.9em;
+  }
+  footer a { color: #818cf8; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <span class="badge">✨ تحديث جديد متاح</span>
+  <h1>OpenClaw 2026.8.2</h1>
+  <p class="subtitle">إصدار رئيسي: رفيق سطح مكتب Linux، Home Dock، و4 سمات جديدة</p>
+  <p class="date">📅 3 سبتمبر 2026 — تم النشر قبل يومين</p>
+</header>
+
+<div class="grid">
+  <div class="stat-card">
+    <div class="label">الإصدار الحالي عندك</div>
+    <div class="value">2026.5.20</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">الإصدار الجديد</div>
+    <div class="value">2026.8.2</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">إجمالي الإصدارات</div>
+    <div class="value">250</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">حجم الحزمة</div>
+    <div class="value">206.2 MB</div>
+  </div>
+</div>
+
+<section>
+  <h2>🚀 أبرز المزايا الجديدة</h2>
+  <ul class="feature-list">
+    <li>
+      <span class="tag">Home Dock</span>
+      <strong>وكيل Home بجانب عملك:</strong> افتح Home في dock جانبي أو سفلي بـ <code>Cmd/Ctrl+Shift+H</code> مع إبقاء صفحتك الحالية ظاهرة، وإمكانية معاينة أو إزالة لقطة "Working on" أو إرفاق نص مختار للرسالة.
+    </li>
+    <li>
+      <span class="tag">Linux Desktop</span>
+      <strong>رفيق سطح مكتب Linux:</strong> ثبّت <code>.deb</code> أو AppImage على Linux x86-64، واتصل بـ Gateway محلي أو بعيد، وافتح Quick Chat من System Tray أو اختصار X11. تحديثات AppImage موقّعة رقميًا.
+    </li>
+    <li>
+      <span class="tag">Background Sessions</span>
+      <strong>بدء عمل بدون تبديل الصفحات:</strong> أنشئ وشغّل جلسة في الخلفية من New Session مع اختيار placement (محلي/سحابي/جهاز مقترن)، وافتحها من إشعار الاكتمال.
+    </li>
+    <li>
+      <span class="tag">Safer Upgrades</span>
+      <strong>ترقيات أكثر أمانًا:</strong> الحفاظ على الإعدادات الأحدث، إيقاف ترحيلات الجلسات غير المكتملة قبل إعلان النجاح، واستعادة Gateway متوقف بعد فشل تحديث عند التحقق من سلامة الحزمة أو التراجع.
+    </li>
+    <li>
+      <span class="tag">Voice Stability</span>
+      <strong>صوت أكثر موثوقية:</strong> إبقاء الاستدلال الداخلي خارج الكلام المنطوق، الحفاظ على الصوت المُولّد من الأدوات حتى التسليم، وضمان استمرار جولات Browser Talk بعد إعداد المكالمة.
+    </li>
+    <li>
+      <span class="tag">Browser CDP</span>
+      <strong>تحكم المتصفح بدون Gateway:</strong> إيقاظ relay المحلي من إضافات Chrome على macOS وLinux المدعومة لعميل CDP مُصادَق، يحتاج تحديث native host وبناء إضافة يدعم wake-up.
+    </li>
+    <li>
+      <span class="tag">4 Themes</span>
+      <strong>أربعة أشكال جديدة:</strong> تخصيص Control UI بـ CRT أو Manuscript أو Rosé أو Miami، مع حفظ اختيار السمة أوفلاين وتطبيقها بدون وميض عند إعادة التحميل.
+    </li>
+    <li>
+      <span class="tag">Replies Fix</span>
+      <strong>ردود تُنهي المهمة:</strong> إعادة الجواب النهائي بعد استقرار عمل الأدوات وعرض حالات الفشل بعد دور مقبول، لإصلاح المحادثات التي توقفت عند output الأدوات.
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>🛠️ التحسينات والتغييرات</h2>
+  <ul class="feature-list">
+    <li>
+      <span class="tag">Recovery</span>
+      <strong>تنظيف الاستعادة:</strong> معاينة أصول الترحيل المحفوظة بـ <code>openclaw update cleanup --dry-run</code>، ثم إزالة الأصول المؤهلة صراحةً أثناء توقف Gateway. يحافظ على سجل SQLite الحالي ويتنازل نهائيًا عن rollback.
+    </li>
+    <li>
+      <span class="tag">Session Visibility</span>
+      <strong>رؤية الجلسات الافتراضية:</strong> السماح افتراضيًا للجلسات غير المعزولة بالعمل مع جلسات أخرى لنفس الوكيل (تشمل جلسات cron المحفوظة). عوامل التشغيل المشتركة يجب أن تضبط <code>tools.sessions.visibility</code> على tree أو self للحصر.
+    </li>
+    <li>
+      <span class="tag">Cross-Session</span>
+      <strong>محادثات عبر الجلسات:</strong> عرض الرسائل المُعاد توجيهها كفقاعات مميزة مع روابط للجلسة المصدر وهوية الوكيل المرسِل، للحفاظ على الإسناد عند توجيه الرسائل لمحادثة نشطة.
+    </li>
+    <li>
+      <span class="tag">Organization</span>
+      <strong>تنظيم الجلسات:</strong> تجميع إجراءات الجلسة في قوائم أوضح، نسخ النصوص كـ Markdown، فتح الجلسات في tabs أو نوافذ أو تقسيمات، تحرير الأيقونات والألوان معًا، وإخفاء مجموعات الجلسات الفارغة اختياريًا.
+    </li>
+    <li>
+      <span class="tag">Cloud Projects</span>
+      <strong>مشاريع سحابية مُجهّزة:</strong> إعادة استخدام لقطعات المشاريع المُجهّزة والتحقق من hashes مساحات العمل قبل بدء جلسة سحابية، مع الحفاظ على دورة stop/snapshot/restart لمشاريع Daytona.
+    </li>
+    <li>
+      <span class="tag">Beam Links</span>
+      <strong>روابط Beam قابلة للقراءة:</strong> مشاركة النصوص عبر روابط <code>/beam/</code> مقسّاة على اسم الجلسة مع الحفاظ على فحوصات الوصول والتنقل السياقي.
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>📦 تعليمات التحديث</h2>
+  <p style="margin-bottom: 18px; color: #cbd5e1;">اتبع الخطوات التالية لتحديث OpenClaw إلى الإصدار الجديد:</p>
+  <ol class="steps">
+    <li>
+      <strong>انسخ بياناتك احتياطيًا</strong>
+      <pre>cp -r ~/.openclaw ~/.openclaw.backup-$(date +%F)</pre>
+    </li>
+    <li>
+      <strong>تحديث OpenClaw عالميًا</strong>
+      <pre>npm install -g openclaw@2026.8.2</pre>
+    </li>
+    <li>
+      <strong>تأكيد نجاح التحديث</strong>
+      <pre>openclaw --version</pre>
+      <p style="color: #94a3b8; margin-top: 8px; font-size: 0.9em;">المتوقع: <code>2026.8.2</code></p>
+    </li>
+    <li>
+      <strong>إعادة تشغيل Gateway</strong>
+      <pre>openclaw gateway restart</pre>
+    </li>
+    <li>
+      <strong>التحقق من سلامة البوابة</strong>
+      <pre>openclaw gateway status</pre>
+    </li>
+  </ol>
+
+  <div class="note">
+    <strong>⚠️ تنبيه:</strong> هذا إصدار رئيسي يحتوي على تغييرات في رؤية الجلسات الافتراضية (<code>tools.sessions.visibility</code>) وسلوك Home Dock. خذ نسخة احتياطية دائمًا قبل التحديث وراجع changelog الكامل للإعدادات التي قد تحتاج تعديل.
+  </div>
+</section>
+
+<section>
+  <h2>🔗 روابط مفيدة</h2>
+  <ul class="feature-list">
+    <li>📖 <strong>دليل Linux:</strong> <a href="https://docs.openclaw.ai/platforms/linux" style="color: #818cf8;">docs.openclaw.ai/platforms/linux</a></li>
+    <li>📋 <strong>سجل التغييرات الكامل:</strong> <a href="https://github.com/openclaw/openclaw/releases/tag/v2026.8.2" style="color: #818cf8;">github.com/openclaw/openclaw/releases/tag/v2026.8.2</a></li>
+    <li>💻 <strong>المستودع على GitHub:</strong> <a href="https://github.com/openclaw/openclaw" style="color: #818cf8;">github.com/openclaw/openclaw</a></li>
+    <li>📦 <strong>صفحة npm:</strong> <a href="https://www.npmjs.com/package/openclaw" style="color: #818cf8;">npmjs.com/package/openclaw</a></li>
+  </ul>
+</section>
+
+<footer>
+  <p>تم إعداد التقرير آليًا بواسطة <strong>Claw</strong> 🦿 — 3 سبتمبر 2026</p>
+  <p style="margin-top: 8px;">© OpenClaw — جميع الحقوق محفوظة</p>
+</footer>
+
+</div>
+</body>
+</html>
