@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحديث OpenClaw 2026.9.2 - تقرير التحديث</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    color: #e2e8f0;
+    min-height: 100vh;
+    line-height: 1.7;
+    padding: 20px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  header {
+    text-align: center;
+    padding: 50px 30px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15));
+    border-radius: 20px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-radius: 999px;
+    font-size: 0.85em;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 2.5em;
+    background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    font-weight: 800;
+  }
+  .subtitle { font-size: 1.15em; color: #cbd5e1; margin-bottom: 8px; }
+  .date { font-size: 0.95em; color: #94a3b8; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-bottom: 35px;
+  }
+  .stat-card {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 14px;
+    padding: 22px;
+    text-align: center;
+  }
+  .stat-card .label { color: #94a3b8; font-size: 0.85em; margin-bottom: 8px; }
+  .stat-card .value {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #818cf8;
+  }
+  section {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 25px;
+  }
+  h2 {
+    color: #c084fc;
+    font-size: 1.6em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(168, 85, 247, 0.3);
+    font-weight: 700;
+  }
+  .feature-list { list-style: none; padding: 0; }
+  .feature-list li {
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    background: rgba(15, 23, 42, 0.6);
+    border-right: 4px solid #818cf8;
+    border-radius: 8px;
+    transition: all 0.3s;
+  }
+  .feature-list li:hover {
+    background: rgba(99, 102, 241, 0.1);
+    transform: translateX(-4px);
+  }
+  .feature-list .tag {
+    display: inline-block;
+    background: rgba(99, 102, 241, 0.25);
+    color: #a5b4fc;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.78em;
+    font-weight: 600;
+    margin-left: 8px;
+  }
+  code, pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+  pre {
+    padding: 18px;
+    overflow-x: auto;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 10px;
+    direction: ltr;
+    text-align: left;
+  }
+  .steps { counter-reset: step; padding: 0; list-style: none; }
+  .steps li {
+    counter-increment: step;
+    padding: 16px 20px 16px 60px;
+    margin-bottom: 12px;
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 10px;
+    position: relative;
+  }
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #818cf8, #c084fc);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+  .steps li code {
+    display: inline-block;
+    margin-top: 6px;
+  }
+  .note {
+    background: rgba(245, 158, 11, 0.1);
+    border-right: 4px solid #f59e0b;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    color: #fbbf24;
+  }
+  .note strong { color: #fde68a; }
+  .deprecation {
+    background: rgba(239, 68, 68, 0.1);
+    border-right: 4px solid #ef4444;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    color: #fca5a5;
+  }
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: #64748b;
+    font-size: 0.9em;
+  }
+  footer a { color: #818cf8; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <span class="badge">✨ تحديث جديد متاح</span>
+  <h1>OpenClaw 2026.9.2</h1>
+  <p class="subtitle">تحديث رئيسي: شات أسرع، استعادة بعد إعادة التشغيل، دعم GPT-6 Astra</p>
+  <p class="date">📅 8 سبتمبر 2026 — نُشر قبل 3 أيام</p>
+</header>
+
+<div class="grid">
+  <div class="stat-card">
+    <div class="label">الإصدار السابق عندك</div>
+    <div class="value">2026.5.20</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">الإصدار الجديد</div>
+    <div class="value">2026.9.2</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">إجمالي الإصدارات</div>
+    <div class="value">252</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">حجم الحزمة</div>
+    <div class="value">177.7 MB</div>
+  </div>
+</div>
+
+<section>
+  <h2>🚀 أبرز المزايا الجديدة</h2>
+  <ul class="feature-list">
+    <li>
+      <span class="tag">أداء</span>
+      <strong>شات أسرع وأكثر استجابة:</strong> تحويل قراءة السجلات وتحضير النصوص الطويلة خارج حلقة أحداث البوابة، مع تحميل مباشر للوحات التحكم وتقليل أعمال التحميل المبدئي.
+    </li>
+    <li>
+      <span class="tag">استعادة</span>
+      <strong>ترقيات واستعادة موثوقة:</strong> الحفاظ على الإعدادات النشطة والمهارات المفعّلة والوكيل الافتراضي أثناء التحديثات التلقائية، واستعادة إعادة تشغيل البوابة بعد تحديثات Git.
+    </li>
+    <li>
+      <span class="tag">GPT-6 Astra</span>
+      <strong>دعم GPT-6 Astra:</strong> اختيار النموذج <code>openai/gpt-6-astra</code> عبر مفتاح OpenAI API أو حساب ChatGPT/Codex المؤهل، مع إدخال نص وصور واستدعاءات أدوات Responses.
+    </li>
+    <li>
+      <span class="tag">إعادة تشغيل</span>
+      <strong>الردود تبقى بعد إعادة التشغيل:</strong> استعادة الردود النشطة والمدرّة والمفوّضة بعد إعادة تشغيل البوابة دون فقدان علامات الاسترداد.
+    </li>
+    <li>
+      <span class="tag">نسخ احتياطي</span>
+      <strong>نسخ احتياطية تحفظ بياناتك:</strong> الحفاظ على النصوص الكاملة التي تحتوي على أحرف NUL مدمجة في نسخ Git الاحتياطية، ودعم تكوين Nix للروابط والإعدادات.
+    </li>
+    <li>
+      <span class="tag">بدون إعادة تشغيل</span>
+      <strong>تغيير الإعدادات بدون إعادة تشغيل:</strong> تطبيق إعدادات الوكيل والنموذج والأداة والقناة والمتصفح والعقدة والوصول عبر أصحابها أثناء التشغيل.
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>🛠️ تحسينات إضافية</h2>
+  <ul class="feature-list">
+    <li><strong>علامة الإضافات:</strong> ضع أيقونة الإضافة في <code>assets/icon.png</code> بدلًا من رابط manifest — تُحمَّل بدون طلب شبكة.</li>
+    <li><strong>GPT-6 Astra Async Tools:</strong> تشغيل أدوات دالة مباشرة بشكل غير متزامن على مسارات Platform API، وتوجيه الردود النشطة عبر WebSockets المخزّنة مؤقتًا.</li>
+    <li><strong>تسجيل دخول macOS عبر المتصفح:</strong> ربط البوابات المحفوظة عبر تسجيل الدخول الشخصي لـCloudflare Access، وفتح تطبيق Mac من موقع البوابة.</li>
+    <li><strong>واجهة الإضافات التجريبية:</strong> من Settings → Labs → Custom plugin UI — يمكن للإضافات المساهمة بصفحات Control UI.</li>
+    <li><strong>Apple Watch Talk التجريبي:</strong> Talk مستقل على Watch مع أدوات يملكها البوابة (يتطلب اتصال UDP).</li>
+    <li><strong>ردود Slack الغنية:</strong> توجيه الوكلاء لاستخدام تخطيطات Block Kit المدعومة للردود الاستباقية.</li>
+    <li><strong>Swarm مفعّل افتراضيًا:</strong> تنسيق وكلاء فرعيين متزامنين مع نتائج منظمة وتقدم مباشر.</li>
+    <li><strong>صفحة الأجهزة:</strong> عرض أنواع الأجهزة ومقاييس الموارد وقدرات التوفر لسطح المكتب.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>🔧 إصلاحات مهمة</h2>
+  <ul class="feature-list">
+    <li><strong>أمان HTTP Proxy:</strong> تحديث اعتماديات HTTP والإبقاء على فحوصات DNS الوجهة فعّالة.</li>
+    <li><strong>تنظيف الجلسات:</strong> الحفاظ على حالة الإضافات للوكلاء الآخرين عند حذف الجلسة، ومنع محاولات الإلغاء من حذف الحالة المستعادة.</li>
+    <li><strong>Telegram Proxy Media:</strong> استرجاع الوسائط عبر وكلاء SOCKS المهيّأة صراحةً وطلبات HTTPS-proxy.</li>
+    <li><strong>تنسيق تفاصيل Telegram:</strong> الحفاظ على العناوين والأكواد والاقتباسات والجداول داخل حاويات details عند الإرسال والتعديل.</li>
+    <li><strong>الردود التلقائية:</strong> إبقاء اكتمالات automation وheartbeat مرفقة بمحادثتها وموضوعها الأصلي.</li>
+    <li><strong>Slack:</strong> تجنب الردود المكررة بعد فقدان إقرارات البث، وإعادة محاولة رفض rate-limit الصريح.</li>
+    <li><strong>WhatsApp:</strong> تسليم سبب فشل الدورة (فشل/مهلة/رفض) بدلًا من ترك المحادثة صامتة.</li>
+    <li><strong>Cron Jobs:</strong> الحفاظ على الرد النهائي عند إزالة automation لنفسه، والحفاظ على سياسات تنبيهات الفشل.</li>
+    <li><strong>تحديث OpenClaw:</strong> تقرير نجاح/فشل/تخطي قابل للتنفيذ من تحديثات chat-triggered.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>📦 تعليمات التحديث</h2>
+  <p style="margin-bottom: 18px; color: #cbd5e1;">اتبع الخطوات التالية لتحديث OpenClaw إلى الإصدار الجديد:</p>
+  <ol class="steps">
+    <li>
+      <strong>انسخ بياناتك احتياطيًا</strong>
+      <pre>cp -r ~/.openclaw ~/.openclaw.backup-$(date +%F)</pre>
+    </li>
+    <li>
+      <strong>تحديث OpenClaw عالميًا</strong>
+      <pre>npm install -g openclaw@2026.9.2</pre>
+    </li>
+    <li>
+      <strong>تأكيد نجاح التحديث</strong>
+      <pre>openclaw --version</pre>
+      <p style="color: #94a3b8; margin-top: 8px; font-size: 0.9em;">المتوقع: <code>2026.9.2</code></p>
+    </li>
+    <li>
+      <strong>إعادة تشغيل Gateway</strong>
+      <pre>openclaw gateway restart</pre>
+    </li>
+    <li>
+      <strong>التحقق من سلامة البوابة</strong>
+      <pre>openclaw gateway status</pre>
+    </li>
+    <li>
+      <strong>تشغيل التشخيص (موصى به)</strong>
+      <pre>openclaw doctor</pre>
+      <p style="color: #94a3b8; margin-top: 8px; font-size: 0.9em;">يتحقق من قاعدة بيانات SQLite والإعدادات والوكلاء.</p>
+    </li>
+  </ol>
+
+  <div class="note">
+    <strong>⚠️ تنبيه:</strong> هذا تحديث رئيسي يقفز 4 إصدارات فرعية. تم تحسين آلية الاستعادة لمنع فقدان الإعدادات، لكن يفضل دائمًا أخذ نسخة احتياطية قبل التحديث.
+  </div>
+
+  <div class="deprecation">
+    <strong>🗑️ إيقاف قادم:</strong> سيُزال Plugin SDK context aliases (الأسماء غير الموثوقة) في أو بعد 8 سبتمبر 2026. يجب الترحيل إلى channel-named context fields و <code>buildChannelMetadata</code>.
+  </div>
+</section>
+
+<section>
+  <h2>🔗 روابط مفيدة</h2>
+  <ul class="feature-list">
+    <li>📖 <strong>التوثيق الرسمي:</strong> <a href="https://docs.openclaw.ai" style="color: #818cf8;">docs.openclaw.ai</a></li>
+    <li>💻 <strong>المستودع على GitHub:</strong> <a href="https://github.com/openclaw/openclaw" style="color: #818cf8;">github.com/openclaw/openclaw</a></li>
+    <li>📦 <strong>صفحة npm:</strong> <a href="https://www.npmjs.com/package/openclaw" style="color: #818cf8;">npmjs.com/package/openclaw</a></li>
+    <li>📋 <strong>سجل التغييرات الكامل:</strong> <a href="https://raw.githubusercontent.com/openclaw/openclaw/main/CHANGELOG.md" style="color: #818cf8;">CHANGELOG.md</a></li>
+    <li>🏷️ <strong>إصدار v2026.9.2:</strong> <a href="https://github.com/openclaw/openclaw/releases/tag/v2026.9.2" style="color: #818cf8;">Release notes</a></li>
+  </ul>
+</section>
+
+<footer>
+  <p>تم إعداد التقرير آليًا بواسطة <strong>Claw</strong> 🦿 — 8 سبتمبر 2026</p>
+  <p style="margin-top: 8px;">قفز 4 إصدارات فرعية: 2026.5.20 → 2026.6.x → 2026.7.x → 2026.8.x → 2026.9.2</p>
+  <p style="margin-top: 8px;">© OpenClaw — جميع الحقوق محفوظة</p>
+</footer>
+
+</div>
+</body>
+</html>
