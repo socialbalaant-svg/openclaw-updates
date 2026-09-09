@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحديث OpenClaw 2026.9.3 - تقرير التحديث</title>
+<meta name="description" content="تقرير تحديث OpenClaw 2026.9.3 - تحسينات الأمان، الأداء، Skill Workshop، ودعم Node 24.16+">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    color: #e2e8f0;
+    min-height: 100vh;
+    line-height: 1.7;
+    padding: 20px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  header {
+    text-align: center;
+    padding: 50px 30px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15));
+    border-radius: 20px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-radius: 999px;
+    font-size: 0.85em;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .badge.breaking {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    margin-right: 8px;
+  }
+  h1 {
+    font-size: 2.5em;
+    background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    font-weight: 800;
+  }
+  .subtitle { font-size: 1.15em; color: #cbd5e1; margin-bottom: 8px; }
+  .date { font-size: 0.95em; color: #94a3b8; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-bottom: 35px;
+  }
+  .stat-card {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 14px;
+    padding: 22px;
+    text-align: center;
+  }
+  .stat-card .label { color: #94a3b8; font-size: 0.85em; margin-bottom: 8px; }
+  .stat-card .value {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #818cf8;
+  }
+  section {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 25px;
+  }
+  h2 {
+    color: #c084fc;
+    font-size: 1.6em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(168, 85, 247, 0.3);
+    font-weight: 700;
+  }
+  h3 {
+    color: #f472b6;
+    font-size: 1.2em;
+    margin-top: 20px;
+    margin-bottom: 12px;
+  }
+  .feature-list { list-style: none; padding: 0; }
+  .feature-list li {
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    background: rgba(15, 23, 42, 0.6);
+    border-right: 4px solid #818cf8;
+    border-radius: 8px;
+    transition: all 0.3s;
+  }
+  .feature-list li:hover {
+    background: rgba(99, 102, 241, 0.1);
+    transform: translateX(-4px);
+  }
+  .feature-list .tag {
+    display: inline-block;
+    background: rgba(99, 102, 241, 0.25);
+    color: #a5b4fc;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    margin-left: 8px;
+    font-weight: 600;
+  }
+  .feature-list .tag.breaking {
+    background: rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
+  }
+  .feature-list .tag.security {
+    background: rgba(16, 185, 129, 0.25);
+    color: #6ee7b7;
+  }
+  .feature-list .tag.perf {
+    background: rgba(245, 158, 11, 0.25);
+    color: #fcd34d;
+  }
+  .code-block {
+    background: #0f172a;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 10px;
+    padding: 16px;
+    margin: 12px 0;
+    font-family: 'Courier New', monospace;
+    direction: ltr;
+    text-align: left;
+    color: #a5b4fc;
+    overflow-x: auto;
+    font-size: 0.95em;
+  }
+  .step {
+    background: rgba(15, 23, 42, 0.6);
+    padding: 18px 20px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border-right: 3px solid #10b981;
+  }
+  .step-num {
+    display: inline-block;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-weight: 700;
+    margin-left: 10px;
+  }
+  .warning-box {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  .warning-box strong { color: #fca5a5; }
+  .install-box {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  .install-box strong { color: #6ee7b7; }
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: #94a3b8;
+    font-size: 0.9em;
+  }
+  footer a { color: #818cf8; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .meta {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    font-size: 0.95em;
+  }
+  .meta-item { color: #cbd5e1; }
+  .meta-item strong { color: #f472b6; }
+  ul.bullet { padding-right: 25px; }
+  ul.bullet li { margin-bottom: 8px; color: #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <span class="badge">إصدار جديد متاح</span>
+  <span class="badge breaking">Breaking Changes</span>
+  <h1>OpenClaw 2026.9.3</h1>
+  <p class="subtitle">تحديث رئيسي يركز على أمان التحديثات، الأداء، و Skill Workshop</p>
+  <p class="date">📅 9 سبتمبر 2026 — قبل 18 ساعة</p>
+  <div class="meta">
+    <span class="meta-item">📦 <strong>الحجم:</strong> 184.2 MB</span>
+    <span class="meta-item">🔧 <strong>التبعيات:</strong> 65</span>
+    <span class="meta-item">📋 <strong>من:</strong> 2026.9.2</span>
+    <span class="meta-item">🏷️ <strong>الترخيص:</strong> MIT</span>
+  </div>
+</header>
+
+<div class="grid">
+  <div class="stat-card">
+    <div class="label">نقطة الانطلاق</div>
+    <div class="value">2026.5.20</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">الإصدار الجديد</div>
+    <div class="value">2026.9.3</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">آخر إصدار سابق</div>
+    <div class="value">2026.9.2</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">نوع التحديث</div>
+    <div class="value">رئيسي</div>
+  </div>
+</div>
+
+<section>
+  <h2>⚡ أبرز المميزات (Highlights)</h2>
+  <ul class="feature-list">
+    <li>
+      <span class="tag security">أمان</span>
+      <strong>تحديثات أكثر أماناً:</strong> تجربة تغييرات الـ Core والإضافات في حالة مرشحة معزولة قبل التفعيل، دعم ترحيلات 2026.9.2 المؤهلة، واستعادة سجلات التحديثات المهجورة دون إيقاف Gateway الصحي.
+    </li>
+    <li>
+      <span class="tag perf">أداء</span>
+      <strong>الحفاظ على ذاكرة Prompt Cache:</strong> تقليل الأعمال غير الضرورية أثناء تحديث الجلسات الباردة والبحث في الذاكرة، وإعادة استخدام بناءات الـ Worker بين الجلسات.
+    </li>
+    <li>
+      <span class="tag">Skill Workshop</span>
+      <strong>ورشة المهارات المحسنة:</strong> الاحتفاظ بالمهارات في مجموعة دائمة مملوكة للوكيل عبر workspaces، مقارنة تعليمات المهارات الكاملة، وإيقاف المسودات المفقودة بأمان من خلال Doctor.
+    </li>
+    <li>
+      <span class="tag">تصفح</span>
+      <strong>تبويبات المتصفح:</strong> مشاهدة صفحات الوكيل تتحدث وفتح روابط خارجية في تبويبات Mac الأصلية تبقى مع نافذتها عند تبديل المحادثات.
+    </li>
+    <li>
+      <span class="tag">نماذج</span>
+      <strong>إدارة حسابات المزودين:</strong> إدارة الحسابات المتصلة وأولويات الحسابات المدعومة مباشرة من إعدادات Models.
+    </li>
+    <li>
+      <span class="tag">مشاركة</span>
+      <strong>مشاركة المحادثات المحددة:</strong> نشر عرض قابل للإلغاء وقراءة فقط للنصوص الحالية والمستقبلية لجلسة معينة، يمكن لأي شخص لديه الرابط العام الوصول إليها.
+    </li>
+    <li>
+      <span class="tag">اجتماعات</span>
+      <strong>مكتبة اجتماعات قابلة للبحث:</strong> تصفح الملاحظات المحفوظة، البحث في النصوص الكاملة، تنزيل أرشيفات Markdown أو JSONL كاملة، وإدارة مصادر الالتقاط من Control UI.
+    </li>
+    <li>
+      <span class="tag">فريق</span>
+      <strong>تقارير نشاط الفريق (اختيارية):</strong> تثبيت وتفعيل Team Reports لتصفح نشاط GitHub المصادق ومناقشات Discord المُكوّنة صراحةً، مع سجل وملخصات نموذج اختيارية.
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>⚠️ تغييرات كاسرة (Breaking Changes)</h2>
+  <div class="warning-box">
+    <strong>🚨 Node Runtime:</strong> يتطلب Node 24.16.0 أو أحدث على 24.x، أو Node 26.1.0 أو أحدث — يُوصى بـ Node 26. يجب ترقية Node قبل OpenClaw لمنع قطع نص SQLite. لم تعد Node 22 و Node 25 وبنيات 24.x/26.x الأقدم مدعومة.
+  </div>
+  <ul class="bullet">
+    <li><strong>SDK سياسة التنفيذ:</strong> نقل أدوات exec-mode و comparator المُهمَلة من infra-runtime إلى execPolicy على <code>openclaw/plugin-sdk/agent-harness-runtime</code>. استخدم <code>resolveExecModePolicy</code> واختر الحقول المطلوبة من المستدعي.</li>
+    <li><strong>أذونات exec:</strong> نقل ومزامنة قائمة <code>approveMainChannel</code> وأذونات exec وinclude بين <code>approve.json</code> و config. اقرأ الـ includes ولا تندمج حرفياً لتجنب الإحلال غير المقصود.</li>
+    <li><strong>Plugin host compatibility:</strong> يُحتفظ بدعم Discord و llama.cpp و Voice Call لإصدار 2026.9.2 من خلال الـ WebSocket البديل — لا يُستعاد تصدير SDK المتقاعد عمداً.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>🔧 أهم التغييرات (Changes)</h2>
+  <h3>🔐 الأمان والتحديثات</h3>
+  <ul class="feature-list">
+    <li>
+      <span class="tag">Updates</span>
+      استعادة سجلات التحديثات المهجورة دون إيقاف Gateway الصحي.
+    </li>
+    <li>
+      <span class="tag">Updates</span>
+      التحقق من ملكية الخدمة، الصحة المستقرة، تطابق الإصدار وهوية البناء، تفعيل الإضافات، جاهزية القنوات و HTTP دون استدعاء نموذج.
+    </li>
+    <li>
+      <span class="tag">Updates</span>
+      rehearsal التغييرات في نسخ مرشحة معزولة، بما في ذلك التبعيات المرتبطة والمُعلّقة في workspace.
+    </li>
+    <li>
+      <span class="tag security">Audit</span>
+      الحفاظ على بيانات إعادة التحرير الميداني الحساسة و URL-redaction في استجابات التكوين.
+    </li>
+  </ul>
+
+  <h3>🏗️ Skill Workshop</h3>
+  <ul class="feature-list">
+    <li>
+      <span class="tag">Reviews</span>
+      مقارنة تعليمات المهارات الكاملة مع التغييرات المضمنة، والتمييز بين المهارات المثبتة وسجل الاقتراحات.
+    </li>
+    <li>
+      <span class="tag">Recovery</span>
+      إيقاف اقتراحات المسودات المفقودة من خلال Doctor مع الحفاظ على المهارات المثبتة.
+    </li>
+    <li>
+      <span class="tag">Learning</span>
+      استعادة الذاكرة وتحديث المهارات بعد إرهاق المراقب، والحفاظ على المهام المحددة.
+    </li>
+  </ul>
+
+  <h3>💬 الجلسات والمحادثات</h3>
+  <ul class="feature-list">
+    <li>
+      <span class="tag">Sessions</span>
+      الاحتفاظ بعمل نشط، مدخلات في الطابور، ملكية سجل التحديث، وتقدم الطرفيات عبر التحديثات الطويلة.
+    </li>
+    <li>
+      <span class="tag">Sessions</span>
+      دعم ترقيات npm من 2026.9.1 واستئناف التزويد السحابي عبر إعادة تشغيل Gateway.
+    </li>
+    <li>
+      <span class="tag">Retention</span>
+      أرشفة المحادثات القديمة بهوياتها وأجيال النص سليمة، ورفع الحد الافتراضي للجلسات النشطة إلى 5,000.
+    </li>
+    <li>
+      <span class="tag">Quality</span>
+      الحفاظ على بطاقات المهام السابقة أثناء إعادة تعيين كاملة ومنع كتابة قديمة في الرحلة من استعادتها.
+    </li>
+  </ul>
+
+  <h3>📱 Android و iOS و Mac</h3>
+  <ul class="feature-list">
+    <li>
+      <span class="tag">Android</span>
+      إبقاء عناصر التحكم في Send و Talk قابلة للاستخدام أثناء التشغيل النشط، استعادة تحديثات Gateway الثانوية، تقليل المحاولات لـ Gateways غير القابلة للوصول.
+    </li>
+    <li>
+      <span class="tag">Android</span>
+      منع اتصال المشغل المتأخر من استبدال رمز جهاز أحدث صدر أثناء تسليم Android bootstrap.
+    </li>
+    <li>
+      <span class="tag">Voice</span>
+      تضمين voice في الإعداد العادي لـ Apple Watch.
+    </li>
+    <li>
+      <span class="tag">Mac</span>
+      توفير تغليف AppImage Linux ARM64 وبطاقات Gateway الحية مع فتح نافذة مباشرة في قائمة macOS Gateways.
+    </li>
+  </ul>
+
+  <h3>🔌 Channels و Provider</h3>
+  <ul class="feature-list">
+    <li>
+      <span class="tag">Teams</span>
+      الحفاظ على التنسيق والإشارات في ردود Microsoft Teams المحررة والنهائية.
+    </li>
+    <li>
+      <span class="tag">Telegram</span>
+      عرض حالة الـ compaction في معاينات الإجابة المفعلة.
+    </li>
+    <li>
+      <span class="tag">Bun</span>
+      استخدام تطبيقات WebSocket المُعلنة تحت Bun عبر Discord و Mattermost و Signal و Gateway و workers ومكالمات الصوت ومسارات المزود.
+    </li>
+    <li>
+      <span class="tag">CLI</span>
+      عرض وكلاء CLI القادرين على الإنشاء في منتقي نموذج الجلسة الجديدة دون opt-in منفصل.
+    </li>
+  </ul>
+
+  <h3>🛠️ Gateway و Service</h3>
+  <ul class="feature-list">
+    <li>
+      <span class="tag">Gateway</span>
+      إعداد Gateway secret واحد في Control UI، وإنشاء Gateway token محلي افتراضياً.
+    </li>
+    <li>
+      <span class="tag">Browser</span>
+      طلب إضافة Chrome الرسمية من متجر Chrome من خلال إعدادات Mac المحلية.
+    </li>
+    <li>
+      <span class="tag">CLI</span>
+      تجميع <code>openclaw-mac</code> لفحص وتكوين اتصالات Gateway للـ Mac من Terminal.
+    </li>
+    <li>
+      <span class="tag">Recovery</span>
+      استعادة التركيبات المؤهلة التي تم التحقق منها بعد فشل التفعيل أو انتقالات الخدمة.
+    </li>
+    <li>
+      <span class="tag">Diagnostics</span>
+      الإبلاغ عن أوقات مرحلة cloud bootstrap لتحديد تأخيرات التزويد.
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>🐛 إصلاحات مهمة (Key Fixes)</h2>
+  <ul class="feature-list">
+    <li>
+      🔧 <strong>الإعدادات المؤلفة:</strong> الحفاظ على الإعدادات المُؤلفة ومراجع البيئة والسر من خلال الإعداد والتحديثات وحفظ الإعدادات وترحيلات Doctor.
+    </li>
+    <li>
+      🔧 <strong>Gateway maintenance:</strong> إبقاء أعطال إعادة التشغيل العادية قابلة للاسترداد في العملية الأمامية، وإيقاف حلقات إعادة التشغيل عندما تمنع الترحيلات بدء التشغيل.
+    </li>
+    <li>
+      🔧 <strong>تحديث الإضافات:</strong> تشغيل صيانة ما بعد التحديث من خلال CLI المفعل، ومحاذاة الإضافات الرسمية المرتبطة بالإصدار.
+    </li>
+    <li>
+      🔧 <strong>استرجاع الخدمة:</strong> الحفاظ على أهداف الخدمة والمصادقة أثناء الحالة والإصلاح، وتحمل خطوات ساعة systemd.
+    </li>
+    <li>
+      🔧 <strong>MCP session continuity:</strong> إبقاء خوادم MCP المملوكة للجلسة حية بين المنعطفات وفترات الهدوء مع التنظيف عند Stop وإعادة التعيين.
+    </li>
+    <li>
+      🔧 <strong>متانة المحادثة:</strong> نشر إعادة كتابة النص ذرياً حتى لا تكشف الانقطاعات تاريخاً جزئياً.
+    </li>
+    <li>
+      🔧 <strong>استمرارية الكود:</strong> الحفاظ على نتائج الأدوات المهيكلة الكاملة أو إرجاع خطأ resource-limit قابل للالتقاط، والاحتفاظ بإعلانات MCP ونتائج البحث.
+    </li>
+    <li>
+      🔧 <strong>فهرسة الذاكرة:</strong> إبقاء البحث بالكلمات الرئيسية متاحاً عندما يتعذر بدء embeddings اختيارية، واستخدام فحص دفعي قابل للإلغاء.
+    </li>
+    <li>
+      🔧 <strong>استمرار Cache:</strong> الحفاظ على prefix المحادثة والأدوات الدافئة عبر حلقات الأدوات وأنشطة الخلفية وموافقات Windows.
+    </li>
+    <li>
+      🔧 <strong>HTTPS محمي:</strong> تجديد شهادات HTTPS leaf مع الحفاظ على استقرار سلسلة ثقة عملية Gateway.
+    </li>
+    <li>
+      🔧 <strong>Prometheus:</strong> طلب إذن قراءة المشغل الفعال قبل تقديم مقاييس Prometheus.
+    </li>
+    <li>
+      🔧 <strong>إعداد الاعتماد:</strong> السماح بتسليمات طلبات تسجيل الدخول وأكواد الإقران في المحادثات الخاصة.
+    </li>
+    <li>
+      🔧 <strong>WebSocket Bun:</strong> استخدام تطبيقات WebSocket المُعلنة تحت Bun عبر جميع القنوات.
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>📦 التبعيات المُحدّثة</h2>
+  <div class="grid">
+    <div class="stat-card">
+      <div class="label">chalk</div>
+      <div class="value">6.0.0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">croner</div>
+      <div class="value">10.0.1</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">diff</div>
+      <div class="value">9.0.0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">dotenv</div>
+      <div class="value">17.4.2</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">execa</div>
+      <div class="value">10.0.1</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">grammy</div>
+      <div class="value">1.46.0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">openai</div>
+      <div class="value">7.8.0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">tar</div>
+      <div class="value">7.5.22</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>🚀 تعليمات التحديث</h2>
+  <div class="install-box">
+    <strong>📋 المتطلبات الأساسية:</strong> قبل التحديث إلى 2026.9.3، يجب ترقية Node.js إلى الإصدار 24.16.0+ (أو 26.1.0+ المُوصى به). الإصدارات الأقدم لم تعد مدعومة.
+  </div>
+
+  <h3>📌 خطوات التحديث على السيرفر</h3>
+  <div class="step">
+    <span class="step-num">1</span>
+    <strong>نسخة احتياطية</strong>
+    <div class="code-block">cp -r ~/.openclaw ~/.openclaw.backup-$(date +%Y%m%d)</div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">2</span>
+    <strong>ترقية Node.js إلى 24.16.0+ (مهم جداً)</strong>
+    <div class="code-block"># باستخدام nvm
+nvm install 24
+nvm use 24
+node --version  # يجب أن يكون v24.16.0 أو أحدث</div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">3</span>
+    <strong>تحديث OpenClaw</strong>
+    <div class="code-block">npm install -g openclaw@2026.9.3
+# أو
+npm update -g openclaw</div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">4</span>
+    <strong>إعادة تشغيل Gateway</strong>
+    <div class="code-block">openclaw gateway restart
+# أو (Docker)
+docker compose restart openclaw</div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">5</span>
+    <strong>التحقق من التحديث</strong>
+    <div class="code-block">npm ls -g openclaw
+openclaw --version
+openclaw doctor</div>
+  </div>
+
+  <h3>⚙️ تحديث الـ SDK (للمطورين)</h3>
+  <p style="margin-top: 10px;">إذا كنت مطور إضافات (plugin developer):</p>
+  <div class="code-block">npm install openclaw/plugin-sdk@latest</div>
+  <p style="margin-top: 10px;">استبدل أدوات <code>infra-runtime</code> القديمة بـ <code>resolveExecModePolicy</code> من <code>execPolicy</code>.</p>
+</section>
+
+<section>
+  <h2>📊 ملخص الإصدار</h2>
+  <ul class="bullet">
+    <li>✅ <strong>الحالة:</strong> latest (إصدار رسمي مستقر)</li>
+    <li>✅ <strong>beta:</strong> 2026.9.1</li>
+    <li>✅ <strong>extended-stable:</strong> 2026.6.34</li>
+    <li>⏰ <strong>تاريخ النشر:</strong> قبل 18 ساعة من npm</li>
+    <li>📦 <strong>tarball:</strong> openclaw-2026.9.3.tgz (184.2 MB)</li>
+    <li>🔐 <strong>npm SHA:</strong> f01ed9f202e9ba84dc1a9c456876884aa787c919</li>
+  </ul>
+</section>
+
+<footer>
+  <p>🦿 Claw — OpenClaw Daily Update Report</p>
+  <p style="margin-top: 8px;">
+    <a href="https://github.com/openclaw/openclaw/releases/tag/v2026.9.3">📋 ملاحظات الإصدار الكاملة على GitHub</a>
+    &nbsp;•&nbsp;
+    <a href="https://docs.openclaw.ai/cli/update">🔧 دليل التحديث</a>
+  </p>
+  <p style="margin-top: 16px; font-size: 0.85em;">
+    تم إنشاؤه في 9 سبتمبر 2026 — 8:00 UTC
+  </p>
+</footer>
+
+</div>
+</body>
+</html>
