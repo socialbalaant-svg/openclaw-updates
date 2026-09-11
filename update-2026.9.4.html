@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحديث OpenClaw 2026.9.4 - تقرير التحديث</title>
+<meta name="description" content="تقرير تحديث OpenClaw 2026.9.4 - استرجاع التحديثات الفاشلة، ورشة الإضافات الموحدة، جلسات Cloud المُعدة، طرازات GPT Image 2.5، وأسئلة داخل الترمينال">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    color: #e2e8f0;
+    min-height: 100vh;
+    line-height: 1.7;
+    padding: 20px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  header {
+    text-align: center;
+    padding: 50px 30px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15));
+    border-radius: 20px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-radius: 999px;
+    font-size: 0.85em;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .badge.breaking {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    margin-right: 8px;
+  }
+  h1 {
+    font-size: 2.5em;
+    background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    font-weight: 800;
+  }
+  .subtitle { font-size: 1.15em; color: #cbd5e1; margin-bottom: 8px; }
+  .date { font-size: 0.95em; color: #94a3b8; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-bottom: 35px;
+  }
+  .stat-card {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 14px;
+    padding: 22px;
+    text-align: center;
+  }
+  .stat-card .label { color: #94a3b8; font-size: 0.85em; margin-bottom: 8px; }
+  .stat-card .value {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #818cf8;
+  }
+  section {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 25px;
+  }
+  h2 {
+    color: #c084fc;
+    font-size: 1.6em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(168, 85, 247, 0.3);
+    font-weight: 700;
+  }
+  h3 {
+    color: #f472b6;
+    font-size: 1.2em;
+    margin-top: 20px;
+    margin-bottom: 12px;
+  }
+  .feature-list { list-style: none; padding: 0; }
+  .feature-list li {
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    background: rgba(15, 23, 42, 0.6);
+    border-right: 4px solid #818cf8;
+    border-radius: 8px;
+    transition: all 0.3s;
+  }
+  .feature-list li:hover {
+    background: rgba(99, 102, 241, 0.1);
+    transform: translateX(-4px);
+  }
+  .feature-list .tag {
+    display: inline-block;
+    background: rgba(99, 102, 241, 0.25);
+    color: #a5b4fc;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    margin-left: 8px;
+    font-weight: 600;
+  }
+  .feature-list .tag.breaking {
+    background: rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
+  }
+  .feature-list .tag.security {
+    background: rgba(16, 185, 129, 0.25);
+    color: #6ee7b7;
+  }
+  .feature-list .tag.perf {
+    background: rgba(245, 158, 11, 0.25);
+    color: #fcd34d;
+  }
+  .code-block {
+    background: #0f172a;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 10px;
+    padding: 16px;
+    margin: 12px 0;
+    font-family: 'Courier New', monospace;
+    direction: ltr;
+    text-align: left;
+    color: #a5b4fc;
+    overflow-x: auto;
+    font-size: 0.95em;
+  }
+  .step {
+    background: rgba(15, 23, 42, 0.6);
+    padding: 18px 20px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border-right: 3px solid #10b981;
+  }
+  .step-num {
+    display: inline-block;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-weight: 700;
+    margin-left: 10px;
+  }
+  .warning-box {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  .warning-box strong { color: #fca5a5; }
+  .install-box {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  .install-box strong { color: #6ee7b7; }
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: #94a3b8;
+    font-size: 0.9em;
+  }
+  footer a { color: #818cf8; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .meta {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    font-size: 0.95em;
+  }
+  .meta-item { color: #cbd5e1; }
+  .meta-item strong { color: #f472b6; }
+  ul.bullet { padding-right: 25px; }
+  ul.bullet li { margin-bottom: 8px; color: #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <span class="badge">إصدار جديد متاح</span>
+  <span class="badge breaking">ترقية رئيسية</span>
+  <h1>OpenClaw 2026.9.4</h1>
+  <p class="subtitle">ترقية كبيرة: استرجاع التحديثات، ورشة الإضافات الموحدة، جلسات Cloud مُعدة، طرازات جديدة</p>
+  <p class="date">📅 11 سبتمبر 2026 — قبل 5 ساعات</p>
+  <div class="meta">
+    <span class="meta-item">📦 <strong>الحجم:</strong> 200.8 MB</span>
+    <span class="meta-item">🔧 <strong>التبعيات:</strong> 65</span>
+    <span class="meta-item">📋 <strong>من:</strong> 2026.9.3</span>
+    <span class="meta-item">🏷️ <strong>الترخيص:</strong> MIT</span>
+  </div>
+</header>
+
+<div class="grid">
+  <div class="stat-card">
+    <div class="label">نقطة الانطلاق</div>
+    <div class="value">2026.5.20</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">الإصدار الجديد</div>
+    <div class="value">2026.9.4</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">آخر إصدار سابق</div>
+    <div class="value">2026.9.3</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">نوع التحديث</div>
+    <div class="value">رئيسي</div>
+  </div>
+</div>
+
+<section>
+  <h2>⚡ أبرز المميزات (Highlights)</h2>
+  <ul class="feature-list">
+    <li>
+      <span class="tag security">استعادة</span>
+      <strong>استرجاع من تحديثات فاشلة متوافقة:</strong> الاحتفاظ بالحزمة السابقة واسترجاعها مع الإعداد والخدمة السابقين عند ثبوت سلامة الـ rollback من فحوصات الـ schema والتكوين. ترحيلات قواعد البيانات ما زالت تتطلب نسخة احتياطية مُتحققة قبل التحديث.
+    </li>
+    <li>
+      <span class="tag">ورشة الإضافات</span>
+      <strong>الإضافات في مكان واحد:</strong> اكتشاف الإضافات المُدمجة و ClawHub، تثبيتها من Control UI، وإدارة إعدادها وإعداداتها وصلاحياتها في ورشة Plugins موحدة.
+    </li>
+    <li>
+      <span class="tag">Cloud</span>
+      <strong>جلسات Cloud مُعدة:</strong> بدء جلسات Linux المؤهلة من مشاريع محلية مُعدة أو مستودعات GitHub عامة، وبناء snapshots قابلة لإعادة الاستخدام من Control UI قبل بدء المحادثة.
+    </li>
+    <li>
+      <span class="tag">TUI</span>
+      <strong>الإجابة عن أسئلة في الترمينال:</strong> اختيارات بالكيبورد، إجابات نصية حرة، وأسئلة متعددة في كل من جلسات TUI المتصلة بالـ Gateway والمحلية.
+    </li>
+    <li>
+      <span class="tag">نماذج</span>
+      <strong>GPT Image 2.5:</strong> طرازات جديدة Flare و Sunburst لتوليد وتعديل الصور عبر OpenAI أو fal دون تغيير طرازك الافتراضي الحالي.
+    </li>
+    <li>
+      <span class="tag perf">تاريخ المحادثات</span>
+      <strong>سجل محادثات أكثر اعتماداً:</strong> استرجاع الردود النهائية بعد تدفقات منقطعة، الاحتفاظ بإشعارات المهلة بعد إعادة التحميل، ومنع تكرار الإجابات النهائية عند تسليم البث المباشر للسجل المحفوظ.
+    </li>
+    <li>
+      <span class="tag">صوت</span>
+      <strong>صوت يُنهي العمل المُفوَّض:</strong> إعادة نتائج الـ Subagent إلى Talk وتسليم الإجابة النهائية حتى بعد جولات متعددة من التفويض.
+    </li>
+    <li>
+      <span class="tag security">إدارة التكوين</span>
+      <strong>تكوين مُدار خارجياً:</strong> تعيين <code>OPENCLAW_CONFIG_READONLY=1</code> لمنع OpenClaw من إعادة كتابة التكوين المُدار مع الحفاظ على تشخيصات القراءة فقط وحالة الـ runtime العادية.
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>⚠️ تغييرات كاسرة (Breaking Changes)</h2>
+  <div class="warning-box">
+    <strong>🚨 Deprecation قادم في الـ SDK:</strong> <code>agent-harness-credential-prompt-string-argument</code> دخل حالة الإهمال بتاريخ 9 سبتمبر 2026؛ وسيظل الوسيط النصي التقليدي لـ <code>buildCredentialSafetyPrompt</code> مدعوماً حتى 30 نوفمبر 2026. على مطوري الإضافات تمرير <code>{ controlToolsAvailable }</code>.
+  </div>
+  <div class="warning-box">
+    <strong>🚨 إزالة معلقة في توافقية الـ SDK:</strong> <code>sdk-untrusted-context-identifier-aliases</code> وصل تاريخ إزالة 8 سبتمبر 2026 لكنه ما زال <code>removal-pending</code>، تمديد فترة الانتظار حتى انتهاء ترحيل قراء الإضافات المنشورة.
+  </div>
+  <ul class="bullet">
+    <li><strong>استعادة الـ Rollback:</strong> حالات فشل التحديث المؤهلة بلا تغيير schema تستعيد الحزمة، command shim، الخدمة، وتكوين ما قبل التفعيل، ثم تتحقق من Gateway السابق. حالات فشل schema-تغيير، قواعد بيانات جديدة غير متوافقة، أو تعديلات المشغل في الفترة بينية تمنع الـ rollback التلقائي.</li>
+    <li><strong>Cloud Ready Workers:</strong> جلسات Git المحلية المؤهلة و GitHub العامة يمكنها إعادة استخدام الـ workers المُعدة. جلسات المستودعات الخاصة والأجهزة المقترنة تبقى خارج هذا التدفق. إعداد افتراضي محجوز واحد لكل مشروع/بروفايل حتى 4 على مستوى Gateway — يتم محاسبتك عليها حتى تحذفها. عيّن <code>cloudWorkers.profiles.*.readyWorkers</code> إلى صفر لتعطيلها.</li>
+    <li><strong>وضع القراءة فقط:</strong> <code>OPENCLAW_CONFIG_READONLY=1</code> يُحترم عبر تكوين الكتابة والإعداد وإصلاحات Doctor وتغييرات الإضافات والتحديثات. لا يجعل حالة الـ runtime للقراءة فقط.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>🔧 أهم التغييرات (Changes)</h2>
+
+  <h3>🛡️ الأمان والاستعادة</h3>
+  <ul class="feature-list">
+    <li>
+      <span class="tag security">Rollback</span>
+      استعادة الحزمة، الأمر، الخدمة، وتكوين ما قبل التحديث المؤهلة عندما تتأكد سلامة schema والتكوين من التطابق.
+    </li>
+    <li>
+      <span class="tag security">Read-only</span>
+      منع OpenClaw من إعادة كتابة التكوين المُدار بالنشر (<code>OPENCLAW_CONFIG_READONLY=1</code>) مع الحفاظ على أوامر التشخيص.
+    </li>
+    <li>
+      <span class="tag security">رفع صلاحيات</span>
+      <span class="tag breaking">قريباً</span>
+      إنذار والترقية الإلزامية لـ Node.js عند عدم توافق runtime الـ CLI مع الحفاظ على التشخيص وأوامر التحديث للإصلاح.
+    </li>
+    <li>
+      <span class="tag">Deepgram</span>
+      نسخ Deepgram Flux الجديدة: <code>flux-general-en</code> و <code>flux-general-multi</code> تتطلب <code>ffmpeg</code> مثبتاً.
+    </li>
+  </ul>
+
+  <h3>🧩 الإضافات (Plugins)</h3>
+  <ul class="feature-list">
+    <li>
+      <span class="tag">Plugins</span>
+      تصفّح الإضافات المثبتة حسب الفئة، صفحات تفاصيل مُجمّعة، عناوين URL قصيرة مثل <code>/reports</code>، واكتشاف المهارات الإضافية المُدمجة و ClawHub من بحث واحد.
+    </li>
+    <li>
+      <span class="tag">Cloud</span>
+      بناء، إعادة بناء، فحص، تثبيت، حذف، واستعادة snapshots لعمال Cloud المُدعومين من Settings → Connections → Cloud workers → Snapshots.
+    </li>
+    <li>
+      <span class="tag">Cloud</span>
+      تعديل بروفايلات العمال المتقدمة والإعدادات الافتراضية للمستودعات، وفحص مواصفات آلة جلسات Cloud، واختيار عمّال Windows أصليين عند دعم الـ backend.
+    </li>
+  </ul>
+
+  <h3>💬 المحادثات والـ TUI</h3>
+  <ul class="feature-list">
+    <li>
+      <span class="tag">TUI</span>
+      التنقل بين الاختيارات بالأسهم أو الأرقام، كتابة إجابة Other، تفعيل خيارات multi-select، وإعادة فتح سؤال معلّق بـ <code>/question</code>.
+    </li>
+    <li>
+      <span class="tag">Chat</span>
+      شريط محادثات جانبي مدمج يساري مع هويات المرسل في معاينات المحادثات المشتركة، إضافة النص المحدد إلى composer الرئيسي، ومعاينة الفيديوهات قبل الإرسال.
+    </li>
+    <li>
+      <span class="tag">الترميم التلقائي</span>
+      السماح لـ command reviewer التلقائي بقبول أو رفض أو تصعيد أمر ضمن سياق محادثة محدود مع احتفاظ سلطة الـ execution policy.
+    </li>
+    <li>
+      <span class="tag">التعلم من المهارات</span>
+      فتح learning من العمل السابق في جلسة عادية يمكنك فحصها ومتابعة العمل فيها.
+    </li>
+  </ul>
+
+  <h3>🧠 التشخيصات والذاكرة</h3>
+  <ul class="feature-list">
+    <li>
+      <span class="tag perf">Diagnostics</span>
+      التعرف على العمل الذي يحتجز قائمة انتظار دورة حياة الجلسة وعرض مرحلة تحضير تنظيف العناصر التي تستغرق وقتاً.
+    </li>
+    <li>
+      <span class="tag perf">Memory</span>
+      استخدام طراز الـ embedding الخاص بالمزود الاحتياطي المختار وحالة الـ index، مراقبة الكتابات الخارجية في LanceDB، والاحتفاظ بالاستدعاء رغم انتهاء مهلة الـ trigger.
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>🐛 إصلاحات مهمة (Key Fixes)</h2>
+  <ul class="feature-list">
+    <li>
+      🔧 <strong>حدود الوصول والمحتوى:</strong> الحفاظ على allowlists مجموعات WhatsApp الحالية أثناء الإصلاحات الأمنية، استمرار حجب عناوين cloud-metadata عند تفعيل استثناءات IPv6 الخاصة، تحديد أحجام bodies لطلبات Slack HTTP، وحصر استرجاع اقتباسات Tlon على الـ post المُقتبَس.
+    </li>
+    <li>
+      🔧 <strong>أمان الـ workspace والنسخ الاحتياطي:</strong> الحفاظ على تعديلات الـ workspace المتزامنة، تضمين ملفات التكوين الخارجية المطلوبة في النسخ الكاملة، إبقاء captures التحديث الخاصة خارج الصادرات العادية، وتحمل اختفاء sidecar SQLite مباشر بعد snapshot قاعدة البيانات.
+    </li>
+    <li>
+      🔧 <strong>استعادة الترحيلات:</strong> استعادة تكوينات multi-agent بدون marker، إبقاء ترحيلات Skill Workshop الغامضة متاحة للمراجعة، شرح رفض ترحيل الجلسات المرتبطة بـ hard-link، والحفاظ على وسائط مُعَدَّلة عند إعادة نشر أرشيفات مُرحَّلة.
+    </li>
+    <li>
+      🔧 <strong>Doctor والمصادقة:</strong> الحفاظ على حالة المصدر أثناء lint الكامل، محاذاة بروفايلات المصادقة المحفوظة أثناء الترحيل، تحديد رفض بروفايلات المصادقة القديمة على المزودين المتأثرين، استعادة رموز عقد legacy ذات scopes غير صالحة.
+    </li>
+    <li>
+      🔧 <strong>تسليم الرد وتاريخ المحادثة:</strong> استرجاع الردود النهائية من تدفقات منقطعة وأخطاء أدوات سابقة، الاحتفاظ بنص الـ turn الفاشل الجزئي ونتائج المهلة، الحفاظ على حدود الفقرة والـ code-block، والإبلاغ عن ردود Responses مقتطعة على أنها غير مكتملة.
+    </li>
+    <li>
+      🔧 <strong>استمرارية المحادثة:</strong> إبقاء الصور المرسلة مرئية أثناء تسليم التاريخ، منع وميض تبديل الجلسات الباردة، وتسوية تحديثات الجلسات المتزامنة بشكل متّسق.
+    </li>
+    <li>
+      🔧 <strong>إعادة استخدام Claude CLI:</strong> إبقاء الجلسات الدافئة حية عند تغير استعداد skills-watcher دون تغير محتوى المهارات المُعدة، مع إبطال إعادة الاستخدام بعد تغير محتوى المهارات الحقيقي.
+    </li>
+    <li>
+      🔧 <strong>المحادثات الصوتية:</strong> تسليم النتائج المُنتَجة والمفوَّضة بشكل متكرر، السماح باستشارات صوتية مستقلة من جلسات الطالبة مقفلة الطراز، وقطع الصوت الفوري المنقطع عند الكمية المُشَغَّلة فعلياً.
+    </li>
+    <li>
+      🔧 <strong>Telegram:</strong> الاحتفاظ بالردود عند رفض HTTP proxy للنفق، التعرف على bot-ID mentions في النص وتعليقات الصور، الحفاظ على تباعد code-example، وإيقاف ردود فعل stall متأخرة بعد إلغاء التحضير.
+    </li>
+    <li>
+      🔧 <strong>Discord:</strong> استعادة التفويض من رسائل guild، الحفاظ على نصوص voice-note ambient، عرض presence الأعضاء فور إعادة الاتصال، والاحتفاظ بـ captions و link emoji المتكررة.
+    </li>
+    <li>
+      🔧 <strong>Slack:</strong> حل ملكية workspace للمؤسسات لـ heartbeat DMs، إبقاء ردود فعل التأكيد مستقلة عن ردود فعل الحالة، وتجنب تنسيق prose عادي ككود بعد مسارات Windows الجذرية.
+    </li>
+    <li>
+      🔧 <strong>Mattermost و Signal:</strong> إبقاء حسابات Mattermost الشقيقة متصلة أثناء إعادة تحميل مراجع السر، الحفاظ على معاينات الاستبدال أثناء تراجع الرسائل السابقة، والاحتفاظ بـ Signal reply quotes عند فشل التسليم التدفقي.
+    </li>
+    <li>
+      🔧 <strong>دقة نص القناة:</strong> الحفاظ على نصوص رسائل Matrix المجهولة و mentions المُهرَّبة، فك ترميز رسائل HTML-only Teams بشكل صحيح، الاحتفاظ بأنماط Feishu rich-text والأدوات غير المرتبطة، وإبقاء بادئات استجابة WhatsApp الصادرة خارج الرسائل الواردة.
+    </li>
+    <li>
+      🔧 <strong>Android والشاشات القابلة للطي:</strong> انتظار المرفقات المختارة قبل إرسال تعليقاتها، استعادة نشاط أداة مكتمل، التمييز بين حالة الاتصال وجاهزية المحادثة، وإبقاء ضوابط التفكير والمهام background داخل ألواح الطي.
+    </li>
+    <li>
+      🔧 <strong>اختيار المزود والطراز:</strong> الحفاظ على صفوف catalog مُؤلَّفة وهويات الطراز الدقيقة والبيانات الوصفية والاعتمادات عند تعايش الأسماء المستعارة أو تحديث الـ catalogs.
+    </li>
+    <li>
+      🔧 <strong>استجابة Gateway:</strong> نقل تخطيط التاريخ البارد وفحوصات السلامة وتنظيف الأرشيف خارج الـ main thread؛ الحفاظ على التحديثات المُعدة وصيانة ما بعد الإخلاء استجابية؛ تقليل ارتفاع الذاكرة عند فحص جلسات طويلة.
+    </li>
+    <li>
+      🔧 <strong>احتفاظ الجلسات:</strong> إيقاف التنظيف الزائد بعد زوال ضغط القرص، الحفاظ على التاريخ الذي يصبح محمياً أثناء التنظيف، وتجنب إعادة التعيين اليومية المبكرة حول فجوات التوقيت الصيفي.
+    </li>
+    <li>
+      🔧 <strong>تثبيت الإضافات والمهارات:</strong> منع تطابق الإضافات المثبتة عبر registries ClawHub مختلفة، الإبلاغ عن إصدارات أحدث للتثبيتات المثبَّتة، استعادة dead-ends في موافقة القدرات، والاحتفاظ بثقة المُدمج لتثبيتات مسار التطوير.
+    </li>
+    <li>
+      🔧 <strong>الأجهزة المقترنة و Linux:</strong> عرض window discovery على أول إجراء كمبيوتر، الحفاظ على نتائج التفعيل والملاحظة، فتح chat desktops على أجهزتها المعيّنة، وتحديد من أخذ التحكم في الـ desktop.
+    </li>
+    <li>
+      🔧 <strong>Doctor وتثبيت التحديث:</strong> السماح بتفضيلات Codex ضمنية عند غياب الإضافة مع الاحتفاظ بأخطاء runtimes المطلوبة صراحةً؛ إنهاء تحديثات بلا تكوين دون إنشاء ملف تكوين.
+    </li>
+    <li>
+      🔧 <strong>التفويض وإعادة التعيين:</strong> إبقاء wakes إكمال الخلفية حية بعد رد أمامي، الحفاظ على تاريخ الـ subagent عند تغير الـ parent thread، عرض نصوص subagent كاملة في task sidebar.
+    </li>
+    <li>
+      🔧 <strong>توجيه المزود والبحث:</strong> الحفاظ على هويات توجيه مستقرة لدورات OpenCode و OpenCode Go المستقلة، الاحتفاظ بـ headers دورة المزود للجلسات الصريحة.
+    </li>
+    <li>
+      🔧 <strong>ملكية التحديث واستمرارية Cloud:</strong> إيقاف استمرارية الإضافة وإجراءات rollback بعد فقدان صلاحية المُحدِّث، رفض استبدالات Gateway غير المُتحقَّق منها، الحفاظ على آلات Cloud عبر تحديثات Gateway.
+    </li>
+    <li>
+      🔧 <strong>تشخيصات runtime والحالة:</strong> إعادة تنفيذ الـ CLI تحت runtime Node مدعوم متاح قبل رفض البدء، الحفاظ على مكتبة Bun SQLite المختارة في الخدمات المُدارة.
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>📊 ملخص الإصدار</h2>
+  <ul class="bullet">
+    <li>✅ <strong>الحالة:</strong> latest (إصدار رسمي مستقر)</li>
+    <li>✅ <strong>beta:</strong> 2026.9.4</li>
+    <li>✅ <strong>extended-stable:</strong> 2026.6.35</li>
+    <li>⏰ <strong>تاريخ النشر على npm:</strong> قبل 5 ساعات</li>
+    <li>📦 <strong>tarball:</strong> openclaw-2026.9.4.tgz (200.8 MB)</li>
+    <li>🔐 <strong>npm SHA:</strong> c377db97052ebbbc7ccc1ea9f466d38d12292c07</li>
+    <li>📊 <strong>المساهمات:</strong> 1,174 PR فريد في السجل الكامل</li>
+    <li>🔄 <strong>تم استبعاد:</strong> 19 PR من v2026.9.3 كأساس</li>
+  </ul>
+</section>
+
+<section>
+  <h2>🚀 تعليمات التحديث</h2>
+  <div class="install-box">
+    <strong>📋 المتطلبات الأساسية:</strong> تأكد أن Node.js لا يزال 24.16.0+ أو 26.1.0+ (المُوصى به). OpenClaw 2026.9.4 يحترم متطلبات الـ runtime نفسها من 2026.9.3.
+  </div>
+
+  <h3>📌 خطوات التحديث على السيرفر</h3>
+  <div class="step">
+    <span class="step-num">1</span>
+    <strong>نسخة احتياطية</strong>
+    <div class="code-block">cp -r ~/.openclaw ~/.openclaw.backup-$(date +%Y%m%d)</div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">2</span>
+    <strong>تحديث OpenClaw</strong>
+    <div class="code-block">npm install -g openclaw@2026.9.4
+# أو
+npm update -g openclaw</div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">3</span>
+    <strong>إعادة تشغيل Gateway</strong>
+    <div class="code-block">openclaw gateway restart
+# أو (Docker)
+docker compose restart openclaw</div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">4</span>
+    <strong>التحقق من التحديث</strong>
+    <div class="code-block">npm ls -g openclaw
+openclaw --version
+openclaw doctor</div>
+  </div>
+
+  <h3>🔄 ميزة جديدة: Rollback والاستعادة</h3>
+  <p style="margin-top: 10px;">إذا فشل التحديث الذي لا يتضمن تغيير schema، سيتم <strong>التراجع التلقائي</strong> إلى الحزمة السابقة مع الإعداد والخدمة. لاحظ أن ترحيلات قواعد البيانات ما زالت تتطلب نسخة احتياطية مُتحققة قبل التحديث.</p>
+
+  <h3>⚙️ تحديث الـ SDK (للمطورين)</h3>
+  <p style="margin-top: 10px;">إذا كنت مطور إضافات (plugin developer):</p>
+  <div class="code-block">npm install openclaw/plugin-sdk@latest</div>
+  <p style="margin-top: 10px;">استبدل الوسيط النصي لـ <code>buildCredentialSafetyPrompt</code> بـ <code>{ controlToolsAvailable }</code> قبل 30 نوفمبر 2026.</p>
+</section>
+
+<footer>
+  <p>🦿 Claw — OpenClaw Daily Update Report</p>
+  <p style="margin-top: 8px;">
+    <a href="https://github.com/openclaw/openclaw/releases/tag/v2026.9.4">📋 ملاحظات الإصدار الكاملة على GitHub</a>
+    &nbsp;•&nbsp;
+    <a href="https://docs.openclaw.ai/install/updating/rollback-and-recovery">🔧 دليل الاستعادة والـ Rollback</a>
+  </p>
+  <p style="margin-top: 16px; font-size: 0.85em;">
+    تم إنشاؤه في 11 سبتمبر 2026 — 8:00 UTC
+  </p>
+</footer>
+
+</div>
+</body>
+</html>
