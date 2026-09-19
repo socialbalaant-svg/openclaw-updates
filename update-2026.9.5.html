@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحديث OpenClaw الإصدار 2026.9.5</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Tajawal', 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    color: #e2e8f0;
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.8;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+  }
+  .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 36px;
+    background: linear-gradient(135deg, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    color: #94a3b8;
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+  .version-card {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .version-card .label {
+    color: #94a3b8;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .version-card .value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #f1f5f9;
+  }
+  .version-card .value.new { color: #34d399; }
+  .version-card .value.old { color: #f87171; text-decoration: line-through; }
+  h2 {
+    font-size: 24px;
+    color: #c084fc;
+    margin-bottom: 16px;
+    border-bottom: 2px solid rgba(192, 132, 252, 0.3);
+    padding-bottom: 8px;
+    margin-top: 32px;
+  }
+  h3 {
+    font-size: 18px;
+    color: #a5b4fc;
+    margin: 20px 0 12px;
+  }
+  .changes {
+    background: rgba(15, 23, 42, 0.6);
+    border-right: 4px solid #6366f1;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .changes ul {
+    list-style: none;
+    padding: 0;
+  }
+  .changes li {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .changes li:last-child { border-bottom: none; }
+  .changes li::before {
+    content: '✦';
+    color: #8b5cf6;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .section-card {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .section-card .section-title {
+    color: #c084fc;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .install-box {
+    background: #0f172a;
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+  .install-box h3 {
+    color: #c084fc;
+    margin-bottom: 16px;
+    font-size: 18px;
+  }
+  pre {
+    background: #020617;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    direction: ltr;
+    text-align: left;
+    font-family: 'Courier New', monospace;
+    color: #a5f3fc;
+    font-size: 14px;
+  }
+  .note {
+    background: rgba(251, 191, 36, 0.1);
+    border-right: 4px solid #fbbf24;
+    border-radius: 8px;
+    padding: 16px;
+    color: #fde68a;
+    margin-bottom: 24px;
+  }
+  .note.green {
+    background: rgba(52, 211, 153, 0.1);
+    border-right-color: #34d399;
+    color: #a7f3d0;
+  }
+  .note.red {
+    background: rgba(248, 113, 113, 0.1);
+    border-right-color: #f87171;
+    color: #fecaca;
+  }
+  .footer {
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(99, 102, 241, 0.2);
+  }
+  .footer a { color: #818cf8; text-decoration: none; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .stat {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat .num {
+    font-size: 22px;
+    font-weight: bold;
+    color: #818cf8;
+  }
+  .stat .lbl {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-top: 4px;
+  }
+  .toc {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 32px;
+  }
+  .toc ul {
+    list-style: none;
+    padding: 0;
+  }
+  .toc li {
+    padding: 6px 0;
+    color: #94a3b8;
+  }
+  .toc a {
+    color: #a5b4fc;
+    text-decoration: none;
+  }
+  .toc a:hover { color: #c084fc; }
+  .releases-list {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .release-row {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .release-row .v {
+    background: rgba(99, 102, 241, 0.2);
+    color: #c084fc;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 14px;
+    font-weight: bold;
+    min-width: 100px;
+    text-align: center;
+  }
+  .release-row .v.head {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+  }
+  .release-row .d {
+    color: #cbd5e1;
+    font-size: 14px;
+    flex: 1;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <span class="badge">🚀 تحديث جديد متاح</span>
+  <h1>OpenClaw الإصدار 2026.9.5</h1>
+  <p class="subtitle">تم النشر قبل ~7 ساعات · تحديثات ذرية (Atomic Updates) + إضافات كبيرة لـ Control UI + Skill Workshop + GPT Live</p>
+
+  <div class="version-card">
+    <div>
+      <div class="label">الإصدار الحالي عندك</div>
+      <div class="value old">2026.5.20</div>
+    </div>
+    <div>
+      <div class="label">الإصدار الجديد</div>
+      <div class="value new">2026.9.5</div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="num">66</div>
+      <div class="lbl">حزمة تبعية</div>
+    </div>
+    <div class="stat">
+      <div class="num">214.5 MB</div>
+      <div class="lbl">حجم التنزيل</div>
+    </div>
+    <div class="stat">
+      <div class="num">259</div>
+      <div class="lbl">إجمالي الإصدارات</div>
+    </div>
+  </div>
+
+  <div class="note red">
+    ⚠️ <strong>تنبيه مهم:</strong> يتطلب هذا الإصدار (وكذلك 2026.9.3 و 2026.9.4) <strong>Node.js ≥ 24.16.0</strong> (يفضّل Node 26.1.0 أو أحدث). التحديث من Node 22 أو 25 سيكسر SQLite — حدّث Node أولًا قبل ترقية OpenClaw.
+  </div>
+
+  <div class="toc">
+    <div style="color:#c084fc;font-weight:bold;margin-bottom:10px;">📑 فهرس التقرير</div>
+    <ul>
+      <li><a href="#highlights">🌟 أبرز الميزات في 2026.9.5</a></li>
+      <li><a href="#all-releases">📦 كل الإصدارات بين 2026.5.20 و 2026.9.5</a></li>
+      <li><a href="#by-category">🗂️ ملخص التغييرات حسب الفئة</a></li>
+      <li><a href="#install">🔧 تعليمات التحديث</a></li>
+      <li><a href="#links">🔗 روابط مفيدة</a></li>
+    </ul>
+  </div>
+
+  <h2 id="highlights">🌟 أبرز الميزات في 2026.9.5</h2>
+
+  <div class="note green">
+    🦾 <strong>أكبر إصدار منذ آخر تحديث عندك:</strong> 4,179 Pull Request و 64 direct commit، شارك فيها 502 مساهمًا — التركيز على تحديثات آمنة بدون انقطاع، تكوين فريق من الوكلاء المتخصصين، GPT Live في الاجتماعات، أرشفة المحادثات، ومتصفح يعمل بالتوازي مع الوكيل.
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">⚛️ تحديثات ذرية (Atomic Updates) — تفحص الإصدار التالي قبل التحويل</div>
+    <ul class="changes">
+      <li><strong>أمان قبل القفز:</strong> قبل التبديل للإصدار الجديد على مسارات التحديث المدعومة، يفحص المُحدِّث الإصدار التالي للتأكد من جاهزيته.</li>
+      <li><strong>تثبيت الإضافات بدون إعادة تشغيل البوابة:</strong> يمكنك تثبيت الإضافات (Plugins) أثناء عمل البوابة (Gateway) دون الحاجة لإعادة التشغيل.</li>
+      <li><strong>إصلاح المشاكل القديمة عبر Doctor:</strong> المحادثات والبيانات الوصفية القديمة وسجلات الإقران وقوائم الرسائل الملفية تنتظر إصلاحًا صريحًا عبر <code>openclaw doctor --fix</code> بدلاً من إصلاحها تلقائيًا عند الإقلاع.</li>
+      <li><strong>تحديثات الإضافات لا تعرقل الإصدار الأساسي:</strong> الإضافات غير المتوفرة لا توقف التحديث الأساسي بعد الآن.</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">👥 تكوين فريق من الوكلاء المتخصصين عند الإعداد</div>
+    <ul class="changes">
+      <li><strong>اختيار الأدوار:</strong> ابدأ بـ "رئيس فريق" + باحث + كاتب + مراجع، أو اختر وكيلًا واحدًا متخصصًا.</li>
+      <li><strong>التعيين المُوجَّه:</strong> المعالج (Wizard) يمكنه إنشاء الفريق المكوَّن من 4 وكلاء، كما يقدّم <strong>وكيل جديد</strong> في واجهة الويب نفس الأدوار عبر اقتراح تحتاج للموافقة عليه قبل أي إنشاء.</li>
+      <li><strong>استئناف آمن:</strong> يحفظ المعالج المنسق الذي اخترته لاستئناف العمل لاحقًا. اختيار <strong>Skip</strong> ينشئ الفريق دون اتصال، مع إمكانية ضبط الوصول للذكاء الاصطناعي لاحقًا.</li>
+      <li><strong>صورة رمزية للوكيل:</strong> بعد الاتفاق على الاسم والشخصية، يقترح الإعداد 4 صور رمزية ويختار المستخدم المفضلة. تتطلب مزود صور متاحًا، ويمكنك التخطي والاكتفاء بالإيموجي.</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">🎤 GPT Live في اجتماعاتك ومكالماتك</div>
+    <ul class="changes">
+      <li>يدعم OpenClaw الآن <strong>التفاعل الصوتي المباشر</strong> داخل الاجتماعات والمكالمات الهاتفية، مع إمكانية الفحص والتوجيه والإلغاء من واجهة الويب وDiscord.</li>
+      <li>تحسين معالجة <strong>wake-name</strong> — أكثر تحمّلًا للكلام البيئي بدون تشغيل عرضي للوكلاء.</li>
+      <li><strong>تسجيل اجتماعات Discord:</strong> التقاط قائم على الإشغال (occupancy) في وضع الاستماع فقط، مع ملاحظات تلقائية وصفحة Meetings في Control UI.</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">🗄️ أرشفة المحادثات القديمة + تحكم في التخزين</div>
+    <ul class="changes">
+      <li><strong>ضغط المحادثات القديمة:</strong> ضغط المحادثات القديمة غير النشطة مع إبقائها متاحة لإعادة الفتح لاحقًا.</li>
+      <li><strong>التخزين البارد (Cold Storage):</strong> معطل افتراضيًا. شغّله لأرشفة المحادثات المؤهلة بعد 30 يومًا، أو غيّر الفترة دون إعادة تشغيل.</li>
+      <li><strong>تقرير التخزين في الإعدادات:</strong> يعرض كم التخزين الذي يستخدمه كل وكيل، مع زر <strong>Run now</strong> للأرشفة الفورية.</li>
+      <li><strong>ترقية Schema 21:</strong> يرقّي قاعدة بيانات الوكلاء إلى schema 21 — الإصدارات الأقدم لا يمكنها فتحها. <strong>يجب عمل نسخة احتياطية قبل الترقية.</strong></li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">🧰 واجهة ويب جديدة كليًا + البحث في المحادثات</div>
+    <ul class="changes">
+      <li><strong>نظرة Agents overview:</strong> تجمع النشاط الأخير ومعاينات المحادثات في مكان واحد، مع رابط مباشر لكل محادثة رئيسية للوكيل.</li>
+      <li><strong>اختيار أيقونة SVG مخصصة:</strong> الصق SVG مخصصًا في <strong>Icon & color → Custom icon…</strong> لمنح المحادثة صورة فريدة بها ألوانها.</li>
+      <li><strong>إعادة ترتيب صفحات الإضافات في الشريط الجانبي:</strong> صفحات الإضافات تنضم لطلبك المحفوظ في الشريط الجانبي.</li>
+      <li><strong>لوحة الأوامر مع بحث تدريجي:</strong> تعرض "Searching sessions…" أو "Searching commands…" أثناء البحث، مع الأوامر المحلية متاحة فورًا.</li>
+      <li><strong>نشاط في علامة تبويب المتصفح:</strong> أيقونة التبويب تعرض عندما يعمل الوكيل، أو يحتاج موافقة، أو انتهى أثناء غيابك.</li>
+      <li><strong>اختيار أين يبدأ عمل جديد:</strong> New Session يعرض أجهزتك في منتقي قابل للبحث، مع تفاصيل السعة وخيار <strong>Any available device</strong>.</li>
+      <li><strong>المسودات والقائمة المنظَّمة:</strong> يمكنك إرسال نص ومرفقات أثناء تحميل السجل، وبدء المسودة التالية فورًا. التسليم ينتظر حتى تكون المحادثة جاهزة.</li>
+      <li><strong>مسودات الفريق غير المرسلة:</strong> في الجلسات المشتركة، تظهر مسودة كل شخص في فقاعة ناعمة مكتوب عليها "Typing · not sent".</li>
+      <li><strong>إدخال الإيموجي بالاسم:</strong> اكتب <code>:smi</code> في الشات لرؤية اقتراحات الإيموجي، ثم اختر بـ Arrow + Enter.</li>
+      <li><strong>تعليقات على أجزاء الشات:</strong> اختر مقطعًا واختر <strong>Add to chat</strong> لحفظ تعليق دون إزعاج مسودة رسالتك.</li>
+      <li><strong>الحفاظ على المشروع عند تفرع محادثة:</strong> Fork conversation و Fork from here يحافظان على المجلد/المشروع المحلي المختار.</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">🔧 تركيب وإعداد أكثر ذكاءً</div>
+    <ul class="changes">
+      <li><strong>اختيارات أقل للإعداد:</strong> الإعداد الجديد لـ OpenAI وChatGPT/Codex يبدأ بـ Astra إذا لم تختر نموذجًا أساسيًا.</li>
+      <li><strong>إعداد محلي افتراضي Full Tools:</strong> الإعداد المحلي يختار Full tools افتراضيًا عندما لا توجد profile مضبوطة، بما في ذلك أدوات الرسائل والإضافات المفعّلة.</li>
+      <li><strong>استعادة تثبيت سطر الأوامر:</strong> المثبّت يعيد استخدام Node وnvm المتوافقَين لديك دون تغيير ملف shell.</li>
+      <li><strong>OpenClaw في حاوية Docker:</strong> sandbox shell وأدوات المتصفح ترى نفس ملفات workspace وskills حتى مع مسارات host مختلفة.</li>
+      <li><strong>تثبيت CLI على FreeBSD:</strong> متاح الآن عبر <code>install-cli.sh</code> باستخدام Node وnpm النظاميين.</li>
+      <li><strong>إعداد الجهاز بتوجيه أوضح:</strong> متصفح يستخدم device token يمكنه إعادة الاتصال بعد موافقة المدير.</li>
+      <li><strong>الاحتفاظ بالوكيل الافتراضي بعد الترحيل:</strong> الإعدادات متعددة الوكلاء تحتفظ بالوكيل الافتراضي المحفوظ بعد إعادة التشغيل.</li>
+      <li><strong>استئناف الإعداد المحلي المتقطع:</strong> الإعداد المتقطع يُكمل في الـworkspace الذي وافقت عليه، مع الاحتفاظ بالوكلاء والنموذج وruntime.</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">🧠 Memory + Skills + Models</div>
+    <ul class="changes">
+      <li><strong>Skill Workshop:</strong> تبقى الإضافات والمهارات في مجموعة دائمة مملوكة للوكيل عبر workspaces.</li>
+      <li><strong>GPT Image 2.5:</strong> دعم توليد الصور الجديد.</li>
+      <li><strong>نماذج جديدة:</strong> GPT-5.6, Tencent Hy3, Meta Muse Spark 1.1.</li>
+      <li><strong>أداء:</strong> الحفاظ على warm prompt caches، تقليل العمل غير الضروري أثناء تحديث الجلسات الباردة.</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">🌐 متصفح يعمل بالتوازي مع الوكيل</div>
+    <ul class="changes">
+      <li>يمكنك العمل على صفحات المتصفح بالتوازي مع الوكيل، مع <strong>browser tabs</strong> تنبض وروابط خارجية تُفتح في tabs Mac أصلية تبقى مع نافذتها.</li>
+    </ul>
+  </div>
+
+  <h2 id="all-releases">📦 كل الإصدارات بين 2026.5.20 و 2026.9.5</h2>
+
+  <div class="releases-list">
+    <div class="release-row">
+      <span class="v head">2026.9.5</span>
+      <span class="d">⚛️ تحديثات ذرية · فريق وكلاء متخصصين · GPT Live · أرشفة المحادثات · متصفح بالتوازي</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.9.4</span>
+      <span class="d">🔌 Skill Workshop · حوارات قابلة للمشاركة · GPT Image 2.5</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.9.3</span>
+      <span class="d">🛡️ تحديثات أكثر أمانًا · أداء أفضل · Node 24.16+ مطلوب</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.9.2</span>
+      <span class="d">⚡ شات أسرع · GPT-6 Astra · استعادة بعد إعادة التشغيل</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.9.1</span>
+      <span class="d">📊 Mermaid في كل مكان · إعداد سريع · بوابة أكثر استقرارًا</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.8.2</span>
+      <span class="d">🐧 رفيق سطح مكتب Linux · Home dock · 4 سمات جديدة · متصفح بدون بوابة</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.8.1</span>
+      <span class="d">🔍 البحث في المحادثات السابقة · widgets في الشات · موافقات متكررة</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.7.1</span>
+      <span class="d">🎨 إعادة هيكلة Control UI · تحديث iOS/Android/macOS · GPT-5.6</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.6.11</span>
+      <span class="d">📡 إصلاحات شاملة للقنوات: Telegram, WhatsApp, Matrix, iMessage, Slack</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.6.9</span>
+      <span class="d">📨 تسليم Telegram أغنى · استرداد أقوى · Codex أقوى</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.6.8</span>
+      <span class="d">📝 تسليم قنوات أغنى · نماذج GLM-5.2 وClaude Haiku 4.5</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.6.6</span>
+      <span class="d">🔒 حدود أمان أكثر صرامة · تسليم Telegram موثوق · iMessage مستقر</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.6.5</span>
+      <span class="d">⚙️ QQBot أنظف · MCP لا يفسد الجلسات · Parallel Web Search مدمج</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.6.1</span>
+      <span class="d">🧩 Skill Workshop · Workboard Goals · Tokenjuice خارجي</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.5.31</span>
+      <span class="d">💬 شات أسرع · استرداد وكلاء · cron أوضح · iOS realtime</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.5.26</span>
+      <span class="d">🚀 بوابة أسرع · Transcripts جوهرية · Talk voice أفضل · 8 محاور</span>
+    </div>
+    <div class="release-row">
+      <span class="v">2026.5.22</span>
+      <span class="d">⚡ أداء Gateway · Transcripts تأسست · حدود أمان محتوى</span>
+    </div>
+  </div>
+
+  <h2 id="by-category">🗂️ ملخص التغييرات حسب الفئة</h2>
+
+  <div class="section-card">
+    <div class="section-title">⚡ الأداء</div>
+    <ul class="changes">
+      <li>Gateway أسرع: تجنب قراءات plugin وchannel وfilesystem المتكررة عند الإقلاع</li>
+      <li>الحفاظ على warm prompt caches (2026.9.3)</li>
+      <li>تقليل العمل أثناء تحديث الجلسات الباردة وبحث الذاكرة (2026.9.3)</li>
+      <li>إعادة استخدام builds بين الجلسات (2026.9.3)</li>
+      <li>شات Control UI أسرع: عرض transcript، حفظ المسودات، أول رسالة لا تتنافس (2026.5.31)</li>
+      <li>Lazy-load لـ plugin startup work و ACPX runtime (2026.5.22)</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">🔒 الأمان</div>
+    <ul class="changes">
+      <li>حدود fail-closed: transcript, sandbox, MCP, browser, channel, exec-approval (2026.6.6)</li>
+      <li>Browser snapshot reads تحترم SSRF policy (2026.5.26)</li>
+      <li>system-event text لا يستطيع spoof nested prompt markers (2026.5.26)</li>
+      <li>fetched file text يُغلَّف كـ external content (2026.5.26)</li>
+      <li>تنقيح الأسرار من debug/config output (2026.6.9)</li>
+      <li>تدقيق open-DM tool exposure (2026.6.9)</li>
+      <li>Stale device tokens تُرفض (2026.5.26)</li>
+      <li>Plugin install governance يحل محل dangerous-code scanner (2026.6.2)</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">📡 القنوات (Telegram, WhatsApp, iMessage, Discord, Slack, Matrix, ...)</div>
+    <ul class="changes">
+      <li><strong>Telegram:</strong> تسليم HTML غني، قوائم/جداول قابلة للتوسيع، CLI-backed replies، mentions صحيحة (2026.6.8, 2026.6.9)</li>
+      <li><strong>WhatsApp:</strong> استعادة group/media behavior، ACP bindings، موافقات thumbs (2026.5.26, 2026.6.8)</li>
+      <li><strong>iMessage:</strong> always-on inbound recovery، durable echo markers، block streaming (2026.6.6)</li>
+      <li><strong>Discord:</strong> voice playback أفضل، model picking، replay متاح (2026.5.26)</li>
+      <li><strong>Slack:</strong> ack reactions أوضح، outbound hooks ثابتة (2026.6.8)</li>
+      <li><strong>Matrix:</strong> voice notes وthreaded conversations تحتفظ بسياقها (2026.6.5)</li>
+      <li><strong>QQBot:</strong> `/bot-group-allways on|off` لتبديل متطلبات @mention (2026.6.5)</li>
+      <li><strong>Feishu:</strong> voice replies تعرض مدتها (2026.6.11)</li>
+      <li><strong>Google Chat:</strong> native approval cards + click handling (2026.6.5)</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">🤖 الوكلاء وCodex</div>
+    <ul class="changes">
+      <li>Tool approvals تتبع posture الجلسة (2026.9.1)</li>
+      <li>"Allow Always" ثابت لـ MCP tools على خوادم OpenClaw-configured (2026.9.1)</li>
+      <li>موافقات تصل للقناة الأصلية عبر Telegram topics (2026.9.1)</li>
+      <li>Codex approvals تلقائية + GPT-5.3 Spark OAuth routing (2026.6.9)</li>
+      <li>Codex Hosted Search متاح (2026.6.9)</li>
+      <li>StepFun متاح من npm وClawHub (2026.6.9)</li>
+      <li>Tencent Hy3, Meta Muse Spark 1.1, GPT-5.6, GPT-6 Astra (2026.7.1, 2026.9.2)</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">🧩 Plugins + Skills</div>
+    <ul class="changes">
+      <li><strong>Skill Workshop:</strong> اكتشاف الإضافات والمهارات أصبح أسهل (2026.9.3, 2026.9.4)</li>
+      <li>حوارات قابلة للمشاركة + تحوّل إلى مهارات قابلة لإعادة الاستخدام (2026.9.4)</li>
+      <li>Tokenjuice وCopilot كـ plugins خارجية رسمية (2026.6.1)</li>
+      <li>BytePlus, ComfyUI, Mistral, NovitaAI, OpenCode, Volcengine, Vydra, Xiaomi, Cohere, Meta (2026.8.1)</li>
+      <li>ClawHub skills تحتفظ بـ verified source provenance (2026.6.9)</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">📱 Mobile Apps (iOS / Android / macOS)</div>
+    <ul class="changes">
+      <li><strong>Android:</strong> chat screen، sidebar navigation، appearance settings تطابق Control UI (2026.9.1)</li>
+      <li><strong>iOS:</strong> Watch controls، Talk realtime playback، iPad layouts أصيلة (2026.6.9, 2026.7.1)</li>
+      <li><strong>macOS:</strong> desktop companion رسمي، hosted push relay، native iPad layouts (2026.7.1)</li>
+      <li><strong>Voice:</strong> iOS Talk mode، Android offline voice/gateway recovery (2026.5.26)</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">🌐 المتصفح</div>
+    <ul class="changes">
+      <li>Mermaid rendering في Control UI وnative apps (2026.9.1)</li>
+      <li>browser tabs تنبض + روابط خارجية في tabs Mac أصلية (2026.9.3)</li>
+      <li>browser CDP clients يمكنها إيقاظ relay محلي مزدوج (2026.8.2)</li>
+      <li>Chrome extension: standalone direct-loopback relay (2026.8.2)</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">🔧 التثبيت والتحديث</div>
+    <ul class="changes">
+      <li>Atomic Updates قبل التبديل (2026.9.5)</li>
+      <li>plugin install بدون إعادة تشغيل البوابة (2026.9.5)</li>
+      <li>تحديث الإضافات لا يعرقل الأساسي (2026.9.5)</li>
+      <li>`openclaw update` يتراجع عن npm candidate عند فشل Doctor (2026.9.1)</li>
+      <li>المعالج (wizard) يبقي configuration وSecretRefs عبر فشل الترقية (2026.9.1)</li>
+      <li>إخفاقات التحديث تُسلَّم لـ built-in triage agent (2026.9.1)</li>
+      <li>npm 12 local archives مدعومة (2026.9.1)</li>
+      <li>تثبيت CLI على FreeBSD (2026.9.5)</li>
+      <li>OpenClaw في Docker مع verified bind mounts (2026.9.5)</li>
+    </ul>
+  </div>
+
+  <h2 id="install">🔧 تعليمات التحديث</h2>
+
+  <div class="note red">
+    ⚠️ <strong>قبل التحديث:</strong>
+    <ol style="padding-right:20px;margin-top:8px;">
+      <li>حدّث Node.js إلى ≥ 24.16.0 (يفضّل 26.1.0+). التحديث من Node 22 أو 25 <strong>سيكسر</strong> SQLite.</li>
+      <li>اعمل نسخة احتياطية كاملة من <code>~/.openclaw</code> + قواعد البيانات قبل أي شيء.</li>
+      <li>الإصدار 2026.9.5 يرقّي قاعدة البيانات إلى schema 21 — الإصدارات الأقدم لا يمكنها فتحها.</li>
+      <li>إذا كنت على 2026.9.2، اتبع <a href="https://docs.openclaw.ai/install/updating#updating-from-2026.9.2-across-a-schema-bump" style="color:#818cf8;">تعليمات schema-upgrade اليدوية</a>.</li>
+    </ol>
+  </div>
+
+  <div class="install-box">
+    <h3>1️⃣ التحقق من إصدار Node الحالي</h3>
+    <pre>node --version</pre>
+    <p style="margin-top:8px;color:#94a3b8;font-size:14px;">يجب أن تكون النتيجة v24.16.0 أو أعلى (يفضّل v26.1.0+).</p>
+
+    <h3 style="margin-top:20px;">2️⃣ تحديث Node (إذا لزم) عبر nvm</h3>
+    <pre>nvm install 26
+nvm use 26</pre>
+
+    <h3 style="margin-top:20px;">3️⃣ التحديث العالمي (Global)</h3>
+    <pre>npm update -g openclaw</pre>
+
+    <h3 style="margin-top:20px;">4️⃣ أو تثبيت إصدار محدد</h3>
+    <pre>npm install -g openclaw@2026.9.5</pre>
+
+    <h3 style="margin-top:20px;">5️⃣ التحقق من الإصدار</h3>
+    <pre>openclaw --version
+# يجب أن يطبع: 2026.9.5</pre>
+
+    <h3 style="margin-top:20px;">6️⃣ إصلاح المشاكل القديمة (مهم بعد قفزة طويلة)</h3>
+    <pre>openclaw doctor --fix</pre>
+
+    <h3 style="margin-top:20px;">7️⃣ إعادة تشغيل البوابة (Gateway)</h3>
+    <pre>openclaw gateway restart</pre>
+
+    <h3 style="margin-top:20px;">8️⃣ فحص الحالة</h3>
+    <pre>openclaw status</pre>
+  </div>
+
+  <h2 id="links">🔗 روابط مفيدة</h2>
+
+  <div class="install-box">
+    <ul style="list-style:none;">
+      <li style="padding:8px 0;">📦 <a href="https://www.npmjs.com/package/openclaw/v/2026.9.5" style="color:#818cf8;">صفحة NPM للإصدار 2026.9.5</a></li>
+      <li style="padding:8px 0;">💻 <a href="https://github.com/openclaw/openclaw" style="color:#818cf8;">مستودع GitHub</a></li>
+      <li style="padding:8px 0;">📝 <a href="https://github.com/openclaw/openclaw/blob/main/CHANGELOG/2026.9.5.md" style="color:#818cf8;">سجل التغييرات الكامل 2026.9.5</a></li>
+      <li style="padding:8px 0;">📋 <a href="https://github.com/openclaw/openclaw/releases" style="color:#818cf8;">كل الإصدارات على GitHub</a></li>
+      <li style="padding:8px 0;">📖 <a href="https://docs.openclaw.ai/releases/2026.9.5" style="color:#818cf8;">توثيق 2026.9.5 الرسمي</a></li>
+      <li style="padding:8px 0;">📥 <a href="https://registry.npmjs.org/openclaw/-/openclaw-2026.9.5.tgz" style="color:#818cf8;">ملف tarball مباشرة</a></li>
+      <li style="padding:8px 0;">🔧 <a href="https://docs.openclaw.ai/install/updating" style="color:#818cf8;">دليل التحديث الرسمي</a></li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <p>📅 تاريخ التقرير: 19 سبتمبر 2026 · 08:00 UTC</p>
+    <p>🤖 تم إنشاؤه تلقائيًا بواسطة Claw</p>
+    <p style="margin-top:8px;"><a href="latest.html">← العودة لآخر تحديث</a></p>
+  </div>
+
+</div>
+</body>
+</html>
