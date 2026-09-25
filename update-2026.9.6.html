@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحديث OpenClaw - الإصدار 2026.9.6</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', 'Tahoma', 'Cairo', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    color: #e2e8f0;
+    line-height: 1.8;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .hero {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+    border-radius: 20px;
+    padding: 50px 40px;
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+  }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+  .hero h1 {
+    font-size: 42px;
+    color: white;
+    margin-bottom: 12px;
+    font-weight: 800;
+  }
+  .hero .version {
+    font-size: 64px;
+    font-weight: 900;
+    color: white;
+    margin: 20px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    letter-spacing: 2px;
+  }
+  .hero .date {
+    color: rgba(255,255,255,0.9);
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  .section {
+    background: #1e293b;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 20px;
+    border: 1px solid #334155;
+  }
+  .section h2 {
+    color: #8b5cf6;
+    font-size: 26px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #6366f1;
+  }
+  .section p {
+    color: #cbd5e1;
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+  }
+  .card {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .card .label {
+    color: #94a3b8;
+    font-size: 13px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .card .value {
+    color: #f1f5f9;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .card .value.green { color: #10b981; }
+  .card .value.yellow { color: #fbbf24; }
+  .card .value.purple { color: #a78bfa; }
+  .timeline {
+    position: relative;
+    padding-right: 30px;
+    margin-top: 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    right: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, #6366f1, #8b5cf6, #ec4899);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 25px;
+    padding: 15px 20px;
+    background: #0f172a;
+    border-radius: 10px;
+    border-right: 3px solid #6366f1;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    right: -35px;
+    top: 22px;
+    width: 14px;
+    height: 14px;
+    background: #6366f1;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px #1e293b;
+  }
+  .timeline-item .ver {
+    color: #a78bfa;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .timeline-item .date {
+    color: #64748b;
+    font-size: 13px;
+    margin-right: 10px;
+  }
+  .timeline-item .desc {
+    color: #cbd5e1;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  .commands {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 15px;
+    font-family: 'Courier New', monospace;
+    direction: ltr;
+    text-align: left;
+  }
+  .commands .cmd {
+    display: block;
+    color: #10b981;
+    padding: 8px 0;
+    border-bottom: 1px dashed #334155;
+    font-size: 14px;
+  }
+  .commands .cmd:last-child { border-bottom: none; }
+  .commands .comment {
+    color: #64748b;
+    font-size: 13px;
+    margin: 10px 0 5px;
+  }
+  .highlight-box {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #0f172a;
+    padding: 20px 25px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-align: center;
+    margin: 20px 0;
+    font-size: 18px;
+  }
+  .footer {
+    text-align: center;
+    color: #64748b;
+    padding: 30px;
+    font-size: 14px;
+  }
+  ul.list { padding-right: 25px; margin-top: 10px; }
+  ul.list li { margin-bottom: 10px; color: #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <span class="badge">🦾 تحديث جديد متاح</span>
+    <h1>إصدار جديد من OpenClaw</h1>
+    <div class="version">2026.9.6</div>
+    <p style="color: rgba(255,255,255,0.95); font-size: 18px;">آخر تحديث: 23 سبتمبر 2026</p>
+  </div>
+
+  <div class="section">
+    <h2>📊 ملخص التحديث</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="label">الإصدار الحالي عندك</div>
+        <div class="value yellow">2026.5.20</div>
+      </div>
+      <div class="card">
+        <div class="label">الإصدار المتاح</div>
+        <div class="value green">2026.9.6</div>
+      </div>
+      <div class="card">
+        <div class="label">عدد الإصدارات بينك وبين الأحدث</div>
+        <div class="value purple">+4 شهر</div>
+      </div>
+      <div class="card">
+        <div class="label">نوع الإصدار</div>
+        <div class="value">Latest + Beta</div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      ⚡ إنت متأخر بأكثر من 4 شهور — فيه تحديثات أمنية ومميزات جديدة مهمة
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🚀 أهم المميزات الجديدة</h2>
+    <ul class="list">
+      <li><strong>إصدار 2026.9.6 (الأحدث):</strong> تحديثات استقرار وتحسينات في الأداء</li>
+      <li><strong>إصدار 2026.9.5:</strong> تحسينات على القنوات المتعددة</li>
+      <li><strong>إصدار 2026.9.4:</strong> إصلاحات أمنية وتحسينات في الـ gateway</li>
+      <li><strong>إصدار 2026.9.3:</strong> تطويرات في معالجة الرسائل</li>
+      <li><strong>إصدار 2026.9.2:</strong> تحسينات في تكامل Telegram و WhatsApp</li>
+      <li><strong>إصدار 2026.9.1:</strong> مميزات جديدة في الـ AI integration</li>
+      <li><strong>إصدار 2026.8.2 / 8.1:</strong> تحسينات كبيرة في الـ core engine</li>
+      <li><strong>إصدارات 2026.7.x:</strong> نظام croners محسّن + أدوات إدارية جديدة</li>
+      <li><strong>إصدارات 2026.6.x:</strong> إصلاحات متعددة وتحسينات في الأداء</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>📅 الإصدارات الرئيسية الأخيرة (Timeline)</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="ver">2026.9.6</span>
+        <span class="date">- 23 سبتمبر 2026</span>
+        <div class="desc">الإصدار الحالي الأحدث — تحديثات استقرار</div>
+      </div>
+      <div class="timeline-item">
+        <span class="ver">2026.7.35</span>
+        <span class="date">- 21 سبتمبر 2026 (extended-stable)</span>
+        <div class="desc">إصدار مستقر طويل المدى</div>
+      </div>
+      <div class="timeline-item">
+        <span class="ver">2026.9.5</span>
+        <span class="date">- 19 سبتمبر 2026</span>
+        <div class="desc">تحسينات في الأداء</div>
+      </div>
+      <div class="timeline-item">
+        <span class="ver">2026.9.4</span>
+        <span class="date">- 11 سبتمبر 2026</span>
+        <div class="desc">إصلاحات أمنية</div>
+      </div>
+      <div class="timeline-item">
+        <span class="ver">2026.9.3</span>
+        <span class="date">- 8 سبتمبر 2026</span>
+        <div class="desc">تطويرات معالجة الرسائل</div>
+      </div>
+      <div class="timeline-item">
+        <span class="ver">2026.8.2</span>
+        <span class="date">- 1 سبتمبر 2026</span>
+        <div class="desc">تحسينات core engine</div>
+      </div>
+      <div class="timeline-item">
+        <span class="ver">2026.8.1</span>
+        <span class="date">- 31 أغسطس 2026</span>
+        <div class="desc">إصدار رئيسي جديد بسلسلة 8.x</div>
+      </div>
+      <div class="timeline-item">
+        <span class="ver">2026.7.x</span>
+        <span class="date">- يوليه - سبتمبر 2026</span>
+        <div class="desc">سلسلة إصدارات 7.x المستقرة</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🛠️ إزاي تحدّث</h2>
+    <p>خطوات التحديث من الإصدار الحالي <strong>2026.5.20</strong> إلى <strong>2026.9.6</strong>:</p>
+
+    <div class="commands">
+      <span class="comment"># 1. اعمل باك أب للـ workspace قبل أي تحديث</span>
+      <span class="cmd">cp -r ~/workspace ~/workspace.backup.$(date +%Y%m%d)</span>
+
+      <span class="comment"># 2. شوف الـ gateway status الأول</span>
+      <span class="cmd">openclaw gateway status</span>
+
+      <span class="comment"># 3. اعمل restart بعد ما تحدّث</span>
+      <span class="cmd">openclaw gateway restart</span>
+
+      <span class="comment"># 4. لو فيه مشكلة، ارجع للـ extended-stable</span>
+      <span class="cmd">npm install -g openclaw@2026.7.35</span>
+
+      <span class="comment"># 5. تحقق من الإصدار بعد التحديث</span>
+      <span class="cmd">openclaw --version</span>
+    </div>
+
+    <div class="highlight-box" style="background: linear-gradient(135deg, #10b981, #059669);">
+      💡 نصيحة: لو مش متأكد، حدّث لـ 2026.7.35 (extended-stable) — أكثر استقراراً للـ production
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>⚠️ ملاحظات مهمة قبل التحديث</h2>
+    <ul class="list">
+      <li>خد باك أب لـ <code>~/workspace</code> قبل التحديث</li>
+      <li>تأكد إن الـ gateway مش شغال في مهام حساسة وقت التحديث</li>
+      <li>راجع الـ changelog الرسمي على npm للحصول على تفاصيل التغييرات الكاسرة</li>
+      <li>لو عندك skills أو plugins مخصصة، تأكد إنها متوافقة مع الإصدار الجديد</li>
+      <li>الترقية من 5.20 لـ 9.6 قفزت 4 إصدانات رئيسية — خلي بالك من breaking changes</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>📦 معلومات تقنية</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="label">Latest</div>
+        <div class="value">2026.9.6</div>
+      </div>
+      <div class="card">
+        <div class="label">Beta</div>
+        <div class="value">2026.9.6</div>
+      </div>
+      <div class="card">
+        <div class="label">Extended Stable</div>
+        <div class="value">2026.7.35</div>
+      </div>
+      <div class="card">
+        <div class="label">Package</div>
+        <div class="value">openclaw</div>
+      </div>
+    </div>
+    <p style="margin-top: 20px;">🔗 <strong>المصدر:</strong> <a href="https://www.npmjs.com/package/openclaw" style="color: #60a5fa;">npmjs.com/package/openclaw</a></p>
+  </div>
+
+  <div class="footer">
+    <p>📅 التقرير بتاريخ: 25 سبتمبر 2026 - 8:00 صباحاً بتوقيت UTC</p>
+    <p style="margin-top: 8px;">🤖 مُولّد تلقائياً بواسطة Claw</p>
+  </div>
+
+</div>
+</body>
+</html>
